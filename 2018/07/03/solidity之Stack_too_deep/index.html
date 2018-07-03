@@ -3,15 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: hexo | 致良知，事上练</title>
+  <title>solidity之Stack to deep | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="致良知，事上练">
-<meta property="og:url" content="http://banyibu.com/tags/hexo/index.html">
+  <meta name="description" content="问题描述使用solidity编写以太坊智能合约时，遇到了Stack to deep, try removing local variables……如下图所示：">
+<meta name="keywords" content="solidity,区块链,计算机语言,智能合约,Bug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="solidity之Stack to deep">
+<meta property="og:url" content="http://banyibu.com/2018/07/03/solidity之Stack_too_deep/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="问题描述使用solidity编写以太坊智能合约时，遇到了Stack to deep, try removing local variables……如下图所示：">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-74022645ceec2eb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-07-03T12:06:24.538Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="致良知，事上练">
+<meta name="twitter:title" content="solidity之Stack to deep">
+<meta name="twitter:description" content="问题描述使用solidity编写以太坊智能合约时，遇到了Stack to deep, try removing local variables……如下图所示：">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-74022645ceec2eb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -72,42 +79,75 @@
   </div>
 </div>
 
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap animated rubberBand">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/02/hello-world/" class="archive-article-date">
-  <time class="post-time" datetime="2018-07-01T16:00:00.000Z" itemprop="datePublished">
+        <section id="main"><article id="post-solidity之Stack_too_deep" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/03/solidity之Stack_too_deep/" class="article-date">
+  <time class="post-time" datetime="2018-07-03T11:08:35.000Z" itemprop="datePublished">
     <span class="post-month">7月</span><br/>
-    <span class="post-day">02</span>
+    <span class="post-day">03</span>
   </time>
 </a>
-      
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/02/hello-world/">Hello World</a>
+    <h1 class="article-title" itemprop="name">
+      solidity之Stack to deep
     </h1>
   
 
-    </header>
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/区块链/">区块链</a>,<a class="article-category-link" href="/categories/区块链/智能合约/">智能合约</a>
   </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>使用<a href="https://solidity.readthedocs.io/en/v0.4.24/" target="_blank" rel="noopener">solidity</a>编写以太坊智能合约时，遇到了Stack to deep, try removing local variables……如下图所示：<br><img src="https://upload-images.jianshu.io/upload_images/12985001-74022645ceec2eb1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""> <a id="more"></a></p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>一般这个问题是报错函数中,局部变量太多导致的，这里的局部变量包括传入函数的形参。</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>1、若函数不算太复杂，可以通过减少局部变量来解决；<br>2、方法1解决不了，可以将报错函数中的部分功能拆分成另一个内部函数，在原函数中调用拆分出去的内部函数；</p>
+<h2 id="疑问"><a href="#疑问" class="headerlink" title="疑问"></a>疑问</h2><p>函数调用也是压栈的形式，虽然解决这个报错有效，但是从原理上还是有点不清晰。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/07/03/solidity之Stack_too_deep/" data-id="cjj5m8xf2000e34v7z4dmca84" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bug/">Bug</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/solidity/">solidity</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/智能合约/">智能合约</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/02/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+
+
 
 </section>
         
