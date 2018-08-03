@@ -5,15 +5,18 @@
   
   <title>共识机制——Raft | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="区块链,共识机制">
+  <meta name="description" content="简述Raft使用Log进行同步，其中角色包含三种，分别是：Leader，Follower，Candidate，这些角色之间可以相互转换。Raft共识包含两个过程：①：leader选举；②：Leader生成Log并与Follower进行Headbeats同步；">
+<meta name="keywords" content="区块链,共识机制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="共识机制——Raft">
 <meta property="og:url" content="http://banyibu.com/2018/08/03/共识机制——Raft/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="简述Raft使用Log进行同步，其中角色包含三种，分别是：Leader，Follower，Candidate，这些角色之间可以相互转换。Raft共识包含两个过程：①：leader选举；②：Leader生成Log并与Follower进行Headbeats同步；">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-03T12:17:17.191Z">
+<meta property="og:updated_time" content="2018-08-03T12:49:42.471Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="共识机制——Raft">
+<meta name="twitter:description" content="简述Raft使用Log进行同步，其中角色包含三种，分别是：Leader，Follower，Candidate，这些角色之间可以相互转换。Raft共识包含两个过程：①：leader选举；②：Leader生成Log并与Follower进行Headbeats同步；">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -110,11 +113,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Raft使用Log进行同步，其中角色包含三种，分别是：Leader，Follower，Candidate，这些角色之间可以相互转换。<br>Raft共识包含两个过程：①：leader选举；②：Leader生成Log并与Follower进行Headbeats同步；<br><a id="more"></a></p>
+<h2 id="Leader-选举-amp-Log-同步"><a href="#Leader-选举-amp-Log-同步" class="headerlink" title="Leader 选举 &amp; Log 同步"></a>Leader 选举 &amp; Log 同步</h2><p>详情查看<a href="https://www.jdon.com/artichect/raft.html" target="_blank" rel="noopener">分布式系统的Raft算法</a><br>详情查看<a href="https://www.jdon.com/artichect/raft.html" target="_blank" rel="noopener">分布式系统的Raft算法</a></p>
+<p><a href="http://thesecretlivesofdata.com/raft/" target="_blank" rel="noopener">有趣的动画理解</a></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/03/共识机制——Raft/" data-id="cjkdyfe21000enov7vqdei9tg" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/03/共识机制——Raft/" data-id="cjkdyg3ip000fwov7v0we1vu5" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/共识机制/">共识机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
