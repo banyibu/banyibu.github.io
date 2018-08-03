@@ -3,15 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: remix | 致良知，事上练</title>
+  <title>共识机制——Paxos | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="致良知，事上练">
-<meta property="og:url" content="http://banyibu.com/tags/remix/index.html">
+  <meta name="description" content="简述Paxos算法是为了保证在通信不会出现错传的情况下，进程之间基于消息传递对某个值达成一致。">
+<meta name="keywords" content="区块链,共识机制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="共识机制——Paxos">
+<meta property="og:url" content="http://banyibu.com/2018/08/03/共识机制——Paxos/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="简述Paxos算法是为了保证在通信不会出现错传的情况下，进程之间基于消息传递对某个值达成一致。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-219ba2db8cd7db7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-03T12:13:17.159Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="致良知，事上练">
+<meta name="twitter:title" content="共识机制——Paxos">
+<meta name="twitter:description" content="简述Paxos算法是为了保证在通信不会出现错传的情况下，进程之间基于消息传递对某个值达成一致。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-219ba2db8cd7db7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -72,42 +79,111 @@
   </div>
 </div>
 
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap animated rubberBand">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2018/07/04/以太坊智能合约中函数调用方法/" class="archive-article-date">
-  <time class="post-time" datetime="2018-07-04T03:34:14.000Z" itemprop="datePublished">
-    <span class="post-month">7月</span><br/>
-    <span class="post-day">04</span>
+        <section id="main"><article id="post-共识机制——Paxos" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/03/共识机制——Paxos/" class="article-date">
+  <time class="post-time" datetime="2018-08-03T08:52:02.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">03</span>
   </time>
 </a>
-      
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/04/以太坊智能合约中函数调用方法/">以太坊智能合约调用方法总结</a>
+    <h1 class="article-title" itemprop="name">
+      共识机制——Paxos
     </h1>
   
 
-    </header>
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/区块链/">区块链</a>,<a class="article-category-link" href="/categories/区块链/核心技术/">核心技术</a>,<a class="article-category-link" href="/categories/区块链/核心技术/共识机制/">共识机制</a>
   </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>Paxos算法是为了保证在通信不会出现错传的情况下，进程之间基于消息传递对某个值达成一致。<br><a id="more"></a></p>
+<h2 id="角色划分"><a href="#角色划分" class="headerlink" title="角色划分"></a>角色划分</h2><p>Proposers, Acceptors, Learners,其中前两个是Paxos的关键，Proposers提出提案，Acceptors批准提案。</p>
+<h2 id="两段协议"><a href="#两段协议" class="headerlink" title="两段协议"></a>两段协议</h2><p>为避免重复劳动，具体过程可点击下面：<br><a href="https://blog.csdn.net/b2222505/article/details/78307677" target="_blank" rel="noopener">浅谈Paxos</a><br>详述例子，可以点击下面<br><a href="https://blog.csdn.net/cnh294141800/article/details/53768464/" target="_blank" rel="noopener">Paxos协议详细解释+简单实例</a></p>
+<p>两段协议核心主题如下图所示：<br><img src="https://upload-images.jianshu.io/upload_images/12985001-219ba2db8cd7db7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paxos两段协议过程"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/03/共识机制——Paxos/" data-id="cjkdyfe25000hnov7zlu7lrrs" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/共识机制/">共识机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/03/共识机制——Raft/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          共识机制——Raft
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/03/共识机制——PBFT/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">共识机制——PBFT</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
 
 </section>
         
