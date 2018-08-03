@@ -3,20 +3,22 @@
 <head>
   <meta charset="utf-8">
   
-  <title>南怀瑾语录杂记 | 致良知，事上练</title>
+  <title>共识机制——PBFT | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="人生的最高境界是佛为心，道为骨，儒为表，大度看世界。技在手，能在身，思在脑，从容过生活。">
-<meta name="keywords" content="哲理,杂谈">
+  <meta name="description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。">
+<meta name="keywords" content="区块链,共识机制">
 <meta property="og:type" content="article">
-<meta property="og:title" content="南怀瑾语录杂记">
-<meta property="og:url" content="http://banyibu.com/2018/07/17/语录杂记/index.html">
+<meta property="og:title" content="共识机制——PBFT">
+<meta property="og:url" content="http://banyibu.com/2018/08/03/共识机制——PBFT/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="人生的最高境界是佛为心，道为骨，儒为表，大度看世界。技在手，能在身，思在脑，从容过生活。">
+<meta property="og:description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-17T13:58:54.093Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-e83755da2b04c5f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-03T08:47:47.439Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="南怀瑾语录杂记">
-<meta name="twitter:description" content="人生的最高境界是佛为心，道为骨，儒为表，大度看世界。技在手，能在身，思在脑，从容过生活。">
+<meta name="twitter:title" content="共识机制——PBFT">
+<meta name="twitter:description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-e83755da2b04c5f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -77,12 +79,12 @@
   </div>
 </div>
 
-        <section id="main"><article id="post-语录杂记" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-共识机制——PBFT" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/07/17/语录杂记/" class="article-date">
-  <time class="post-time" datetime="2018-07-17T13:30:38.000Z" itemprop="datePublished">
-    <span class="post-month">7月</span><br/>
-    <span class="post-day">17</span>
+    <a href="/2018/08/03/共识机制——PBFT/" class="article-date">
+  <time class="post-time" datetime="2018-08-03T07:25:12.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">03</span>
   </time>
 </a>
    
@@ -94,14 +96,14 @@
         
   
     <h1 class="article-title" itemprop="name">
-      南怀瑾语录杂记
+      共识机制——PBFT
     </h1>
   
 
         <div>
           
   <div class="article-category">
-    <a class="article-category-link" href="/categories/哲学文学/">哲学文学</a>,<a class="article-category-link" href="/categories/哲学文学/杂家杂言/">杂家杂言</a>
+    <a class="article-category-link" href="/categories/区块链/">区块链</a>,<a class="article-category-link" href="/categories/区块链/核心技术/">核心技术</a>,<a class="article-category-link" href="/categories/区块链/核心技术/共识机制/">共识机制</a>
   </div>
 
           
@@ -113,37 +115,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li>人生的最高境界是佛为心，道为骨，儒为表，大度看世界。技在手，能在身，思在脑，从容过生活。<a id="more"></a>
-<hr>
-</li>
-<li><p>一个真正有修养的人，就是达到“挫其锐”的程度，把尖锐的聪明棱角都磨下去。</p>
-</li>
-<li><p>人有三个基本错误不能犯：一是德薄而位尊，二是智小而谋大，三是力小而任重。</p>
-</li>
-<li><p>天下的事，没有突变的，只有我们智慧不及的时候，才会看到某件事是突变的，其实早有一个前因潜伏在那里。</p>
-</li>
-<li><p>世界上任何人，一辈子只做三件事，不是自欺，就是欺人，再不然就是被人欺。你看世界上的人能不能逃出这三样事？能逃出了这三样的话，就跳出三界外了。</p>
-</li>
-<li><p>学问最难是平淡，安于平淡的人，什么事业都可以做。</p>
-</li>
-<li><p>一个人内心没有涵养，就会变成色厉内荏，表面面不在乎，而内心非常空虚。其实大可不必。一个人好就是好，穷就是穷，痛苦就是痛苦。</p>
-</li>
-<li><p>佛学叫这个世界“娑婆世界”，译为“堪忍”，说我们这个世界是缺陷的世界。《易经》也说这个世界是缺陷的，让你有钱就不给你学问，有学问就没有钱；给你子孙满堂，就不给你别样了，所以总是有缺陷不圆满的。</p>
-</li>
-<li><p>今天的世界惟科技马首是瞻，人格养成没有了，都是乱的不成器的，教育只是贩卖知识，这是根本乱源，是苦恼之源。只有科学、科技、哲学、宗教、文艺、人格成教育回归一体，回归本位，均衡发展，才有希望。</p>
-</li>
-<li><p>立身不求无患，身无患则贪欲必生；处世不求无难，世无难则骄奢必起；谋事不求易成，事易成则志存轻慢；施德不求望报，德望报则意有所图。</p>
-</li>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”<br>该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。<br><a id="more"></a></p>
+<h2 id="具体算法"><a href="#具体算法" class="headerlink" title="具体算法"></a>具体算法</h2><ol>
+<li>选取一个主节点，当主节点失效时，启动视图更换过程，重新选择主节点；</li>
+<li>客户端向主节点发送请求调用服务；</li>
+<li>主节点通过广播将请求消息发送给其他副本；</li>
+<li>所有副本都执行请求并将结果发回客户端；</li>
+<li>客户端需要等待超过1/3个不同副本节点发回相同的结果，作为整个操作的最终结果。<h2 id="三阶段协议"><a href="#三阶段协议" class="headerlink" title="三阶段协议"></a>三阶段协议</h2>包括：预准备(pre-prepare)、准备(prepare)和确认(commit)<br><img src="https://upload-images.jianshu.io/upload_images/12985001-e83755da2b04c5f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>其中C为发送请求端，0123为副本节点，其中3为宕机的服务端，0为当前主节点，具体步骤如下：</li>
+<li>Request：请求端C发送请求到主节点，这里是0</li>
+<li>Pre-Prepare：服务端0收到C的请求后进行广播，扩散至123，由123对其做一些必要的检查。在这一步，确定了该请求所在视图中被赋予的编号。</li>
+<li>Prepare：123,收到后记录并再次广播，1-&gt;023，2-&gt;013，3因为宕机无法广播。方式接受预准备消息的节点，在这一步将把预准备和准备消息计入自己的日志。</li>
+<li>Commit：0123节点在Prepare阶段，若收到超过一定数量的相同请求，则进入Commit阶段，广播Commit请求<br>5.Reply：0123节点在Commit阶段，若收到超过一定数量的相同请求(即验证合格的请求)，则对C进行反馈，并将确认消息写入消息日志中。<br>三段协议之后，则所有副本节点可以对时间戳小于确认请求的其他请求都丢弃。<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2>对于各个副本中的无异议消息记录应当删除，而这种删除又需要确保一定数量的其他副本都执行了被删除消息对应的请求。且这种删除耗费资源严重，因此这种删除周期性的进行，引入了检查点。删除操作执行后得到的状态称为检查点，具有证明的检查点称为稳定检查点。<br><em><a href="https://www.jianshu.com/p/fb5edf031afd" target="_blank" rel="noopener">详情请点击这里</a></em></li>
 </ol>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/07/17/语录杂记/" data-id="cjkdp007a000hgkv7zba4paj7" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/03/共识机制——PBFT/" data-id="cjkdp0072000agkv79qvs1t2o" class="article-share-link">分享</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/哲理/">哲理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/杂谈/">杂谈</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/共识机制/">共识机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
 
     </footer>
   </div>
@@ -151,19 +142,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/07/17/清心决-道家/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          清心决_道家
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/07/04/以太坊智能合约中函数调用方法/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/08/03/共识机制——DPoS/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">以太坊智能合约调用方法总结</div>
+      <div class="article-nav-title">共识机制——DPoS</div>
     </a>
   
 </nav>
