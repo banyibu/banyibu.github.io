@@ -5,19 +5,19 @@
   
   <title>共识机制——PBFT | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。">
+  <meta name="description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。PBFT允许存在少数恶意节点(消息可能被伪造)。">
 <meta name="keywords" content="区块链,共识机制">
 <meta property="og:type" content="article">
 <meta property="og:title" content="共识机制——PBFT">
 <meta property="og:url" content="http://banyibu.com/2018/08/03/共识机制——PBFT/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。">
+<meta property="og:description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。PBFT允许存在少数恶意节点(消息可能被伪造)。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-e83755da2b04c5f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-08-03T08:47:47.439Z">
+<meta property="og:updated_time" content="2018-08-03T13:16:52.349Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="共识机制——PBFT">
-<meta name="twitter:description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。">
+<meta name="twitter:description" content="概述PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。PBFT允许存在少数恶意节点(消息可能被伪造)。">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-e83755da2b04c5f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
@@ -45,9 +45,9 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>11</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>10</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>13</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>14</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>18</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>15</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
      
@@ -115,7 +115,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”<br>该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。<br><a id="more"></a></p>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>PBFT算法，“一种状态机副本复制算法，即服务作为状态机进行建模，状态机在分布式系统的不同节点进行副本复制。每个状态机的副本都保存了服务的状态，同时也实现了服务的操作。”<br>该算法有1/3的容错能力，一般常用于联盟链和私链等节点较少的区块链网络。<br>PBFT允许存在少数恶意节点(消息可能被伪造)。<br><a id="more"></a></p>
 <h2 id="具体算法"><a href="#具体算法" class="headerlink" title="具体算法"></a>具体算法</h2><ol>
 <li>选取一个主节点，当主节点失效时，启动视图更换过程，重新选择主节点；</li>
 <li>客户端向主节点发送请求调用服务；</li>
@@ -131,7 +131,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/03/共识机制——PBFT/" data-id="cjkdyg3ik000ewov7z8oj0bf1" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/03/共识机制——PBFT/" data-id="cjkhpboyf000er8v7sq5i9k4j" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/共识机制/">共识机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
@@ -240,9 +240,9 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>11</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>10</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>13</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>14</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>18</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>15</strong><br>标签</div></a>
     </div>
 
 
