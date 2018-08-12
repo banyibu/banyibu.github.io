@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第二章_变量和基本类型 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述算数类型、字面值常量和字面值类型、转移序列、指定字面值类型、变量的初始化和赋值、变量的申明和定义、标识符、复合类型……">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第二章_变量和基本类型">
+<meta property="og:url" content="http://banyibu.com/2018/08/11/C-学习笔记第二章/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述算数类型、字面值常量和字面值类型、转移序列、指定字面值类型、变量的初始化和赋值、变量的申明和定义、标识符、复合类型……">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-12T14:13:48.927Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第二章_变量和基本类型">
+<meta name="twitter:description" content="概述算数类型、字面值常量和字面值类型、转移序列、指定字面值类型、变量的初始化和赋值、变量的申明和定义、标识符、复合类型……">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第二章" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/11/C-学习笔记第二章/" class="article-date">
+  <time class="post-time" datetime="2018-08-11T14:15:41.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">11</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第二章_变量和基本类型
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>算数类型、字面值常量和字面值类型、转移序列、指定字面值类型、变量的初始化和赋值、变量的申明和定义、标识符、复合类型……<br><a id="more"></a></p>
+<h3 id="算数类型"><a href="#算数类型" class="headerlink" title="算数类型"></a>算数类型</h3><p>bool、char、wchar_t、char16_t、char32_t、short、int、long、long long、float、double、long double；<br>一般char可表示比较小的整数，但是不同操作系统环境，char的符号不定，所以，一般以signed char或unsigned char来表示较小的整数。</p>
+<h3 id="字面值常量"><a href="#字面值常量" class="headerlink" title="字面值常量"></a>字面值常量</h3><p><strong>整数字面值：</strong><br>十进制字面值是带符号的，其类型是最小能够容纳字面值常量的类型；<br>八进制和十六进制字面值类型可能带符号也可能不带符号，仍然是最小能够容纳字面值常量的类型；<br>short没有对应的字面值。<br><strong>浮点数字面值：</strong><br>默认为double类型。<br><strong>字符和字符串字面值：</strong><br>字符串字面值的类型实际上由常量字符构成的数组，会在结尾添加‘\0’，字符串字面值的实际长度要比其内容多1。</p>
+<h3 id="转义序列"><a href="#转义序列" class="headerlink" title="转义序列"></a>转义序列</h3><p>不可打印字符需要转义；<br>\x后面加十六进制数字，\后面加八进制数字，注意\后面最多只有三个数值参与转义。<br>\x所跟数字过多，会报错，一般这种情况和某个前缀开头的扩展字符一起使用。</p>
+<h3 id="指定字面值类型"><a href="#指定字面值类型" class="headerlink" title="指定字面值类型"></a>指定字面值类型</h3><p>字符串和字符字面值</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>含义</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u</td>
+<td>Unicode16字符</td>
+<td>char16_t</td>
+</tr>
+<tr>
+<td>U</td>
+<td>Unicode32字符</td>
+<td>char32_t</td>
+</tr>
+<tr>
+<td>L</td>
+<td>宽字符</td>
+<td>wchar_t</td>
+</tr>
+<tr>
+<td>u8</td>
+<td>UTF-8(仅用于字符串字面常量)</td>
+<td>char</td>
+</tr>
+</tbody>
+</table>
+<p>整数字面值</p>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>最小匹配类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>u or U</td>
+<td>unsigned</td>
+</tr>
+<tr>
+<td>l or L</td>
+<td>long</td>
+</tr>
+<tr>
+<td>ll or LL</td>
+<td>long long</td>
+</tr>
+</tbody>
+</table>
+<p>浮点型字面值</p>
+<table>
+<thead>
+<tr>
+<th>后缀</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>f or F</td>
+<td>float</td>
+</tr>
+<tr>
+<td>l or L</td>
+<td>long double</td>
+</tr>
+</tbody>
+</table>
+<h3 id="变量的初始化和赋值"><a href="#变量的初始化和赋值" class="headerlink" title="变量的初始化和赋值"></a>变量的初始化和赋值</h3><p>变量的初始化，是创建变量时赋予其的一个初始化值，而赋值，则是把当前对象的当前值清除，而以一个新值来替代。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">long double ld = 3.14159;</span><br><span class="line">int a&#123;ld&#125;, b=&#123;ld&#125;; //错误，类型转换未执行，编译时报错</span><br><span class="line">int c(ld), d = ld; //正确</span><br></pre></td></tr></table></figure></p>
+<p>默认初始化：定义于函数体的内置类型的对象如果没有初始化，则其值是未定义的。类的对象如果没有显示的初始化，则其值由类确定。</p>
+<h3 id="变量申明和定义的关系"><a href="#变量申明和定义的关系" class="headerlink" title="变量申明和定义的关系"></a>变量申明和定义的关系</h3><p>C++为了支持分离式编译，将申明和定义区分开来。申明使得名字为程序所知，而定义负责创建与名字相关联的实体。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">extern int i; //申明i而非定义i</span><br><span class="line">int j;  //申明并定义了j</span><br><span class="line">extern double pi = 3.1415926; //定义了pi，赋初始值，使得extern作用消失</span><br></pre></td></tr></table></figure></p>
+<p>变量可以被定义一次，但是可以被多次申明。</p>
+<h3 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h3><p>用户自定义的标识符中不能连续出现两个下划线，也不能以下划紧接大写字母开头。此外，定义在函数体外的标识符也不能以下划线开头。<br><strong>变量命名规范：</strong><br>1）标识符要能体现含义；<br>2）变量名一般使用小写字母；<br>3）用户自定义的类名一般以大写字母开头；<br>4）如果标识符有多个单词组成，则单词间应该有明显区分：如student_loan, studentLoan。</p>
+<h3 id="复合类型"><a href="#复合类型" class="headerlink" title="复合类型"></a>复合类型</h3><p><strong>引用</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int ival = 1024;</span><br><span class="line">int &amp;refVal = ival;</span><br><span class="line">int &amp;refVal2; //报错：引用定义后必须被初始化</span><br></pre></td></tr></table></figure></p>
+<p>引用定义时，程序把引用和它的初始值绑定在一起，而不进行拷贝。引用并非对象，而是一个已经存在的对象的别名。<br>引用本身不是一个对象，所以不能定义引用的引用。<br>引用的类型要和与之绑定的对象严格匹配。<br>引用只能绑定在对象上，而不能与字面值或某个表达式的计算结果绑定在一起。<br><strong>指针</strong><br>指针和引用一样也实现了对其他对象的间接访问，但有如下不同点：<br>1）指针本身就是一个对象，允许被赋值和拷贝，而且指针在其生命周期中可以指向不同的的对象；<br>2）指针无需在定义时赋初值。<br>因为引用不是对象，没有实际地址，所以不能定义指向引用的指针。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p1=nullptr; //C++11标准中，初始空指针，使用nullptr</span><br></pre></td></tr></table></figure></p>
+<p><strong> void* 指针</strong><br>void<em>指针存放着一个地址，而具体是什么类型的却无法得知。<br>void</em>可以做的事情：1）和其他指针比较；2）作为函数的输入或输出；3）赋值给另外一个void*指针;<br><strong>指向指针的引用</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int i=42;</span><br><span class="line">int *p;</span><br><span class="line">int *&amp;r=p; //r是一个对指针p的引用</span><br><span class="line"></span><br><span class="line">r=&amp;i;  //r应用了一个指针，因此r这个赋值就是让p指向i</span><br><span class="line">*r=0;  //将p指向的对象i的值改为0；</span><br></pre></td></tr></table></figure></p>
+<p>面对复杂的指针或引用的申明语句，从右往左阅读有助于弄清楚它的真正含义。<br><strong>const限定符</strong><br>默认情况下，const对象被设定为仅在文件内有效。当多个文件出现了同名的const变量时，其实等同于在不同的文件中分别定义了独立的变量。<br>对于const变量，不管是定义还是申明都添加extern关键字，这样就只需要定义一次了。<br><strong>const的引用</strong><br>引用的类型必须与被引用对象的类型一致，但有两个例外：<br>1）在初始化常量引用时，允许任意表达式作为初始值，<strong>只要该表达式的结果可以转化为引用的类型即可</strong>；<br>2）存在继承关系的类：可以将基类的指针或引用绑定到派生类的对象上。<br>绑定到常量引用的对象可以是如上1）所述的。但绑定了对象的常量引用，不能通过该引用修改其绑定的内容。<br><strong>const和指针</strong><br>指向常量的指针可以指向常量或非常量，但其指针类型和指向对象的类型必须一致。通过该常量指针，不可以修改其指向的内容。<br>常量指针必须初始化，一旦初始化完成，它的值就改变不了了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int errNumber = 0;</span><br><span class="line">int *const curErr = &amp;errNumber; //常量指针，指向errNumber，该指针的内容不能改变，但是指向的对象可以改变</span><br><span class="line"></span><br><span class="line">const double pi = 3.14159;</span><br><span class="line">const double *const pip = &amp;pi; //pip是一个指向常量对象的常量指针，指针内容和指向对象均不能改变</span><br></pre></td></tr></table></figure></p>
+<p><strong>顶层const和底层const</strong><br>顶层const表示指针本身就是一个常量，底层const表示指针所指对象时一个常量。<br>当执行对象的拷贝时，顶层const不受影响、底层const限制不容忽略。<br><strong>constexpr和常量表达式</strong><br>常量表达式是指值不会改变并且咱编译过程中就可以得到计算结果的表达式。字面值和用常量表达式初始const对象也是常量表达式。<br>申明为constexpr的变量一定是一个常量，而且必须用常量表达式初始化。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">constexpr int mf = 20;</span><br><span class="line">constexpr int limit = mf +1;</span><br><span class="line">constexpr int sz = size(); //只有当size()是一个constexpr函数时，这条语句才正确</span><br></pre></td></tr></table></figure></p>
+<p>一般来说，如果你认定变量时一个常量表达式，那就把它申明成constexpr类型。<br>字面值类型：算数类型、应用、指针都属于字面值类型。非字面值类型的类型不能被定义为constexpr。<br>注意：constexpr修饰指针，其指针初始值必须是nullptr或0，或者存储在某个固定地址中的对象。定义于函数体外的变量都具有固定地址，定义的有效范围超过函数本身的变量也具有固定地址。<br>constexpr修饰指针，只和指针有关，和被指向的对象无关，也即constexpr将它所定义的对象置为了顶层const。<br><strong>类型别名</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//方法一：</span><br><span class="line">typedef double wages；//wages是double的同义词</span><br><span class="line">typedef wages base, *p; //base是double的同义词，p是double*的同义词。</span><br><span class="line">//方法二：</span><br><span class="line">using SI=Sales_item; // SI是Sales_item的同义词</span><br></pre></td></tr></table></figure></p>
+<p>指针、常量和类型别名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">typedef char *pstring;</span><br><span class="line">const pstring cstr = 0; //cstr是指向char的常量指针。</span><br><span class="line">const pstring *ps; //ps 是一个指针，它的对象时指向char的常量指针。</span><br></pre></td></tr></table></figure></p>
+<p><strong>auto说明符</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto item = val1+val2; //item的类型将根据val1+val2的结果推断</span><br><span class="line">auto i=0; *p =&amp;i;</span><br><span class="line">auto sz =0; pi =3.14; //错误，sz和pi的类型不一致。</span><br></pre></td></tr></table></figure></p>
+<p>复合类型、常量和auto<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int i=0, &amp;r=i;</span><br><span class="line">auto a=r; //a是一个整数</span><br></pre></td></tr></table></figure></p>
+<p>auto一般会忽略掉顶层的const，保留底层const。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const int ci=i, &amp;cr=ci;</span><br><span class="line">auto b=ci; //b是一个整数（ci的顶层const被忽略）</span><br><span class="line">auto c=cr; //c是一个整数</span><br><span class="line">auto d=&amp;i； //d是一个整型指针</span><br><span class="line">auto e=&amp;ci; //e是一个指向整数常量的指针（对常量对象取地址是一种底层const)</span><br></pre></td></tr></table></figure></p>
+<p>设置一个类型为auto的引用时，初始值中的顶层常量属性仍然保留。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">auto &amp;g=ci; //g是一个整型常量引用，绑定到ci</span><br><span class="line">auto &amp;h=42; //错误：不能为非常量引用绑定字面值</span><br><span class="line">const auto &amp;j=42; //正确：可以为常量引用绑定字面值</span><br></pre></td></tr></table></figure></p>
+<p><strong>decltype类型说明符</strong><br>希望从表达式的类型推断出要定义的变量的类型，但是不想像auto那样用该表达式为变量赋初值，则可以用decltype。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">decltype(f()) sum = x; //sum的类型就是函数f的返回类型</span><br></pre></td></tr></table></figure></p>
+<p>decltype处理顶层const和引用的方式与auto有些许不同。如果decltype使用的表达式是一个变量，则返回该变量的类型（包括顶层const和引用在内）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const int ci =0, &amp;cj =ci;</span><br><span class="line">decltype(ci) x =0; //x的类型是const int</span><br><span class="line">decltype(cj) y =x; //y的类型是const int&amp;，y绑定到变量x</span><br><span class="line">decltype(cj) z; //错误，z是引用，必须初始化</span><br><span class="line"></span><br><span class="line">//关于decltype和引用</span><br><span class="line">int i=42, *p=&amp;i, &amp;r=i;</span><br><span class="line">decltype(r+0) b; //b是一个未初始化的int</span><br><span class="line">decltype(*p) c; //错误：c是int&amp;，必须初始化，p解引用得到的int&amp;</span><br><span class="line"></span><br><span class="line">//decltype所使用的表达式加括号会影响其解析结果</span><br><span class="line">decltype((i)) d; //错误：d是int&amp;，必须初始化</span><br><span class="line">decltype(i) e; //正确：e是一个未初始化的int</span><br></pre></td></tr></table></figure></p>
+<p><strong>预处理器概述</strong><br>头文件保护符：避免一个头文件多次被包含的情况。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#ifndef SALES_DATA_H</span><br><span class="line">#define SALES_DATA_H</span><br><span class="line">#include&lt;string&gt;</span><br><span class="line">struct Sales_data &#123;</span><br><span class="line">	……</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/11/C-学习笔记第二章/" data-id="cjkqy7l3g0007ocv701z97xxd" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/12/C-学习笔记第三章-字符串、向量和数组/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          C++学习笔记第三章_字符串、向量和数组
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/09/C-学习笔记第一章/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第一章_开始</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

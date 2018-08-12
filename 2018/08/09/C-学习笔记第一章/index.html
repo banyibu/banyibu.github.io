@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第一章_开始 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第一章_开始">
+<meta property="og:url" content="http://banyibu.com/2018/08/09/C-学习笔记第一章/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-11T14:19:01.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第一章_开始">
+<meta name="twitter:description" content="概述标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第一章" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/09/C-学习笔记第一章/" class="article-date">
+  <time class="post-time" datetime="2018-08-09T12:58:54.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">09</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第一章_开始
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。<br><a id="more"></a></p>
+<h3 id="标准输入输出"><a href="#标准输入输出" class="headerlink" title="标准输入输出"></a>标准输入输出</h3><p>cin 标准输入、cout 标准输出、cerr 标准错误、clog 输出程序运行时的一般性信息。标准输入输出和标准错误通常关联到程序执行所在的窗口。</p>
+<h3 id="输入输出运算符"><a href="#输入输出运算符" class="headerlink" title="输入输出运算符"></a>输入输出运算符</h3><p>“&lt;&lt;” 和 “&gt;&gt;”运算符都接受两个运算对象。<br>“&lt;&lt;” 左侧的运算对象是一个ostream对象，右侧的运算对象是要打印的值。此运算符将给定的值写到给定的ostream对象中。输出运算符的计算结果就是其左侧运算符对象。<br>“&gt;&gt;” 左侧的运算对象时一个istream对象，右侧的运算对象从给定的istream对象中读入数据，并存入其中。</p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注意：块注释不能嵌套<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *注释/* */不能嵌套</span><br><span class="line"> *</span><br><span class="line">*/</span><br></pre></td></tr></table></figure></p>
+<h3 id="读取不定数量的输入数据"><a href="#读取不定数量的输入数据" class="headerlink" title="读取不定数量的输入数据"></a>读取不定数量的输入数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int value=0, sum=0;</span><br><span class="line">while(std::cin&gt;&gt;value)&#123;</span><br><span class="line">	sum+=value;</span><br><span class="line">&#125;</span><br><span class="line">std::cout&lt;&lt;sum&lt;&lt;std::endl;</span><br></pre></td></tr></table></figure>
+<p>上段代码中，std::cin&gt;&gt;value 检查的实际上是”&gt;&gt;”的返回值，即std::cin,如果流有效，即未遇到错误和文件为结束，返回为真，否则返回为假。<br><strong>各个系统中输入文件结束符的方式:</strong><br>Windows中，Ctrl+Z，然后按Enter或Return;<br>UNIX中，Ctrl+D；</p>
+<h3 id="编译器可以检查出的错误"><a href="#编译器可以检查出的错误" class="headerlink" title="编译器可以检查出的错误"></a>编译器可以检查出的错误</h3><p>语法错误、类型错误、申明错误。</p>
+<h3 id="文件重定向"><a href="#文件重定向" class="headerlink" title="文件重定向"></a>文件重定向</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ addItems &lt;infile &gt;outfile</span><br></pre></td></tr></table></figure>
+<p>其中，addItems是可执行文件，则上述命令会从一个名为infile文件中读取数据，将数据结果写入outfile中，其中两个文件都应该位于当前目录中。</p>
+<h3 id="缓冲区刷新"><a href="#缓冲区刷新" class="headerlink" title="缓冲区刷新"></a>缓冲区刷新</h3><p>1） cin.ignore(n,ch); 其中 n 指的是忽略字符的个数，ch 代表的是终止的字符。<br>2）cin.sync()用来清除缓冲区中未读取的信息<br><em>详情待完善</em></p>
+<h3 id="变量初始化"><a href="#变量初始化" class="headerlink" title="变量初始化"></a>变量初始化</h3><p>类类型的变量如果未初始化，则按照类定义时的方式初始化。定义在函数内的内置类型默认是不初始化的，除非有显示的初始化语句。全局变量按照默认方式初始化。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/09/C-学习笔记第一章/" data-id="cjkqy7l360001ocv7jcli59sh" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/11/C-学习笔记第二章/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          C++学习笔记第二章_变量和基本类型
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/06/区块链分叉问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">区块链分叉问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

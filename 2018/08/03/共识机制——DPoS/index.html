@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="致良知，事上练">
 <meta property="og:description" content="概述DPoS大体思想就是所有网络节点，根据其手中的权利（一般为代币）投票选举出一定数目的delegates，由这些delegates轮流产生区块，其他节点验证区块并添加到自己的区块链上。优点：与PoW相比，算力消耗非常少；与PoS相比，避免了被“庄家”控股的现象。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-03T03:08:03.106Z">
+<meta property="og:updated_time" content="2018-08-10T02:37:11.505Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="共识机制——DPoS">
 <meta name="twitter:description" content="概述DPoS大体思想就是所有网络节点，根据其手中的权利（一般为代币）投票选举出一定数目的delegates，由这些delegates轮流产生区块，其他节点验证区块并添加到自己的区块链上。优点：与PoW相比，算力消耗非常少；与PoS相比，避免了被“庄家”控股的现象。">
@@ -43,9 +43,9 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>16</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>16</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>19</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
      
@@ -119,13 +119,13 @@
 <h2 id="伪代码理解"><a href="#伪代码理解" class="headerlink" title="伪代码理解"></a>伪代码理解</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">for round i //分成很多个round，round无限持续</span><br><span class="line">   dlist_i = get N delegates sort by votes //投票还真是人为投票</span><br><span class="line">   dlist_i = shuffle(dlist_i) //随机改变顺序</span><br><span class="line">   loop //round完了，退出循环</span><br><span class="line">       slot = global_time_offset / block_interval</span><br><span class="line">       pos = slot % N</span><br><span class="line">       if dlist_i[pos] exists in this node //delegate在这个节点</span><br><span class="line">           generateBlock(keypair of dlist_i[pos]) //产生block</span><br><span class="line">       else</span><br><span class="line">           skip</span><br></pre></td></tr></table></figure>
 <p><em>注：<a href="https://mp.weixin.qq.com/s?__biz=MjM5ODIzNDQ3Mw==&amp;mid=2649967768&amp;idx=1&amp;sn=596fe0f892aa64b3b948ac629067dc51&amp;chksm=beca3c9e89bdb5882a7de2c678a23b3e67d7ca478cc0a183eefba0c6523d79e63d4ab6357fd6&amp;mpshare=1&amp;scene=1&amp;srcid=02282VSyPVH3qoV99lWkkoWY#rd" target="_blank" rel="noopener">伪代码参考自这里</a></em></p>
 <h3 id="round"><a href="#round" class="headerlink" title="round"></a>round</h3><p>DPoS共识过程分为无数多个round，在每个round中，都会统计投票结果，将前N个设置为delegates，并将他们的排序打乱。</p>
-<h3 id="slot"><a href="#slot" class="headerlink" title="slot"></a>slot</h3><p>每个delegate有一次产生新区块的机会，若产生的区块合法，则获得奖励，否则，跳过该delegate，由下一个delegate产生新区块。一遍循环结束，重新统计投票，选delegates。<br>注意：投票的结果信息一般记录在区块头中。投票是通过交易实现的。</p>
+<h3 id="slot"><a href="#slot" class="headerlink" title="slot"></a>slot</h3><p>每个delegate有在每个round中，有一次产生新区块的机会，若产生的区块合法，则获得奖励，否则，跳过该delegate，由下一个delegate产生新区块。一遍循环结束，重新统计投票，选delegates。<br>注意：投票的结果信息一般记录在区块头中。投票是通过交易实现的。</p>
 <h3 id="资料链接"><a href="#资料链接" class="headerlink" title="资料链接"></a>资料链接</h3><p>详细分析了DPoS共识机制下，可能出现的各类区块链共识状态。<a href="https://steemit.com/dpos/@legendx/dpos" target="_blank" rel="noopener">DPoS共识算法–缺失的白皮书</a><br>EOS使用的DPoS机制：详细介绍了EOS中DPoS的整个实现流程<a href="http://www.blockchainbrother.com/article/684" target="_blank" rel="noopener">如何理解EOS使用的DPoS机制</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/03/共识机制——DPoS/" data-id="cjkizddco0006g8v7ytw7kkri" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/03/共识机制——DPoS/" data-id="cjkqy7l44000oocv72pcekdab" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/共识机制/">共识机制</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
@@ -234,9 +234,9 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>16</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>16</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>19</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
     </div>
 
 
