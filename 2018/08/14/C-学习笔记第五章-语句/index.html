@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第五章_语句 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述简单的语句、迭代、条件、跳转、异常处理等语句。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第五章_语句">
+<meta property="og:url" content="http://banyibu.com/2018/08/14/C-学习笔记第五章-语句/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述简单的语句、迭代、条件、跳转、异常处理等语句。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-14T13:21:33.897Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第五章_语句">
+<meta name="twitter:description" content="概述简单的语句、迭代、条件、跳转、异常处理等语句。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>21</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第五章-语句" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/14/C-学习笔记第五章-语句/" class="article-date">
+  <time class="post-time" datetime="2018-08-14T08:41:04.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">14</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第五章_语句
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>简单的语句、迭代、条件、跳转、异常处理等语句。<br><a id="more"></a></p>
+<h3 id="简单语句"><a href="#简单语句" class="headerlink" title="简单语句"></a>简单语句</h3><p>空语句：只有一个’;’<br>注意不要多写’;’，在需要空语句的地方，应该注意添加注释说明<br>复合语句块<br>空块，即’{}’等价于空语句。<br>switch语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">switch(ch)&#123;</span><br><span class="line">	case item1:</span><br><span class="line">		……;</span><br><span class="line">		break；</span><br><span class="line">	case item2:</span><br><span class="line">		……;</span><br><span class="line">	default:</span><br><span class="line">		……;</span><br><span class="line">		break;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>case标签必须是整型常量表达式。default也是一种特殊的case标签。<br>case分支后的break如果不需要，一般注释写明程序逻辑。<br>标签后面必须跟另一个标签或语句，如果switch以一个空default标签结束，应该在其后加一个空语句或空块。<br>注意在case标签中申明变量是不合适的，因为申明变量的case语句有可能被跳过。<br>for语句头中的第一条语句可以定义多个对象，但是智能有一条申明语句。<br>for语句头中语句的省略，省略第二天语句，相当于一个死循环，必须在循环内部终止迭代过程。<br><strong>范围for语句</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(declaration:expression)</span><br><span class="line">	statement;</span><br></pre></td></tr></table></figure></p>
+<p>其中，expression必须是一个序列，declaration定义一个变量，序列中的每个元素都能转化成变量的类型。<br>do while语句的后面，以’;’结尾。<br><strong>跳转语句</strong><br>break、continue、goto、return<br>break终止离它最近的while、do while、for或switch语句，并从此语句之后的第一条语句开始。<br>continue终止最近循环中的当前迭代并立即开始下一次迭代，其只能出现在for、while、do while内部。<br>goto语句作用从goto语句无条件跳转到同一函数内的另一条语句，其语法：goto lable; ，其中lable是用于标识一条语句的标识符。带标签语句例如：end: return; //end 为label，可以作为goto的目标<br>注意，标签标识符独立于其他标识符，所以其可以和程序中其他实体名字重复。<br>goto不能绕过某些变量的初始化而直接用这些变量，向后跳转，并重新定义一个变量时合法的，相当于这个变量被销毁重新定义。</p>
+<h3 id="try语句块和异常处理"><a href="#try语句块和异常处理" class="headerlink" title="try语句块和异常处理"></a>try语句块和异常处理</h3><p>典型的异常包括失去数据库连接以及遇到意外输入等。<br>异常检测和异常处理两部分：<br>1）throw表达式，异常检测部分使用throw表达式表示它遇到了无法处理的问题。我们说throw引发了异常；<br>2）try语句块，异常处理部分使用try语句块处理异常。try语句块以关键字try开始，并以一个或多个catch子句结束。try语句中代码抛出的异常通常会被某个catch子句处理，因此，catch子句也被称为异常处理代码。<br>3）一套异常类，用户throw表达式和相关的catch子句之间传递异常的具体信息。<br><strong>throw表达式</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if(item1.isbn()!=item2.isbn())</span><br><span class="line">	throw runtime_error(&quot;Data must refer to same ISBN&quot;);</span><br><span class="line">cout&lt;&lt;item1+item2&lt;&lt;endl;</span><br></pre></td></tr></table></figure></p>
+<p>若两个isbn不同，则抛出异常，并将控制权转移到异常处理代码。<br>runtime_error是标准库异常类型的一种，定义在stdexcept头文件中。<br><strong>try语句块</strong><br>try语句块的语法形式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">	program-statements</span><br><span class="line">&#125;catch (exception-declaration)&#123;</span><br><span class="line">	handler-statements</span><br><span class="line">&#125;catch (exception-declaration)&#123;</span><br><span class="line">	handler-statements</span><br><span class="line">&#125;//……</span><br></pre></td></tr></table></figure></p>
+<p>当程序选中某个catch子句处理异常之后，执行与之对应的块。完事跳转到try语句块的最后一个catch子句之后的那条语句继续执行。<br>注意：try语句块中申明的变量在其块内无法访问，包括在catch语句中也无法访问。<br>一个完整的处理代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">while(cin&gt;&gt;item1&gt;&gt;item2)&#123;</span><br><span class="line">	try&#123;</span><br><span class="line">		if(item1.isbn()!=item1.isbn())</span><br><span class="line">			throw runtime_error(&quot;Data must refer to same ISNBN&quot;);</span><br><span class="line">		cout&lt;&lt;item1+item2&lt;&lt;endl;</span><br><span class="line">	&#125;catch(runtime_error err)&#123;</span><br><span class="line">		cout&lt;&lt;err.what()&lt;&lt;&quot;\nTry Again? y or n&quot;&lt;&lt;endl;</span><br><span class="line">		char c;</span><br><span class="line">		cin&gt;&gt;c;</span><br><span class="line">		if(!cin||c==&apos;n&apos;)</span><br><span class="line">			break;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>函数寻找处理代码，由内而外找，若未找到匹配的处理代码。最终将调用terminate的标准库函数。若一个程序没有try语句块且发生了异常，也会调用terminate函数并终止当前程序的执行。<br><strong>标准异常</strong><br>C++定义了一组类来报告标准库函数遇到的问题。这些类，用户编程时也可以使用。<br>1）exception头文件，定义了最通用的异常类exception。只报告异常的发生，不提供任何额外信息；<br>2）new头文件，定义了bad_alloc异常类；<br>3）type_info头文件定义了bad_cast异常类；<br>4）stdexcept头文件，定义了几种常用的异常类，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>异常类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exception</td>
+<td>最常见问题</td>
+</tr>
+<tr>
+<td>runtime_error</td>
+<td>只有在运行时才能检查出的问题</td>
+</tr>
+<tr>
+<td>range_error</td>
+<td>运行时错误：生成的结果超出了有意义的值域的范围</td>
+</tr>
+<tr>
+<td>overflow_error</td>
+<td>运行时错误：计算上溢</td>
+</tr>
+<tr>
+<td>underflow_error</td>
+<td>运行时错误：计算下溢</td>
+</tr>
+<tr>
+<td>logic_error</td>
+<td>程序逻辑错误</td>
+</tr>
+<tr>
+<td>domain_error</td>
+<td>逻辑错误：参数对应的结果值不存在</td>
+</tr>
+<tr>
+<td>invalid_argument</td>
+<td>逻辑错误：无效参数</td>
+</tr>
+<tr>
+<td>length_error</td>
+<td>逻辑错误：试图创建一个超出该类型最大长度的对象</td>
+</tr>
+<tr>
+<td>out_of_range</td>
+<td>逻辑错误：使用一个超出有效范围的值</td>
+</tr>
+</tbody>
+</table>
+<p>标准库异常类只定义了几种运算：创建和拷贝异常类对象，以及为异常类对象赋值。<br>只能以默认初始化方式初始化exception、bad_alloc、bad_cast对象，不允许为这些对象提供初值。<br>其他异常类型恰好想法，必须提供C风格字符串或string对象初始化这些对象，不允许使用默认初始化方式。<br>异常类型只定义了一个名为what的成员函数，该函数没有参数，返回一个指向C风格字符串的指针，提供一些关于该异常的文本信息。对于无初始化值的异常类型，what返回的内容由编译器决定。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/14/C-学习笔记第五章-语句/" data-id="cjktq51s50002hkv776yyvbsr" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/13/C-学习笔记第四章章-表达式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第四章章_表达式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>21</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
