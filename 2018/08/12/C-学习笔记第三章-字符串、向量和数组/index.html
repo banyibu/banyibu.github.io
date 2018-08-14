@@ -5,15 +5,18 @@
   
   <title>C++学习笔记第三章_字符串、向量和数组 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="计算机语言,C++">
+  <meta name="description" content="概述命名空间using申明、标准库类型string、标准库类型vector、迭代器、数组及多维数组、C风格字符串……">
+<meta name="keywords" content="计算机语言,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++学习笔记第三章_字符串、向量和数组">
 <meta property="og:url" content="http://banyibu.com/2018/08/12/C-学习笔记第三章-字符串、向量和数组/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述命名空间using申明、标准库类型string、标准库类型vector、迭代器、数组及多维数组、C风格字符串……">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-12T14:32:16.728Z">
+<meta property="og:updated_time" content="2018-08-13T13:05:41.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++学习笔记第三章_字符串、向量和数组">
+<meta name="twitter:description" content="概述命名空间using申明、标准库类型string、标准库类型vector、迭代器、数组及多维数组、C风格字符串……">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -40,7 +43,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>20</strong><br>文章</div></a>
       <a href="/categories"><div><strong>19</strong><br>分类</div></a>
       <a href="/tags"><div><strong>20</strong><br>标签</div></a>
     </div>
@@ -110,11 +113,82 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>命名空间using申明、标准库类型string、标准库类型vector、迭代器、数组及多维数组、C风格字符串……<br><a id="more"></a></p>
+<h3 id="命名空间using申明"><a href="#命名空间using申明" class="headerlink" title="命名空间using申明"></a>命名空间using申明</h3><p>使用using申明，就无需专门的前缀也可以访问所需要的名字了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">using std::cin; //当我们使用名字cin时，就从命名空间std中获取</span><br></pre></td></tr></table></figure></p>
+<p>一般来说，头文件不应该使用using申明，以避免在头文件被包含到其他文件时，将一些名字不经意的引入到该文件中。</p>
+<h3 id="标准库类型string"><a href="#标准库类型string" class="headerlink" title="标准库类型string"></a>标准库类型string</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;string&gt;</span><br><span class="line">using std::string;</span><br></pre></td></tr></table></figure>
+<p><strong>定义和初始化string对象</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">string s1; //默认初始化，一个空字符串</span><br><span class="line">string s2=s1; //s2是s1的一个副本：**拷贝初始化**</span><br><span class="line">// string s3(&quot;hiya&quot;); 直接初始化</span><br><span class="line">string s3=&quot;hiya&quot;; //s3是该字符串字面常量的副本，不包含最后的&apos;\0&apos;字符。拷贝初始化</span><br><span class="line">string s4(10,&apos;c&apos;); //s4的内容是cccccccccc 直接初始化</span><br><span class="line"></span><br><span class="line">string s8=string(10,&apos;c&apos;); //拷贝初始化</span><br><span class="line">//等价于</span><br><span class="line">string temp(10,&apos;c&apos;); string s8=temp;</span><br></pre></td></tr></table></figure></p>
+<p><strong>string对象上的操作</strong><br>&lt;&lt;、&gt;&gt;、getline(is,s)、 s.empty()、s.size()、s[n]、s1+s2、s1=s2、s1==s2、s1!=s2、&lt;、&lt;=、&gt;、&gt;=<br>注意getline(is,s);从给定输入流is中读取一行到s中，也即，读到遇到换行符为止，换行符会被丢弃，不包含在s中。<br>string::size_type类型：s.size()返回该类型，该类型与机器无关：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto len = line.size(); //len的类型就是string::size_type</span><br></pre></td></tr></table></figure></p>
+<p>假设n为int类型的负值，则s.size()&lt; n，为true，因为n会自动转化为一个无符号值。<br>字面值和string相加:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string s1=&quot;hello&quot;, s2=&quot;world&quot;;</span><br><span class="line">string s3=s1+&quot;,&quot;+s2+&apos;\n&apos;; //必须确保每个加法运算符&apos;+&apos;的两侧至少有一个是string</span><br></pre></td></tr></table></figure></p>
+<p>切记：字符串字面值和string是不同的类型。<br><strong>处理string对象中的每个字符</strong><br>处理string中单个字符，cctype头文件中定义的函数有：</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>实现功能</th>
+<th>函数</th>
+<th>实现功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>isalnum(c)</td>
+<td>当c是字母或数字时为真</td>
+<td>isalpha(c)</td>
+<td>当c是字母时为真</td>
+</tr>
+<tr>
+<td>iscntrl(c)</td>
+<td>当c是控制字符时为真</td>
+<td>isdigit(c)</td>
+<td>当c是数字时为真</td>
+</tr>
+<tr>
+<td>isgraph(c)</td>
+<td>当c不是空格但可打印时为真</td>
+<td>islower(c)</td>
+<td>当c是小写字母时为真</td>
+</tr>
+<tr>
+<td>isprint(c)</td>
+<td>当c是可打印字符时为真(c是空格或可是格式)</td>
+<td>ispunct(c)</td>
+<td>当c是标点符号时为真(c不是字母、数字、可打印空白时)</td>
+</tr>
+<tr>
+<td>isupper(c)</td>
+<td>当c是大写字母时为真</td>
+<td>isxdigit(c)</td>
+<td>当c是十六进制数字时为真</td>
+</tr>
+<tr>
+<td>tolower</td>
+<td>输出c对应的小写字母</td>
+<td>toupper(c)</td>
+<td>输出c对应的大写字母</td>
+</tr>
+</tbody>
+</table>
+<p>注意：cname形式的头文件，是C++对对应的C中的name头文件的兼容模式。cname中的名字都在命名空间std中。C++中应该使用cname的头文件而不是name.h的头文件。<br>使用范围for:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">string str(&quot;some string&quot;);</span><br><span class="line">for(auto c : str)  //对于str中的每个字符逐个赋值给c</span><br><span class="line">    cout&lt;&lt;c&lt;&lt;endl;  //对单个字符单独处理</span><br></pre></td></tr></table></figure></p>
+<p>若想要改变string对象中字符的值，必须把循环变量定义成引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string s(&quot;hello world!&quot;);</span><br><span class="line">for(auto &amp;c : s)</span><br><span class="line">    c = toupper(c);</span><br><span class="line">cout&lt;&lt;s&lt;&lt;endl;</span><br></pre></td></tr></table></figure></p>
+<p>对单个或者部分string中的字符进行处理时，可以使用下标’[]’或使用迭代器。<br>其中’[]’接受string::size_type类型的参数，其参数在0——size()-1之间，下标运算返回的对应位置字符的引用。<br>使用下标执行迭代：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(decltype(s.size() index = 0; index!=s.size()&amp;&amp;!isspace(s[index]; ++index)</span><br><span class="line">    s[index]=toupper(s[index]);</span><br></pre></td></tr></table></figure></p>
+<h3 id="标准库类型vector"><a href="#标准库类型vector" class="headerlink" title="标准库类型vector"></a>标准库类型vector</h3><p>vector是C++的一个类模版。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;vector&gt;</span><br><span class="line">using std::vector;</span><br><span class="line">vector&lt;int&gt; ivec; //ivec保存int类型的对象</span><br><span class="line">vector&lt;Sales_item&gt; Sales_vec; //保存Sales_item类型的对象</span><br><span class="line">vector&lt;vector&lt;string&gt;&gt; file; //该向量的元素是vector的对象</span><br></pre></td></tr></table></figure></p>
+<p>初始化方式和string的类型，仅多一种vector<t> v4(n) //v4包含了n个重复执行了值初始化的对象<br>初始化时，如果使用的是’()’则说明提供的值是用来构造vector对象的。如果使用的是’{}’则是列表初始化该对象。只有’{}’中的值不能用来列表初始化时，才会尝试用它来构造对象。<br><strong>向vector中添加元素</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; v2;</span><br><span class="line">for(int i = 0; i !=100; ++i)&#123;</span><br><span class="line">	v2.push_back(i); //依次将数值添加到v2的末端</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></t></p>
+<p>范围for语句体内不应该改变遍历序列的大小<br><strong>其他vector操作</strong><br>v.empty()、v.size()、v.push_back(t)、v[n]、v1=v2、v1={a,b,c……}、v1==v2、!=、&lt;、&lt;=、&gt;、&gt;=<br>vector定义的size_type的类型：vector&lt; int &gt;::size_type;<br>vector对象的下标运算符可以用来访问已经存在的元素，而不能用于添加元素。否则可能导致缓冲区溢出。</p>
+<h3 id="迭代器介绍"><a href="#迭代器介绍" class="headerlink" title="迭代器介绍"></a>迭代器介绍</h3><p>标准容器迭代器的运算符：<br><em>iter    返回迭代器iter所指元素的引用        iter-&gt;mem解引用iter并获取该元素的名mem的成员，等价于(\</em>item).mem<br>++、–、==、!=<br>注意：所有标准库容器的迭代器都定义了==和!=，但是他们中的大多数都没有定义&lt;运算符。<br>迭代器类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt;::iterator it; //it读写vector&lt;int&gt;的元素</span><br><span class="line">string::iterator it2; //it2读写string对象中的字符</span><br><span class="line">vector&lt;int&gt;::const_iterator it3; //it3只能读元素，不能写</span><br><span class="line">string::const_iterator it4; //it4只能读字符，不能写</span><br></pre></td></tr></table></figure></p>
+<p>begin和end运算符<br>返回的具体类型由对象是否是常量决定，如果对象时常量，则返回const_iterator；否则返回iterator;<br>cbegin和cend运算符，返回的一定是const_iterator<br>结合解引用和成员访问操作：(*it).empty()或者it-&gt;empyt()，注意(*it)的括弧不可少。<br>注意：但凡是使用了迭代器的循环体，都不要向迭代器所属的容器添加元素。<br><strong>迭代器运算</strong><br>string和vector的迭代器还支持更多的运算：iter+n、iter-n、+=、-=、&gt;、&gt;=、&lt;、&lt;=<br>两迭代器的差，代表了右侧迭代器往前移动多少位置可以追上左侧的迭代器。类型名为difference_type的带符号整数。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>定义数组时，必须指定数组的类型，不允许使用auto关键字由初始值列表推断类型。<br>字符数组的特殊性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char a3[]=&quot;C++&quot;; //自动添加表示字符串结束的空字符</span><br><span class="line">char a[6]=&quot;Daniel&quot;; //错误：没有空间容纳空字符</span><br></pre></td></tr></table></figure></p>
+<p>数组不允许拷贝和赋值。<br>理解复杂的数组申明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int *ptrs[10]; //ptrs是含有10个整数指针的数组</span><br><span class="line">int &amp;refs[10] =/*?*/; //错误不存在引用的数组</span><br><span class="line">int (*Parray)[10] = &amp;arr; //Parray指向一个含有10个整数的数组</span><br><span class="line">int (&amp;arrRef)[10]=arr; //arrRef引用含有10个整数的数组</span><br></pre></td></tr></table></figure></p>
+<p>数组的下标类型通常为size_t类型，它是一种机器相关的无符号类型，在cstddef中定义。<br><strong>指针和数组</strong><br>在大多数表达式中，使用数组类型的对象其实是使用一个指向该数组首元素的指针。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">int ia[]=&#123;1,2,3,4,5,6,7,8,9,0&#125;;</span><br><span class="line">auto ia2(ia); //ia2是一个整型指针，指向ia[]的首元素</span><br><span class="line">ia2=42； //错误，ia2是一个指针，不能用整数赋值</span><br><span class="line"></span><br><span class="line">int *p=nullptr;</span><br><span class="line">decltype(ia) ia3 = &#123;0,1,2,3,4,5,6,7,8,9&#125;;</span><br><span class="line">ia3=p; //错误，不能用整型指针给数组赋值。</span><br></pre></td></tr></table></figure></p>
+<p>指针也是迭代器，vector和string的迭代器支持的运算，数组的指针全都支持。<br>获得尾后指针：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int *e = &amp;arr[arr.size()]; //这种方法极易出错</span><br><span class="line">int *beg = begin(ia);</span><br><span class="line">int *last = end(ia); //获得数组ia的尾后指针</span><br></pre></td></tr></table></figure></p>
+<p>其中begin、end函数定义在iterator头文件中。<br>两个指针想减的结果的类型是一种名为ptrdiff_t的带符号标准库类型，和size_t类似，它也定义在cstddef头文件中。<br>注意：内置的下标运算符，也就是数组的下标运算符，其下标的值可以为负数，这和string和vector不一样。<br><strong>C风格字符串</strong><br>cstring头文件中，定义的C风格字符串，其以一个空字符结尾，C语言标准库提供的一组库函数：strlen(p)，返回字符串p的长度，不包括空字符；strcmp(p1,p2),比较两个字符串，若相等返回0，p1大则返回正值，否则返回负值；strcat(p1,p2)p2添加到p1之后，返回p1；strcpy(p1,p2)将p2拷贝给p1，返回p1；<br>注意：这些函数传入的字符串必须以空字符结尾。<br>对于C风格的字符串，一般使用C风格字符串提供的库函数。<br><strong>与旧代码的接口</strong><br>允许使用C风格字符串为string对象赋值；<br>允许在string的+运算中，使用C风格字符串，但是+的两边不能都是C风格字符串。<br>反过来，用string为C风格字符串赋值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char *str = s; //错误，不能用string对象初始化char*，这里假设s是string对象。</span><br><span class="line">const char* str=s.c_str(); //正确</span><br></pre></td></tr></table></figure></p>
+<p>这里，c_str()函数的返回值是一个C风格的字符串。<br>注意：如果后续操作改变了s的值，那么str就会失效。若想保证c_str()返回的值一直可用，我们需要将返回值拷贝一份。<br><strong>使用数组初始化vector</strong><br>不能使用数组初始化内置类型数组，也不能使用vector对象初始化数组。相反的允许使用数组初始化vector对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int int_arr[]=&#123;0,1,2,3,4,5,6,7&#125;;</span><br><span class="line">vector&lt;int&gt; ivec(begin(int_arr),end(int_arr);</span><br></pre></td></tr></table></figure></p>
+<h3 id="多维数组"><a href="#多维数组" class="headerlink" title="多维数组"></a>多维数组</h3><p>C++语言中没有多维数组，我们所说的多维数组实际上是数组的数组。<br>在范围for中，如果是多维数组，在每一层最好使用引用的方式来遍历每个元素，以避免数组被自动转化成指针，除了最后一层。<br>因为多维数组实际上是数组的数组，所以由多维数组名转化而来的指针是指向第一个内层数组的指针。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int *ip[4];  //整数指针的数组</span><br><span class="line">int (*ip)[4]; //指向含有4个整数的数组的指针</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/12/C-学习笔记第三章-字符串、向量和数组/" data-id="cjkqy7l3l000aocv74lnlabik" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/12/C-学习笔记第三章-字符串、向量和数组/" data-id="cjksak57t0002o4v7ucasyibg" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -124,6 +198,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/08/13/C-学习笔记第四章章-表达式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          C++学习笔记第四章章_表达式
+        
+      </div>
+    </a>
   
   
     <a href="/2018/08/11/C-学习笔记第二章/" id="article-nav-older" class="article-nav-link-wrap">
@@ -214,7 +297,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>19</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>20</strong><br>文章</div></a>
       <a href="/categories"><div><strong>19</strong><br>分类</div></a>
       <a href="/tags"><div><strong>20</strong><br>标签</div></a>
     </div>
