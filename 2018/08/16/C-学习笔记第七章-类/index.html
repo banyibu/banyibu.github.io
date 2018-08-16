@@ -5,18 +5,18 @@
   
   <title>C++学习笔记第七章_类 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概述类的基本思想是数据抽象和封装。 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。对待类，编译器会分两步处理，首先">
+  <meta name="description" content="概述类的基本思想是数据抽象和封装。构造函数、静态成员、友元、字面值类类型、类的作用域等 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只">
 <meta name="keywords" content="计算机语言,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++学习笔记第七章_类">
 <meta property="og:url" content="http://banyibu.com/2018/08/16/C-学习笔记第七章-类/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="概述类的基本思想是数据抽象和封装。 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。对待类，编译器会分两步处理，首先">
+<meta property="og:description" content="概述类的基本思想是数据抽象和封装。构造函数、静态成员、友元、字面值类类型、类的作用域等 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-16T14:35:27.620Z">
+<meta property="og:updated_time" content="2018-08-16T14:37:08.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++学习笔记第七章_类">
-<meta name="twitter:description" content="概述类的基本思想是数据抽象和封装。 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。对待类，编译器会分两步处理，首先">
+<meta name="twitter:description" content="概述类的基本思想是数据抽象和封装。构造函数、静态成员、友元、字面值类类型、类的作用域等 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -113,7 +113,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>类的基本思想是数据抽象和封装。</p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>类的基本思想是数据抽象和封装。构造函数、静态成员、友元、字面值类类型、类的作用域等</p>
 <h3 id="定义抽象数据类型"><a href="#定义抽象数据类型" class="headerlink" title="定义抽象数据类型"></a>定义抽象数据类型</h3><p>数据抽象依赖于接口和实现分离的编程技术。<br>定义在类内部的函数时隐式的inline函数。<br>this总是指向当前调用它的对象，所以this是一个常量指针。<br>常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。<br>注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。<br>对待类，编译器会分两步处理，首先编译成员的申明，然后再到成员函数体。由此成员函数体可以任意的使用类中的这些其他成员而无需在意其出现的次序。<br>成员函数可以返回this指针。<br><strong>构造函数</strong><br>构造函数不能被申明为const的。构造函数在const对象的构造过程中可以向其写值。<br>默认构造函数<br>合成默认构造函数初始化规则：<br>1）如果存在类内初始值，用它来初始化成员；<br>2）否则，默认初始化该成员。<br>一般我们需要定义自己的默认构造函数。一旦我们定义了其他构造函数，编译器将不再会为我们自动生成默认构造函数。<br>如果类包含有内置类型或复合类型的成员，则只有当这些成员都被赋予类内初始值时，这个类才适合使用默认构造函数。<br>类内含有类类型成员，若该类类型成员没有默认构造函数，则编译器不会为该类提供默认构造函数。<br>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct Sales_data&#123;</span><br><span class="line">	Sales_data()=default; //默认构造函数</span><br><span class="line">	Sales_data(const std::string &amp;s): bookNo(s)&#123;&#125; //构造函数初始值列表，被忽略的数据成员以默认构造函数的构造方式初始化</span><br><span class="line">	Sales_data(const std::string &amp;s, unsigned n, double p):bookNo(s), units_sold(n),revenue(p*n)&#123;&#125;</span><br><span class="line">	Sales_data(std::istream &amp;);</span><br><span class="line">	……</span><br><span class="line">&#125;;</span><br><span class="line">Sales_data::Sales_data(std::istream &amp;is)&#123;</span><br><span class="line">	read(is, *this); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>拷贝、赋值和析构</strong><br>如果我们不定义这些操作，编译器将生成的版本将对对象的每个成员执行拷贝、赋值和销毁操作。<br>某些类不能依赖于合成的版本，特别是当这些类需要分配类对象之外的资源时。</p>
 <h3 id="访问控制与封装"><a href="#访问控制与封装" class="headerlink" title="访问控制与封装"></a>访问控制与封装</h3><p>访问说明符：public之后的成员在整个程序内可以被访问，其用来定义类的接口。<br>private之后的成员可以被类的成员函数访问，但不能被使用该类的代码使用。<br>class和struct关键字的默认访问权限不一样。<br><strong>友元</strong><br>类允许使用其他类或非成员函数访问他们的私有成员，方法是令其他类或者函数成为他们的友元。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Sales_data&#123;</span><br><span class="line">	friend Sales_data add(const Sales_data &amp;, const Sales_data &amp;); //友元函数的声明</span><br><span class="line">&#125;;</span><br><span class="line">Sales_data add(const Sales_data &amp;, const Sales_data &amp;); //非成员接口函数声明</span><br></pre></td></tr></table></figure></p>
