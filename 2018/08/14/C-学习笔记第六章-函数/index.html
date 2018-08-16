@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第六章_函数 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述函数基础知识、参数传递、返回类型和return语句、函数重载、函数指针和一些具有特殊用途的语言特性。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第六章_函数">
+<meta property="og:url" content="http://banyibu.com/2018/08/14/C-学习笔记第六章-函数/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述函数基础知识、参数传递、返回类型和return语句、函数重载、函数指针和一些具有特殊用途的语言特性。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-16T02:58:05.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第六章_函数">
+<meta name="twitter:description" content="概述函数基础知识、参数传递、返回类型和return语句、函数重载、函数指针和一些具有特殊用途的语言特性。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>22</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第六章-函数" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/14/C-学习笔记第六章-函数/" class="article-date">
+  <time class="post-time" datetime="2018-08-14T13:38:10.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">14</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第六章_函数
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>函数基础知识、参数传递、返回类型和return语句、函数重载、函数指针和一些具有特殊用途的语言特性。<br><a id="more"></a></p>
+<h3 id="函数基础"><a href="#函数基础" class="headerlink" title="函数基础"></a>函数基础</h3><p>函数组成：返回值类型、函数名字、形参、函数体<br>调用运算符’()’，其作用于函数或指向函数的指针。<br>函数调用完成的两项工作：<br>1）用实参初始化函数对应的形参；<br>2）将控制权转交给被调函数。<br>return语句完成的两项工作：<br>1）返回return语句中的值；<br>2）将控制权转交给主调函数。<br>空形参列表定义和形参定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void f1()&#123;&#125;</span><br><span class="line">void f2(void)&#123;&#125;</span><br><span class="line"></span><br><span class="line">int f3(int v1, v2)&#123;&#125; //错误</span><br><span class="line">int f4(int v1, int v2)&#123;&#125; //正确</span><br></pre></td></tr></table></figure></p>
+<p>注意：任意两个形参都不能同名，函数最外层作用域中的局部变量也不能使用与形参一样的名字。<br>函数的返回类型，不能是数组类型或函数类型，但是可以是指向数组或函数的指针。<br><strong>局部对象</strong><br>局部对象：自动对象、局部静态对象<br>如果局部静态变量没有显示的初始值，它将进行值初始化。<br><strong>函数申明</strong><br>函数只能定义一次，但是可以申明多次。<br>函数申明也称为函数原型，包括返回类型、函数名、形参类型。<br>注意：函数和变量应该在头文件中申明，在源文件中定义，含有函数申明的头文件应该被包含到定义函数的源文件中。<br><strong>分离式编译</strong><br>分离式编译，允许我们把程序分割到几个文件中去，每个文件独立编译。<br>假设fact函数位于fact.cc文件中，factMain.cc中创建了main函数，main函数调用fact函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ CC -c factMain.cc # generates factMain.o</span><br><span class="line">$ CC -c fact.cc # generates fact.o</span><br><span class="line">$ CC factMain.o fact.o # generates factMain.exe or a.out</span><br><span class="line">$ CC factMain.o fact.o -o main # generates main or mian.exe</span><br></pre></td></tr></table></figure></p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p>形参初始化的机理和变量初始化一样的。<br>引用传递、值传递<br>注意：指针形参也是值传递。<br>大的类类型或容器对象使用拷贝效率较低，有些类类型不支持拷贝。所以，最好使用引用传值，其中当不需要修改引用形参的值时最好使用常量引用。<br>当用参数初始化形参时，会忽略掉形参顶层const，即传递给它常量或非常量都是可以的。<br>C++允许用字面值初始化常量引用。<br>尽量使用常量引用作为函数形参：1.增加函数形参所能接受的实参类型（常量或非常量）；2.避免函数调用者的误解，即可以修改实参的值。<br><strong>数组形参</strong><br>数组的两个特殊属性：1.不允许拷贝数组；2.使用数组时通常会将其转化为指针。<br>我们传递给函数的实际上是指向数组首元素的指针，数组的大小对函数的调用没有影响。<br>数组参数传入需要一些额外的信息：使用标记指定数组长度、使用标准库规范（传入首尾指针）、显示传入一个表示数组大小的形参。<br>形参也可以使数组的引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f(int &amp;arr[10]) //错误：将arr申明成了应用的数组</span><br><span class="line">f(int (&amp;arr)[10]) //正确：arr具有10个整数的整型数组的引用</span><br></pre></td></tr></table></figure></p>
+<p><strong>传递多维数组</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void print(int (*matrix)[10], int rowSize)&#123;&#125;</span><br><span class="line">void print(int matrix[][10], int rowSize)&#123;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>main: 处理命令行选项</strong><br>假定main函数在可执行文件prog中，我们可以向程序传递下面选项： prog -d -o ofile data0<br>int main(int argc, char <em> argv[]){} 其中，argv是指向char指针的数组，argc代表数组中字符串的数量，也可以定义为：int main(int argc, char <strong>argv){}<br>则，如上命令行提供的的参数为：argv[0]=”prog”、argv[1]=”-d”…… 注意argv[0]是空或可执行程序名。
+</strong>含有可变形的函数<strong><br>处理不同数量实参的函数，若所有实参类型相同，可以传递一个名为initializer_list的标准库类型。其定义在同名头文件中。<br>initializer_list提供的操作有：initializer_list<t> lst、initializer_list<t> lst{a,b,c……}、lst2(list)、list2=list、lst.size()、list.begin()、list.end()<br>initializer_list中的对象永远是常量值。P198
+</t></t></strong>省略符形参**<br>为了便于C++程序访问某些特殊的C代码而设置的。省略符应该仅仅用于C和C++通用的类型。
+</em>具体带补充*</p>
+<h3 id="返回类型和return语句"><a href="#返回类型和return语句" class="headerlink" title="返回类型和return语句"></a>返回类型和return语句</h3><p>无返回值类型：返回类型为void的函数，其可以使用’return;’语句提前退出函数，也可以返回返回类型为void的函数。<br><strong>有返回值的函数</strong><br>在含有return语句的循环后面，应该也有一条return语句。<br>值的返回方式：和初始化一个变量一样，返回的值用于初始化调用点的一个临时量，该临时量就是函数调用的结果。<br>返回对象的引用时，不会拷贝相应的对象，但是注意，不要返回局部对象的引用或指针。<br>调用运算符的优先级与点运算符和箭头运算符相同，并且也符合左结合律。调用一个返回值是引用的函数会得到左值，其他类型得到右值。<br>列表初始化返回值：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;string&gt; process()&#123;</span><br><span class="line">	if(……)</span><br><span class="line">		return &#123;&#125;;</span><br><span class="line">	else </span><br><span class="line">		return &#123;&quot;function&quot;,&quot;okey&quot;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果返回的是内置类型，则花括号包围的列表最多包含一个值，而且其所占的空间不应大于目标类型的空间。<br><strong>主函数main的返回值</strong><br>main函数返回类型不是void的时，也可以没有return语句。这是编译器会隐式的添加一个。<br>main返回的值为0表示执行成功，返回其他值与机器有关。<br>cstdlib中定义了两个预处理变量，其返回值与机器无关：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">	if(……)</span><br><span class="line">		return EXIT_FAILURE;</span><br><span class="line">	else</span><br><span class="line">		return EXIT_SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>递归<br><strong>返回数组指针</strong><br>1）使用类型别名：typedef int arrT[10];/using arrT=int[10]; arrT<em> func(int i);<br>2)申明一个返回数组指针的函数： Type (</em>function(parameter_list)) [dimension]   例子：int (*func(int i))[10]<br>3)<strong>尾置返回类型</strong><br>尾置返回类型适合返回类型比较复杂的情况。<br>auto func(int i)-&gt; int(*)[10];<br>4)如果知道返回的指针指向哪个数组，则可以使用decltype：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int odd[]=……；</span><br><span class="line">decltype(odd) *arrPtr(int i)&#123;</span><br><span class="line">	return &amp;odd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="函数重载"><a href="#函数重载" class="headerlink" title="函数重载"></a>函数重载</h3><p>重载函数中，不允许除了返回类型外，其他要素都相同。<br>顶层const不影响传入函数的对象。一个拥有顶层const的形参无法和另一个没有顶层const的形参区分开来。相应的，底层const可以重载。<br>const_cast在重载中非常有用。<br>调用重载的函数：最佳匹配、无匹配、二义性调用。<br><strong>重载与作用域</strong><br>在C++中，名字查找发生在类型检查之前。<br>局部作用于的名字会隐藏掉外层作用域的名字（无论是函数名还是变量名）。</p>
+<h3 id="特殊用途语言特性"><a href="#特殊用途语言特性" class="headerlink" title="特殊用途语言特性"></a>特殊用途语言特性</h3><p>默认参数、内联函数、constexpr函数<br>1）默认参数：一旦函数的某个形参是默认值，那么它后面的所有形参都必须有默认值。<br>在给定的作用域中一个形参只能被赋予一次默认实参。也就是，函数的后续申明只能为之前没有默认值的形参添加默认值而不能修改已经设置过默认值的形参。<br>局部变量不能作为默认实参。<br>2）内联函数：可以避免函数调用的开销，内联函数会在它的每个调用点上“内联的”展开。在函数返回类型前面加上inline,就可以将它申明为内联函数了。<br>注意，内联函数未必会实现期待的内联形式，有可能会被编译器忽略。<br>3）contexpr函数：是指能够用于常量表达式的函数。<br>定义contexpr函数时：函数的返回值和形参的类型都必须是字面值类型，而且函数体中必须有且仅有一条return语句。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">constecpr int new_sz()&#123;return 42;&#125;</span><br><span class="line">constecpr int foo = new_sz(); //正确：foo是一个常量表达式</span><br></pre></td></tr></table></figure></p>
+<p>contexpr函数在被调用时，被隐式的指定为内联函数。contexpr函数体内也可以包含其他不执行任何操作的语句。<br>contexpr函数不一定返回常量表达式，此时若在需要常量表达式的地方使用该函数，编译器将报错。<br>内联函数和contexpr函数可以多次定义，但是所有定义都必须一样，因此，通常将其定义在头文件中。<br><strong>调试帮助</strong><br>assert预处理宏和NDEBUG</p>
+<ol>
+<li>assert(expr); 对expr求值，若为假，则输出信息并终止程序执行，若为真，什么也不做。<br>其定义在cassert头文件中。预处理名字可以不用加命名空间或using申明而直接使用。和预处理变量一样，宏名字在程序内必须唯一。</li>
+<li>NDEBUG预处理变量：assert行为依赖于NDEBUG预处理变量的状态。如果定义了NDEBUG，则assert什么都不做，默认其是没有定义的，此时assert运行检查。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ CC -D NDEBUG main.C 这条作用的命令等价于在main.c文件的一开始写# define NDEBUG</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>assert 仅用于验证那些确实不可能发生的事情。将其当做调试程序的一种辅助手段。</p>
+<ol start="3">
+<li>除了使用assert，也可以使用NDEBUG编写自己的条件调试代码。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void print(const int ia[], size_t size)&#123;</span><br><span class="line">	#ifndef NDEBUG</span><br><span class="line">		cerr&lt;&lt;_ _func_ _&lt;&lt;&quot;:array size is&quot;&lt;&lt;size&lt;&lt;endl;</span><br><span class="line">	#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>其中_ <em>func</em> <em>是编译器定义的一个局部静态变量，用于存放函数的名字<br>除此之外还有：<br>\</em> _FILE_ _ 存放文件名的字符串字面值<br>_ _LINE_ _ 存放当前行号的整型字面值<br>_ _TIME_ _ 存放文件编译时间的字符串字面值<br>_ _DATE_ _ 存放文件编译日期的字符串字面值<br>使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(word.size()&lt;threshold)</span><br><span class="line">	cerr&lt;&lt;&quot;Error:&quot;&lt;&lt;_ _FILE_ _&lt;&lt;&quot;: in function &quot;&lt;&lt;_ _func_ _&lt;&lt;&quot; at line &quot;&lt;&lt;_ _LINE_ _&lt;&lt;endl</span><br><span class="line">	    &lt;&lt;&quot; Compiled on &quot;&lt;&lt;_ _DATE_ _&lt;&lt;&quot; at &quot;&lt;&lt;_ _TIME_ _&lt;&lt;endl</span><br><span class="line">		&lt;&lt;&quot;\&quot;Length too short&quot;&lt;&lt;endl;</span><br></pre></td></tr></table></figure></p>
+<h3 id="函数匹配"><a href="#函数匹配" class="headerlink" title="函数匹配"></a>函数匹配</h3><p>确定候选函数和可行函数、寻找最佳匹配。<br>调用函数时应该尽量避免强制类型转换。<br><strong>实参类型转换</strong><br>编译器将实参类型到形参类型的转换分为了几个等级：</p>
+<ol>
+<li>精确匹配：包括<br> 实参类型和形参类型相同；<br> 实参从数字类型或函数类型转换为对应的指针类型；<br> 向实参添加顶层const或从实参中删除顶层const；</li>
+<li>通过const转换实现的匹配；</li>
+<li>通过类型提升实现的匹配；</li>
+<li>通过算数类型转换或指针转换实现匹配；</li>
+<li>通过类类型转化实现的匹配。<h3 id="函数指针"><a href="#函数指针" class="headerlink" title="函数指针"></a>函数指针</h3>函数的类型由它的返回值类型和形参共同决定，与函数名无关。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//定义：</span><br><span class="line">bool (*pf)(const string &amp;,  const string &amp;)； //未初始化的函数指针。*pf两段的括号必不可少。</span><br><span class="line">//赋值</span><br><span class="line">pf=0；</span><br><span class="line">pf=nullptr；</span><br><span class="line">pf=LengthCompare; //假设LengthCompare是一个函数，此时函数名自动转变为函数指针</span><br><span class="line">pf=&amp;LengthCompare; //等价的赋值方式</span><br><span class="line">//调用</span><br><span class="line">bool b1=pf(&quot;hello&quot;,&quot;goodbaye&quot;);</span><br><span class="line">bool b2=(*pf)(&quot;hello&quot;,&quot;googbaye&quot;); //等价调用</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>重载函数的指针</strong><br>如果定义了指向重载函数的指针，编译器通过指针类型决定选择哪个函数，指针类型不许与重载函数中的某一类型精确匹配。<br><strong>函数指针形参</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void useBigger(const string &amp;s1, const string &amp;s2, bool pf(const string&amp;,const string&amp;));</span><br><span class="line">void useBigger(const string &amp;s1, const string &amp;s2, bool (*pf)(const string&amp;, const string&amp;));</span><br></pre></td></tr></table></figure></p>
+<p>如上，在调用函数useBigger时，可以直接将另一个函数名当做实参传递给该函数。<br>可以使用类型别名和decltype简化函数指针相关的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">typedef bool Func(const string&amp;, const string&amp;);</span><br><span class="line">typedef decltype(lengthCompare) Func2; //等价类型Func和Func2都是函数类型</span><br><span class="line"></span><br><span class="line">typedef bool (*FuncP)(const string&amp;, const string&amp;);</span><br><span class="line">typedef decltype(lengthCompare) *FuncP2; //等价定义，FuncP和FuncP2都是函数指针类型</span><br></pre></td></tr></table></figure></p>
+<p><strong>返回指向函数的指针</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">using F=int(int*,int); //F是函数类型</span><br><span class="line">using PF=int(*)(int*,int); //PF是函数指针类型</span><br><span class="line"></span><br><span class="line">PF f1(int); //正确</span><br><span class="line">F f1(int); //错误</span><br><span class="line">F* f1(int); //正确</span><br><span class="line">int (*f1(int))(int*,int);</span><br><span class="line">auto f1(int)-&gt;int (*)(int*, int);</span><br></pre></td></tr></table></figure></p>
+<p>注意，函数返回值类型，不会自动将函数类型转换为指针。<br><strong>将auto和decltype用于函数指针类型</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string::size_type sumLength(const string&amp;, const string&amp;);</span><br><span class="line">string::size_type largerLength(const string&amp;, const string&amp;);</span><br><span class="line"></span><br><span class="line">decltype(sumLength) *getFcn(const string&amp;);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/14/C-学习笔记第六章-函数/" data-id="cjkv9rcli000be0v79jakakqx" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/14/C-学习笔记第五章-语句/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第五章_语句</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>22</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
