@@ -3,15 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>致良知，事上练</title>
+  <title>C++学习笔记第七章_类 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="致良知，事上练">
-<meta property="og:url" content="http://banyibu.com/index.html">
+  <meta name="description" content="概述类的基本思想是数据抽象和封装。 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。对待类，编译器会分两步处理，首先">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第七章_类">
+<meta property="og:url" content="http://banyibu.com/2018/08/16/C-学习笔记第七章-类/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述类的基本思想是数据抽象和封装。 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。对待类，编译器会分两步处理，首先">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-16T14:35:27.620Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="致良知，事上练">
+<meta name="twitter:title" content="C++学习笔记第七章_类">
+<meta name="twitter:description" content="概述类的基本思想是数据抽象和封装。 定义抽象数据类型数据抽象依赖于接口和实现分离的编程技术。定义在类内部的函数时隐式的inline函数。this总是指向当前调用它的对象，所以this是一个常量指针。常量成员函数就是在函数形参列表之后加const关键字。这样，在这个函数中的常量指针this将指向一个常量对象。注意：常量对象、常量对象的引用或指针都只能调用常量成员函数。对待类，编译器会分两步处理，首先">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -72,9 +77,7 @@
   </div>
 </div>
 
-        <section id="main">
-  
-    <article id="post-C-学习笔记第七章-类" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-C-学习笔记第七章-类" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/08/16/C-学习笔记第七章-类/" class="article-date">
   <time class="post-time" datetime="2018-08-16T03:01:19.000Z" itemprop="datePublished">
@@ -90,8 +93,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/16/C-学习笔记第七章-类/">C++学习笔记第七章_类</a>
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第七章_类
     </h1>
   
 
@@ -134,69 +137,17 @@
     </footer>
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C-学习笔记第六章-函数" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/14/C-学习笔记第六章-函数/" class="article-date">
-  <time class="post-time" datetime="2018-08-14T13:38:10.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">14</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
     
-    
-      <header class="article-header">
-        
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/14/C-学习笔记第六章-函数/">C++学习笔记第六章_函数</a>
-    </h1>
   
+    <a href="/2018/08/14/C-学习笔记第六章-函数/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第六章_函数</div>
+    </a>
+  
+</nav>
 
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>函数基础知识、参数传递、返回类型和return语句、函数重载、函数指针和一些具有特殊用途的语言特性。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/14/C-学习笔记第六章-函数/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/14/C-学习笔记第六章-函数/" data-id="cjkwo35gj000ds4v7wv17gkmq" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
 
@@ -205,527 +156,32 @@
 
 
 
-
-
-
-  
-    <article id="post-C-学习笔记第五章-语句" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/14/C-学习笔记第五章-语句/" class="article-date">
-  <time class="post-time" datetime="2018-08-14T08:41:04.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">14</span>
-  </time>
-</a>
-   
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
   </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/14/C-学习笔记第五章-语句/">C++学习笔记第五章_语句</a>
-    </h1>
-  
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
 
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
 
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>简单的语句、迭代、条件、跳转、异常处理等语句。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/14/C-学习笔记第五章-语句/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/14/C-学习笔记第五章-语句/" data-id="cjkwo35ge0008s4v7c4oq0cdt" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C-学习笔记第四章章-表达式" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/13/C-学习笔记第四章章-表达式/" class="article-date">
-  <time class="post-time" datetime="2018-08-13T13:03:56.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">13</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/13/C-学习笔记第四章章-表达式/">C++学习笔记第四章章_表达式</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>表达式的基础内容、各种运算符及类型转化相关问题。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/13/C-学习笔记第四章章-表达式/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/13/C-学习笔记第四章章-表达式/" data-id="cjkwo35gr000os4v7w47turya" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C-学习笔记第三章-字符串、向量和数组" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/12/C-学习笔记第三章-字符串、向量和数组/" class="article-date">
-  <time class="post-time" datetime="2018-08-12T14:31:55.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">12</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/12/C-学习笔记第三章-字符串、向量和数组/">C++学习笔记第三章_字符串、向量和数组</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>命名空间using申明、标准库类型string、标准库类型vector、迭代器、数组及多维数组、C风格字符串……<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/12/C-学习笔记第三章-字符串、向量和数组/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/12/C-学习笔记第三章-字符串、向量和数组/" data-id="cjkwo35gb0006s4v71nei7toh" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C-学习笔记第二章" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/11/C-学习笔记第二章/" class="article-date">
-  <time class="post-time" datetime="2018-08-11T14:15:41.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">11</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/11/C-学习笔记第二章/">C++学习笔记第二章_变量和基本类型</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>算数类型、字面值常量和字面值类型、转移序列、指定字面值类型、变量的初始化和赋值、变量的申明和定义、标识符、复合类型……<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/11/C-学习笔记第二章/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/11/C-学习笔记第二章/" data-id="cjkwo35gf000as4v7m1z422ek" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C-学习笔记第一章" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/09/C-学习笔记第一章/" class="article-date">
-  <time class="post-time" datetime="2018-08-09T12:58:54.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">09</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/09/C-学习笔记第一章/">C++学习笔记第一章_开始</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/09/C-学习笔记第一章/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/09/C-学习笔记第一章/" data-id="cjkwo35g10000s4v73doja26a" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-区块链分叉问题" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/06/区块链分叉问题/" class="article-date">
-  <time class="post-time" datetime="2018-08-06T03:40:44.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">06</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/06/区块链分叉问题/">区块链分叉问题</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/区块链/">区块链</a>,<a class="article-category-link" href="/categories/区块链/核心技术/">核心技术</a>,<a class="article-category-link" href="/categories/区块链/核心技术/分叉问题/">分叉问题</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>区块链网络中，因为时延等问题，对产生新区块存在竞争，所以整个网络存在分叉是非常自然的事情，最终都会确定一条最长的合法主链。<br>而这里讨论的分叉主要是指，因区块链协议的改变而导致的分叉。区块链协议的修改有可能导致，不同区块链网络节点会遵守不同的区块链协议，这时，就可能产生分叉，导致区块链网络中不止一条看起来合法的主链了。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/06/区块链分叉问题/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/06/区块链分叉问题/" data-id="cjkwo35h4001bs4v7v3j99bs7" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分叉/">分叉</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-SPV验证" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/06/SPV验证/" class="article-date">
-  <time class="post-time" datetime="2018-08-06T03:17:09.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">06</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/06/SPV验证/">SPV验证</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/区块链/">区块链</a>,<a class="article-category-link" href="/categories/区块链/进阶技术/">进阶技术</a>,<a class="article-category-link" href="/categories/区块链/进阶技术/SPV验证/">SPV验证</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>简单支付验证(Simplified Payment Verification,SPV)，能够用较小的代价，来判断某个交易是否已经被区块链网络验证通过（包含到区块链中），以及其得到的算力确认的次数（包含该交易的区块之后链接的区块链的数量）。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/06/SPV验证/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/06/SPV验证/" data-id="cjkwo35gl000es4v7papscbeh" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SPV验证/">SPV验证</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-侧链技术" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/06/侧链技术/" class="article-date">
-  <time class="post-time" datetime="2018-08-06T02:56:07.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">06</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/06/侧链技术/">侧链技术</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/区块链/">区块链</a>,<a class="article-category-link" href="/categories/区块链/进阶技术/">进阶技术</a>,<a class="article-category-link" href="/categories/区块链/进阶技术/侧链技术/">侧链技术</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h2><p>侧链技术最初是为了实现比特币网络中的比特币可以安全而自由的流向其他区块链网络的一种技术。后期发展为，任意区块链之间的代币等数字资产或证明可以相互自由流动的一种技术。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/06/侧链技术/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/06/侧链技术/" data-id="cjkwo35gv000us4v7jyqr5el4" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/侧链/">侧链</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/区块链/">区块链</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-
-
-  <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">next &raquo;</a>
-  </nav>
 </section>
         
           <aside id="sidebar">
