@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第一部分基础，1-7章总结 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述大多数编程语言会通过两种方式补充其基本特征：1. 赋予程序员自定义数据类型的权利；2. 将一些有用的功能封装成库函数提供给程序员。C++是一种静态数据类型语言。这里对C++primer 1-7章的内容复习总结。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第一部分基础，1-7章总结">
+<meta property="og:url" content="http://banyibu.com/2018/08/17/C-学习笔记第一部分基础，1-7章总结/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述大多数编程语言会通过两种方式补充其基本特征：1. 赋予程序员自定义数据类型的权利；2. 将一些有用的功能封装成库函数提供给程序员。C++是一种静态数据类型语言。这里对C++primer 1-7章的内容复习总结。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-f0b7ad3942a272c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-e89cd44ac757cc08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-0748ff87614293e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-18T09:56:11.658Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第一部分基础，1-7章总结">
+<meta name="twitter:description" content="概述大多数编程语言会通过两种方式补充其基本特征：1. 赋予程序员自定义数据类型的权利；2. 将一些有用的功能封装成库函数提供给程序员。C++是一种静态数据类型语言。这里对C++primer 1-7章的内容复习总结。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-f0b7ad3942a272c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>24</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第一部分基础，1-7章总结" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/17/C-学习笔记第一部分基础，1-7章总结/" class="article-date">
+  <time class="post-time" datetime="2018-08-17T01:31:48.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">17</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第一部分基础，1-7章总结
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>大多数编程语言会通过两种方式补充其基本特征：1. 赋予程序员自定义数据类型的权利；2. 将一些有用的功能封装成库函数提供给程序员。<br>C++是一种静态数据类型语言。这里对C++primer 1-7章的内容复习总结。<br><a id="more"></a></p>
+<h3 id="第一章，开始"><a href="#第一章，开始" class="headerlink" title="第一章，开始"></a>第一章，开始</h3><p>在命令行执行完一个程序后，可以通过echo命令获得返回值，即main函数的返回值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//UNIX中</span><br><span class="line">$ echo $?</span><br><span class="line">//win中</span><br><span class="line">$ echo %ERRORLEVEL%</span><br></pre></td></tr></table></figure></p>
+<p><strong>输入输出</strong><br>C++用iostream标准库提供IO机制。<br>cin、cout、cerr、clog<br>缓冲区刷新，将缓冲区中的内容刷到设备中。保证程序产生的数据真正写入输出流中，而不是仅停留在内存中等待写入。<br>从键盘输入文件结束标记：win：Ctrl+D-&gt;Enter/Return；UNIX：Ctrl+D；<br>文件重定向：$ addItems &lt;\infile &gt;outfile<br>cerr通常写入到与标准输出相同的设备。默认情况下，写入到cerr的程序是不缓冲的。<br>操纵符：在读写流对象时操纵流本身。<br>标准输出、标准错误、标准输入通常关联到程序执行所在的窗口。</p>
+<h3 id="第二章，变量和基本类型"><a href="#第二章，变量和基本类型" class="headerlink" title="第二章，变量和基本类型"></a>第二章，变量和基本类型</h3><p><strong>基本内置类型</strong><br>算数类型和空类型<br>char和signed char、unsigned char不一样，具体char表现为带符号还是无符号由编译器决定。<br>不要在表达式中混用带符号类型和无符号类型。这样带符号类型会自动转换为无符号类型，可能产生错误。<br>整型字面值类型：十进制字面值带符号，是int、long、longlong中能存储其的最小类型。八进制和十六进制是：int、unsigned int、long、unsigned long、long long、unsigned long long中最小的类型。<br>浮点数字面值默认是double类型。<br>字符串字面值是常量字符构成的数组。如果字符串字面值位置相邻，且仅由空格、缩进和换行符分隔，则它们是一个整体。<br>转义序列：\后跟不多于三个八进制数字，或\x后跟一个或多个十六进制数。若所跟十六进制数过多，则一般由一些表示扩展字符，需要加前缀。<br><img src="https://upload-images.jianshu.io/upload_images/12985001-f0b7ad3942a272c5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="字符串和字符串字面值前缀和后缀："><br>布尔型字面值：true、false<br><strong>变量</strong><br>对象是指能一块能存储数据并具有某种类型的内存空间。<br>初始化和赋值是两个完全不同的操作。<br>初始化方式中，列表初始化若存在丢失信息的风险，则编译器会报错。<br>如果只要申明一个变量，则在变量名前加extern，如extern int i；若为其赋初值，则会抵消关键字extern的作用。<br>标识符：字母、数字下划线组成，大小写敏感。用户自定义标识符中不能有连续的两个下划线，也不能以下划线加大写字母开头。<br><strong>复合类型</strong><br>基于其他基本类型定义的类型：引用、指针<br>引用即别名，且引用只能绑定到对象上，其类型需要与绑定对象严格匹配。<br>预处理器是运行于编译过程之前的一段程序。预处理变量不属于命名空间。<br>void<em> 指针、指向指针的指针、指向指针的引用。<br><strong>const限定符</strong><br>对变量的限制，const变量，需要最迟在运行时进行初始化。<br>const变量默认只在文件内有效，若多个文件想共同使用，则需要在多个文件分别定义。<br>在const变量前，无论定义或申明都添加extern，这样只需定义一次。<br>const引用，对常量的引用，初始化常量引用时，允许用任意表达式作为初始值，只要该表达式可以转换成引用的类型。<br>常量表达式是指值不会改变并且在编译过程中就可以得到计算结果的表达式。申明为constexpr类型的变量必须是一个常量，而且必须用常量表达式进行初始化。<br>常量表达式函数。<br>常量指针，初始值只能是0，nullptr，或指向存储与固定地址中的对象。定义于所有函数体之外的对象地址固定，可以用来初始化constexpr指针。<br><strong>处理类型</strong><br>类型别名：typedef double base，</em>p; / using SI=Sales_item;<br>auto类型说明符：auto一般会忽略顶层const而保留底层const，对引用会获得引用对象的类型。我们可以明确指出需要顶层const，也可以添加&amp;获得引用类型。<br>decltype类型指示符：若给定一个变量decltype会返回变量的类型，包括其顶层const和引用在内。若给定表达式，表达式计算结果是一个左值，则返回对应引用类型，否则返回右值的类型。<br>decltype对多加括号的变量，会将其与括号当做表达式求值，从而返回一个引用。<br><strong>自定义数据结构</strong><br>类定义的最后加’;’ C++11标准中可以为数据成员提供一个类内初始值。<br>预处理器：编译之前执行的一段程序：#include #define #ifndef #ifdef #endif<br>预处理变量无视C++中，关于作用域的规则。</p>
+<h3 id="第三章，字符串、向量和数组"><a href="#第三章，字符串、向量和数组" class="headerlink" title="第三章，字符串、向量和数组"></a>第三章，字符串、向量和数组</h3><p>数组的实现与硬件密切相关。<br><strong>命名空间using声明</strong><br>using namespace::name; 头文件不应该包含using声明，以免使用头文件的文件不经意间引入一些名字。<br><strong>标准库类型string</strong><br>直接初始化和拷贝初始化，使用等号是拷贝初始化，否则是直接初始化。<br>支持的部分操作：getline(is,s)  s.empty() s.size()<br>读入string对象时，会自动忽略开头的空表字符。<br>string::size_type类型，其是一个无符号整型类型，与机器无关，足够表示string对象的大小。<br>string相加时，要保证每个加号两侧必须要有一个string对象。<br>注意，C++中字符串字面值是C风格字符串。<br>处理string中单个字符的函数：定义在cctype中<br><img src="https://upload-images.jianshu.io/upload_images/12985001-e89cd44ac757cc08.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="处理单个字符的函数"><br>注意范围for处理字符串时，变量定义为引用或非引用的区别。<br><strong>标准库类型vector</strong><br>实例化<br>初始化方式<br>向vector中添加元素push_back(), 不能用下标形式向vector中添加元素<br>范围for语句中不应该改变其所遍历序列的大小。<br>部分vector操作：v.empty()、v.size()、v.push_back(t)<br>vector&lt;\int&gt;::size_type<br><strong>迭代器介绍</strong><br>标准迭代器的运算符*iter iter-&gt;mem ++ – == !=<br>迭代器类型：iterator、const iterator<br>begin() end() cbegin() cend()<br>string和vector支持的其他迭代器运算：iter+n、iter-n、+=、-=、&gt; &gt;= &lt; &lt;=<br>string和vector都定义了类型difference_type，一种带符号整型，表示两个迭代器的距离。<br><strong>数组</strong><br>数组的大小确定不变，不能随意增加元素。<br>数组的纬度需要编译时就已知，所以需要常量。<br>定义数组的时候必须指定数组的类型，不允许使用auto推断。<br>数组不允许拷贝和赋值。<br>数组下标类型通常定义为cstddef中定义的size_t类型，是一种机器相关的无符号类型。<br>使用数组的时候后，编译器一般会把其转换为指针。使用auto推断数组类型时，往往获得的是指针类型，使用decltype时，不会发生这种转换。<br>数组支持的标准库函数：begin、end<br>数组中两个指针相减的类型为ptrdiff_t，其定义在cstddef头文件中与机器相关的类型，是一种带符号整型。<br>内置的下标运算符所用的索引值可以使有符号类型。<br>cstring头文件定义了C风格字符串，其中包括的操作：strlen(p)返回p的长度，不包括空字符；strcmp(p1,p2); strcat(p1,p2); strcpy(p1,p2);<br>C++中，C风格字符串可以轻易的转换为string，但是反过来，只能使用一个名为c_str()的函数将string转换为C风格字符串。c_str()的返回值有效性需要注意。<br>可以使用数组为vector对象赋初值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int int_arr[]=&#123;0,1,2,3,4,5&#125;;</span><br><span class="line">vector&lt;int&gt; ivec(begin(int_arr),end(int_arr));</span><br></pre></td></tr></table></figure></p>
+<p><strong>多维数组</strong><br>C++无多维数组，只有数组的数组。<br>在多维数组中使用范围for，需要将非最内存循环的循环控制变量定义为引用，以避免被转换为指针。<br>复杂类型，可以使用类型别名简化</p>
+<h3 id="第四章，表达式"><a href="#第四章，表达式" class="headerlink" title="第四章，表达式"></a>第四章，表达式</h3><p>表达式由一个或多个运算对象组成。运算符和运算对象结合得到较复杂的表达式。<br><strong>基础</strong><br>优先级、结合律、求值顺序、运算对象转换、重载运算符<br>C++中一个左值求值结果往往是对象或函数。需要右值的地方可以用左值代替，但是需要左值的地方不能用右值代替。<br>只有四种运算规定了求值顺序：逻辑与、逻辑或、条件、逗号。<br><strong>算数运算符</strong><br>算数运算符的运算对象和求值结果都是右值。<br>取余操作，结果的符号位和被取余的数字时相同的。<br><strong>逻辑和关系运算符</strong><br>短路求值<br>if(val == true)，会将布尔常量true转换成1。进行比较运算时除非比较对象时布尔类型，否则不要使用布尔字面值作为运算对象。<br><strong>赋值运算符</strong><br>条件语句中，赋值运算符应该加上括号。<br>复合赋值运算符：+= -= <em>= /= %= &lt;&lt;= &gt;&gt;= &amp;= ^= |=<br>复合赋值语句比同样功能的普通语句少求一次左侧对象的值。<br><strong>递增和递减运算符</strong><br>在一条语句中混用解引用和递增运算符：</em>pbeg++，返回当前值，并将指针pbeg向前移动一个元素。<br><strong>成员访问运算符</strong><br>箭头运算符作用于一个指针类型的运算符对象，结果是一个左值。点运算符作用的对象时左值则返回左值，否则返回右值。<br><strong>条件运算符</strong><br>当条件运算符的两个表达式都是左值，或者能转换成同一种左值类型时，运算的结果是左值；否则运算的结果是右值。<br>条件运算符优先级比较低，所以在长的表达式中，尽量添加括号。<br><strong>位运算符</strong><br>位运算符对该符号数的处理，依赖于机器。在右移运算符中，运算对象是无符号，则插入值为0的二进制位，有符号，则复制符号位或插入值为0的运算，取决于具体环境。<br>移位运算符优先级低于算数运算符，高于关系运算符。<br><strong>sizeof运算符</strong><br>sizeof返回值类型为size_t类型的常量表达式。<br>sizeof中解引用运算符作用于无效指针是一种安全行为。<br>sizeof运算符不会吧数组转换成指针。<br><strong>逗号运算符</strong><br><strong>类型转换</strong><br>算数类型之间的隐式转换设计的尽可能避免损失精度。<br>算数转换：整型提升<br>如果一个运算对象时无符号类型，一个是有符号类型，且其中的无符号类型不小于带符号类型，那么带符号类型会转换为无符号类型。<br>带符号类型大于无符号类型，如果无符号类型的所有值都能存在带符号类型中，则无符号类型转化为带符号类型，否则，带符号转化为无符号类型。<br>数组转换为指针的例外：&amp;，sizeof、typeid<br>0或nullptr转换为任意指针，指针转化为void*或const void* 有继承关系的类、指向非常量指针转化为相应常量指针、类的转换构造函数定义的转换。<br>显示类型转换：static_cast、dynamic_cast、const_cast、reinterpret_cast,其中dynamic_cast支持运行时类型识别。<br>static_cast具有明确定义的类型转化，只要不含底层const，都可以使用。其也可以用于找回void*所指的类型。<br>const_cast只能改变运算对象的底层const。<br>reinterpret_cast提供较低层次上的类型重解释。<br><strong>运算符优先级列表</strong></p>
+<h3 id="第五章，语句"><a href="#第五章，语句" class="headerlink" title="第五章，语句"></a>第五章，语句</h3><p><strong>简单语句</strong><br>表达式语句、空语句、复合语句、空块的作用等价于空语句。<br><strong>语句作用域</strong></p>
+<p><strong>条件语句</strong><br>悬垂else<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">switch(item)&#123;</span><br><span class="line">	case item1:</span><br><span class="line">	     ……;</span><br><span class="line">	case ietm2:</span><br><span class="line">	     ……;</span><br><span class="line">	default:</span><br><span class="line">	     ……;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中，case标签必须是整型常量表达式。<br>switch内部变量的定义：有时候会跳过一些case语句块，所以，在case中定义变量，用花括号括起来，以保证其他case语句不会非法使用。<br><strong>迭代语句</strong><br>定义在while条件部分或while循环体内的变量每次迭代都经历了从创建到销毁的过程。<br>for语句中的循环变量初始化部分可以定义多个变量，但是只能有一条申明语句。<br>do while语句在while之后的条件后以’;’结尾。<br><strong>跳转语句</strong><br>break、continue、goto、return<br>goto语句可以无条件的跳转到函数内的另一条语句。goto向后跳转到变量定义之前是合法的，意味着该变量被消耗并重新定义。<br><strong>try语句块和异常处理</strong><br>throw表达式、catch子句、异常处理代码、异常类。terminate的标准库。<br>若一段程序没有try语句块且发生了异常，系统也会调用terminate函数并终止当前的程序。<br>标准异常：exception头文件定义了最通用的异常类expection。只报告异常的发生，不提供额外信息。<br>new头文件中定义了bad_alloc异常类型。type_info头文件中定义了bad_cast异常类。<br>stdexcept头文件定义了的常见异常类如下：<br><img src="https://upload-images.jianshu.io/upload_images/12985001-0748ff87614293e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="stdexcept中的异常类"><br>我们只能以默认初始化的方式为exception、bad_alloc、bad_cast的对象进行初始化，不允许为其提供初始值。其他异常类恰好相反，都需要提供string对象或C风格字符串作为初始值。<br>异常类只有一个名为what的成员函数，该函数没有参数，返回一个指向C风格字符串的const char* 。对有初始值的异常类型，返回该初始值，没有初始值的返回的内容由编译器决定。</p>
+<h3 id="第六章，函数"><a href="#第六章，函数" class="headerlink" title="第六章，函数"></a>第六章，函数</h3><p><strong>函数基础</strong><br>调用运算符<br>编译器未规定形参的求值顺序。<br>函数的返回类型不可以是数组或函数类型，但是可以返回指向数组的指针和指向函数的指针。<br>局部对象：自动对象、局部静态对象；如果局部静态变量没有显示的初始化，它将进行默认值初始化。<br>函数只能定义一次，但是可以申明多次。函数声明也称作函数原型。<br>变量和函数都应该在头文件中声明在源文件中定义。其中，声明了函数的头文件应该被包含到定义函数的源文件中。<br>分离式编译：把一个程序分割到几个文件中去，每个文件独立编译。<br>其中factMain中包含main函数，fact中的fact函数在factMain中被用到。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ CC factMain.cc fact.cc #generates factMain.exe or a.out</span><br><span class="line">$ CC factMain.cc fact.cc -o main # generates main or main.exe</span><br><span class="line"></span><br><span class="line">$ CC -c factMain.cc # generates factMain.o</span><br><span class="line">$ CC -c fact.cc # generates fact.o</span><br><span class="line">$ CC factMain.o fact.o # generates factMain.exe or a.out</span><br><span class="line">$ CC factMain.o fact.o -o main # generate main or main.exe</span><br></pre></td></tr></table></figure></p>
+<p><strong>参数传递</strong><br>值传递\函数被传值调用、引用传递\函数被传引用调用、指针形参<br>使用引用避免拷贝：拷贝大的类型比较低效，且有些类型不允许拷贝。<br>如果函数无需修改引用形参的值，最好将其声明为常量引用。<br>函数形参会忽略其顶层const。<br>数组形参，一般传入指针、标准库范围、数组引用（引用传递会限制数组的大小，使得形参只能接受指定大小的数组作为实参）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">void print(int (*matrix)[10], int rowSize)&#123;&#125;</span><br><span class="line">void print(int matrix[][10], int rowSize)&#123;&#125; //其中传入的二维数组实际上是指向一个包含十个整型元素的指针。</span><br></pre></td></tr></table></figure></p>
+<p>主函数的参数传递：int main(int argc, char *argv[]){……}<br>对含有可变形参的函数：1. 可变实参类型相同，initializer_list标准库类型；2. 可变实参类型不同，可变参数模版。3. 省略符<br>initializer_list中的元素永远是常量值。<br><strong>返回类型和return语句</strong><br>对void函数的return语句，其表达式要么空，要么返回返回值为void的函数。<br>列表初始化返回值，用花括号包围一组数据，初始化一个返回类型的对象。<br>对于非void的main函数，可以没有return语句，这是执行到main结尾的编译器会隐式的插入return 0；<br>与机器无关的定义在cstdlib头文件中的两个返回值预处理变量：EXIT_FAILURE、EXIT_SUCCESS<br><strong>函数重载</strong><br>顶层const不影响传入函数的对象，拥有一个顶层const的形参无法和另一个没有顶层const的形参区分开。而在指针或引用中的底层const可以区分两个函数。<br>函数匹配也叫重载确定。<br>C++语言中，名字查找发生在类型查找之前。<br><strong>特殊用途语言特性</strong><br>默认实参声明，对于已经申明过的函数，后续声明不能修改已经设定的实参，只能添加没有设置的实参。<br>局部变量不能作为默认实参。<br>内联函数只是向编译器发送一个请求，编译器可以选择忽略这个请求。<br>constexpr函数：用于常量表达式的函数。函数的返回类型和形参类型都必须有且仅有一条return语句。constexpr函数被隐式的指定为内联函数。<br>constexpr函数内也可以有不执行任何操作的语句。如空语句、类型别名、using申明。<br>constexpr函数不一定返回常量表达式。如果返回不是常量表达式，编译器将报错。<br>内联函数和constexpr函数通常定义在头文件中。<br>调试帮助：assert和NDEBUG，assert宏定义在cassert头文件中，其通常用于检查不可能发生的事情。<br><strong>函数匹配</strong><br>候选函数、可行函数、二义性<br><strong>函数指针</strong><br>函数指针类型在函数形参中函数名会自动转换为指针类型，但在返回值类型中，这种转换不会发生。</p>
+<h3 id="第七章，类"><a href="#第七章，类" class="headerlink" title="第七章，类"></a>第七章，类</h3><p>数据抽象和封装<br><strong>定义抽象数据类型</strong><br>定义在类内部的函数时隐式的inline函数。<br>this是一个常量指针，常量成员函数，使得this指针指向的值也为常量对象。<br>常量对象，常量对象的引用和指针都只能调用常量成员函数。<br>构造函数：默认构造函数、构造函数初始值列表<br>拷贝、赋值、销毁<br><strong>访问控制与封装</strong><br>访问说明符：public、private<br>一般最好在类定义开始或结束的位置集中声明友元。友元的声明只是获得访问权限，需在类外再声明一次。<br><strong>类的其他特性</strong><br>类成员：1. 定义别名，用来定义类型的成员必须先定义后使用，因此，类型别名通常出现在类开始的地方。<br>可变数据成员，即无论是否是非常量对象，其都可以被改变。关键字：mutable<br>当我们提供一个类内初始值时，必须以一个等号或花括号表示。<br>一个const成员函数如果以引用的方式返回*this，那么它的返回类型是常量引用。<br>类的前向申明、不完全类型，不完全类型可以定义其引用或指针，也可以当做函数返回值或函数形参类型。<br>友元再探：友元可以使其他的类，也可以是其他类的成员函数。友元关系不具有传递性。<br>函数重载和友元，若要将重载函数申明为友元，则必须挨个声明一次。<br><strong>类的作用域</strong><br>类的定义分两步处理：1. 编译成员的声明；2. 直到类全部可见后才编译函数体。<br>在类中，如果已经使用了某个类型名，则之后不能在重新定义该名字。所以一般类中类型名的声明定义在类开始处。<br>成员函数在类外查找名字，先查找类定义之前的部分，后查找成员函数定义前的部分。<br><strong>构造函数再探</strong><br>成员初始化顺序与其在类中的定义顺序有关。<br>如果一个构造函数为所有参数都提供了默认实参，则它实际上也定义了默认构造函数。<br>委托构造函数：先执行委托构造函数的初始值列表，然后在执行委托函数的函数体，最后将控制权交给委托者的函数体。<br>隐式类类型转换：转换构造函数；一直构造函数定义的隐式类型转换，explicit，注意该关键字只在类内定义时需要，不可在类外定义时要重复，有explicit虽然不能隐式的转换了，但是还可以使用static_cast进行显示的转换。<br>聚合类：所有成员都是public、没有定义任何构造函数、没有类内初始值、没有基类、没有virtual函数。<br>字面值常量类：数据成员都是字面值类型的聚合类是字面值常量类，或者满足以下条件的也是：数据成员都是字面值类型、至少有一个constexpr构造函数、如果一个数据成员含有类内初始值，则内置类型成员的初始值必须是一条常量表达式；或者如果该类型是一种类类型，则其初始值必须使用自己的constexpr构造函数、类必须使用析构函数的默认定义。<br>constexpr构造函数可以定义成=default形式或者是删除形式。否则，既要符合构造函数的要求（不能包含返回值），又要符合constexpr函数的要求（唯一可执行语句就是返回值）。综上，只能为空。<br>constexpr构造函数必须初始化所有数据成员，初始值由constexpr构造函数生成，或是一条常量表达式。<br><strong>类的静态成员</strong><br>static关键字，类的静态成员可以是public或private，静态数据成员可以是常量、引用、指针、类类型等。<br>类的静态成员使用：类名加作用域运算符直接使用、通过对象或指向对象的指针访问、成员函数可以直接使用。<br>类的静态成员可以在类内部定义，也可以在类的外部定义。外部定义时，不能再重复static关键字。必须在类的外部定义和初始化每个静态成员。<br>若静态成员是字面值常量类型的constexpr，则可以在类内提供一个const整数类型的类内初始值。<br>注意类内定义后，若只用于编译器替换它的值的情况，则可以不用在类外再定义。否则，需要类外定义，且不能再指定一个初始值了。<br>把静态数据成员的定义和其他非内联函数的定义放在同一个文件中。<br>静态成员可以使它所属的类型，也就是静态成员可以使不完全类型。我们可以使用静态成员作为成员函数的默认参数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/17/C-学习笔记第一部分基础，1-7章总结/" data-id="cjkz8zowq00003cv72csbzun3" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/16/C-学习笔记第七章-类/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第七章_类</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>24</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
