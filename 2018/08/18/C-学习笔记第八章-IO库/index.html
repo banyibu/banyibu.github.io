@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>C++学习笔记第一章_开始 | 致良知，事上练</title>
+  <title>C++学习笔记第八章_IO库 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概述标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。">
+  <meta name="description" content="概述IO操作的相关内容">
 <meta name="keywords" content="计算机语言,C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++学习笔记第一章_开始">
-<meta property="og:url" content="http://banyibu.com/2018/08/09/C-学习笔记第一章/index.html">
+<meta property="og:title" content="C++学习笔记第八章_IO库">
+<meta property="og:url" content="http://banyibu.com/2018/08/18/C-学习笔记第八章-IO库/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="概述标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。">
+<meta property="og:description" content="概述IO操作的相关内容">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-11T14:19:01.457Z">
+<meta property="og:updated_time" content="2018-08-18T14:49:46.472Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++学习笔记第一章_开始">
-<meta name="twitter:description" content="概述标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。">
+<meta name="twitter:title" content="C++学习笔记第八章_IO库">
+<meta name="twitter:description" content="概述IO操作的相关内容">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -77,12 +77,12 @@
   </div>
 </div>
 
-        <section id="main"><article id="post-C-学习笔记第一章" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-C-学习笔记第八章-IO库" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/08/09/C-学习笔记第一章/" class="article-date">
-  <time class="post-time" datetime="2018-08-09T12:58:54.000Z" itemprop="datePublished">
+    <a href="/2018/08/18/C-学习笔记第八章-IO库/" class="article-date">
+  <time class="post-time" datetime="2018-08-18T10:00:20.000Z" itemprop="datePublished">
     <span class="post-month">8月</span><br/>
-    <span class="post-day">09</span>
+    <span class="post-day">18</span>
   </time>
 </a>
    
@@ -94,7 +94,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      C++学习笔记第一章_开始
+      C++学习笔记第八章_IO库
     </h1>
   
 
@@ -113,22 +113,163 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>标准输入输出及输入输出运算符概述、注释、读取不定量输入数据、编译器检查错误类型、文件重定向、缓冲区刷新、变量初始化。<br><a id="more"></a></p>
-<h3 id="标准输入输出"><a href="#标准输入输出" class="headerlink" title="标准输入输出"></a>标准输入输出</h3><p>cin 标准输入、cout 标准输出、cerr 标准错误、clog 输出程序运行时的一般性信息。标准输入输出和标准错误通常关联到程序执行所在的窗口。</p>
-<h3 id="输入输出运算符"><a href="#输入输出运算符" class="headerlink" title="输入输出运算符"></a>输入输出运算符</h3><p>“&lt;&lt;” 和 “&gt;&gt;”运算符都接受两个运算对象。<br>“&lt;&lt;” 左侧的运算对象是一个ostream对象，右侧的运算对象是要打印的值。此运算符将给定的值写到给定的ostream对象中。输出运算符的计算结果就是其左侧运算符对象。<br>“&gt;&gt;” 左侧的运算对象时一个istream对象，右侧的运算对象从给定的istream对象中读入数据，并存入其中。</p>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注意：块注释不能嵌套<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *注释/* */不能嵌套</span><br><span class="line"> *</span><br><span class="line">*/</span><br></pre></td></tr></table></figure></p>
-<h3 id="读取不定数量的输入数据"><a href="#读取不定数量的输入数据" class="headerlink" title="读取不定数量的输入数据"></a>读取不定数量的输入数据</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int value=0, sum=0;</span><br><span class="line">while(std::cin&gt;&gt;value)&#123;</span><br><span class="line">	sum+=value;</span><br><span class="line">&#125;</span><br><span class="line">std::cout&lt;&lt;sum&lt;&lt;std::endl;</span><br></pre></td></tr></table></figure>
-<p>上段代码中，std::cin&gt;&gt;value 检查的实际上是”&gt;&gt;”的返回值，即std::cin,如果流有效，即未遇到错误和文件为结束，返回为真，否则返回为假。<br><strong>各个系统中输入文件结束符的方式:</strong><br>Windows中，Ctrl+Z，然后按Enter或Return;<br>UNIX中，Ctrl+D；</p>
-<h3 id="编译器可以检查出的错误"><a href="#编译器可以检查出的错误" class="headerlink" title="编译器可以检查出的错误"></a>编译器可以检查出的错误</h3><p>语法错误、类型错误、申明错误。</p>
-<h3 id="文件重定向"><a href="#文件重定向" class="headerlink" title="文件重定向"></a>文件重定向</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ addItems &lt;infile &gt;outfile</span><br></pre></td></tr></table></figure>
-<p>其中，addItems是可执行文件，则上述命令会从一个名为infile文件中读取数据，将数据结果写入outfile中，其中两个文件都应该位于当前目录中。</p>
-<h3 id="缓冲区刷新"><a href="#缓冲区刷新" class="headerlink" title="缓冲区刷新"></a>缓冲区刷新</h3><p>1） cin.ignore(n,ch); 其中 n 指的是忽略字符的个数，ch 代表的是终止的字符。<br>2）cin.sync()用来清除缓冲区中未读取的信息<br><em>详情待完善</em></p>
-<h3 id="变量初始化"><a href="#变量初始化" class="headerlink" title="变量初始化"></a>变量初始化</h3><p>类类型的变量如果未初始化，则按照类定义时的方式初始化。定义在函数内的内置类型默认是不初始化的，除非有显示的初始化语句。全局变量按照默认方式初始化。</p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>IO操作的相关内容<br><a id="more"></a></p>
+<h3 id="IO类"><a href="#IO类" class="headerlink" title="IO类"></a>IO类</h3><p>iostream定义了用于读写流的基本类型，fstream定义了命名文件的类型，sstream定义了读写内存string对象的类型。<br>wcin、wcout、wcerr对应于宽字符版本。<br>IO对象无拷贝和赋值。<br>访问和控制流的条件状态：</p>
+<table>
+<thead>
+<tr>
+<th>函数或标志</th>
+<th>解释</th>
+<th>函数或标志</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>strm::iostate</td>
+<td>iostate是一种机器相关的类型，提供了表达状态的完整性</td>
+<td>strm::badbit</td>
+<td>用来指出流已经崩溃</td>
+</tr>
+<tr>
+<td>strm::failbit</td>
+<td>指出一个IO操作失败</td>
+<td>strm::eofbit</td>
+<td>流到达了文件结束</td>
+</tr>
+<tr>
+<td>strm::goodbit</td>
+<td>指出流未处于错误状态。此值保证为零</td>
+<td>s.eof()</td>
+<td>若流s的eofbit置位，则返回true</td>
+</tr>
+<tr>
+<td>s.fail()</td>
+<td>流s的failbit或badbit置位，返回true</td>
+<td>s.bad()</td>
+<td>流s的badbit置位，则返回true</td>
+</tr>
+<tr>
+<td>s.good()</td>
+<td>流s处于有效状态，则返回true</td>
+<td>s.clear()</td>
+<td>将流s中的所有条件状态复位，将流的状态设置为有效，返回void</td>
+</tr>
+<tr>
+<td>s.clear(flags)</td>
+<td>根据给定的flags标志位，将流s对应条件状态复位。flags的类型为strm::iostate。返回void</td>
+<td>s.setstate(flags)</td>
+<td>根据给定的flags标志位，将流s中对应的条件状态置位。flags的类型为strm::iostate。返回void</td>
+</tr>
+<tr>
+<td>s.rdstate()</td>
+<td>返回流s的当前条件状态，返回值类型为strm::iostate</td>
+</tr>
+</tbody>
+</table>
+<p>其中badbit代表系统级错误，发生badbit则流无法使用了。可恢复错误发生后failbit被置位。到达文件结束eofbit和failbit都会被置位。goodbit的值为0，表示流未发生错误。如果badbit、failbit、eofbit任何一个被置位，则流检测状态条件失败。<br>good和fail是确定流的总体状态的正确方法，而eof和bad只表示特定错误。<br>用clear复位单一的条件状态位cin.clear(cin.rdstate()&amp;`cin.failbit()&amp;`cin.badbit()); //对failbit和badbit复位<br>导致缓冲区刷新的原因：</p>
+<ol>
+<li>程序正常结束，作为main函数的return操作的一部分，缓冲区刷新被执行；</li>
+<li>缓冲区满时；</li>
+<li>使用操纵符endl、flush、ends显示刷新缓冲区；</li>
+<li>在每个输出操作之后，可以设置操纵符unitbuf设置流的内部状态，来清空缓冲区。默认情况下，cerr是这支unitbuf的，写到cerr的内容是即时刷新的；</li>
+<li>输出流相互关联，cin和cerr都关联到cout，若读cin或写cerr都会刷新cout。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cout&lt;&lt;&quot;hi!&quot;&lt;&lt;endl; //输出hi和一个换行，然后刷新缓冲区</span><br><span class="line">cout&lt;&lt;&quot;hi!&quot;&lt;&lt;ends; //输出hi和一个空字符，然后刷新缓冲区</span><br><span class="line">cout&lt;&lt;&quot;hi!&quot;&lt;&lt;flush; //输出hi，然后刷新缓冲区</span><br><span class="line"></span><br><span class="line">cout&lt;&lt;unitbuf; //之后的任何输出都立即刷新</span><br><span class="line">cout&lt;&lt;nounitbuf; //回到正常刷新方式</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>程序崩溃，缓冲区不会被刷新。<br>缓冲区关联，tie函数有两个重载版本，一个不带参数，返回指向输出流的指针。如果当前对象关联到一个输出流，则返回指向该输出流的指针，否则返回一个空指针。<br>tie接受一个指向ostream的指针，将自己关联到此ostream，返回原来关联的对象的指针。<br>每个流同时最多关联到一个流，但是一个流可以被多个流关联。</p>
+<h3 id="文件输入输出"><a href="#文件输入输出" class="headerlink" title="文件输入输出"></a>文件输入输出</h3><p>ifstream、ofstream、fstream<br>fstream特有的操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fstream fstrm;</td>
+<td>创建未绑定的文件流，fstream是同名头文件中定义的一个类型</td>
+<td>fstream fstrm(s)</td>
+<td>创建一个fstream，并打开s文件。s可以使string类型或C风格字符串的指针，默认的文件模式依赖于fstream</td>
+</tr>
+<tr>
+<td>fstream fstrm(s,mod)</td>
+<td>按照指定模式打开文件</td>
+<td>fstrm.open(s)</td>
+<td>打开名为s的文件，与fstrm关联，返回void</td>
+</tr>
+<tr>
+<td>fstrm.close()</td>
+<td>关闭fstrm绑定的文件，返回void</td>
+<td>fstrm.is_open()</td>
+<td>返回一个bool值，指出与流fstrm关联的文件是否成功打开且尚未关闭</td>
+</tr>
+</tbody>
+</table>
+<p>对一个已经打开的流调用open会失败，随后该流上的所有操作都会失败。<br>当一个fstream对象被销毁时，close会自动被调用。<br>每个流都有一个关联的文件模式，用来指出如何使用文件：</p>
+<table>
+<thead>
+<tr>
+<th>文件模式</th>
+<th>解释</th>
+<th>文件模式</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>in</td>
+<td>以读的方式打开</td>
+<td>out</td>
+<td>以写的方式打开</td>
+</tr>
+<tr>
+<td>app</td>
+<td>每次写操作前均定位到文件末尾</td>
+<td>ate</td>
+<td>打开文件后立即定位到文件末尾</td>
+</tr>
+<tr>
+<td>trunc</td>
+<td>截断文件</td>
+<td>binary</td>
+<td>以二进制方式进行IO</td>
+</tr>
+</tbody>
+</table>
+<p>保留被ofstream打开的文件中已有的数据的唯一方式是显示指定app或in模式。</p>
+<h3 id="string流"><a href="#string流" class="headerlink" title="string流"></a>string流</h3><p>istringstream、ostringstream、stringstream<br>stringstream特有的操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sstream strm</td>
+<td>sstream是类型，strm是对象</td>
+<td>sstream strm(s)</td>
+<td>保存string对象s的一个拷贝</td>
+</tr>
+<tr>
+<td>strm.str()</td>
+<td>返回strm所保存的string的拷贝</td>
+<td>strm.str(s)</td>
+<td>将string s拷贝到strm中，返回void</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/09/C-学习笔记第一章/" data-id="cjkzgks7q000e6ov790rooin8" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/18/C-学习笔记第八章-IO库/" data-id="cjkzgks7k00066ov79ct1zjbi" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -139,19 +280,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/08/11/C-学习笔记第二章/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          C++学习笔记第二章_变量和基本类型
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/08/06/区块链分叉问题/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/08/17/C-学习笔记第一部分基础，1-7章总结/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">区块链分叉问题</div>
+      <div class="article-nav-title">C++学习笔记第一部分基础，1-7章总结</div>
     </a>
   
 </nav>
