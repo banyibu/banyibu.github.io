@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第十一章_关联容器 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="简述关联容器中的元素时按照关键字来保存和访问的。关联容器支持高效的查找和访问。标准库提供8个关联容器，其主要体现在三个纬度上：1）或者是一个set或者是一个map；2）或者要求不重复的关键字，或者允许重复关键字muti；3）按顺序保存元素或无序unordered保存元素。无序容器使用哈希函数来组织元素。map和multimap定义在头文件map中；set和multiset定义在头文件set中；无序">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第十一章_关联容器">
+<meta property="og:url" content="http://banyibu.com/2018/08/20/C-学习笔记第十一章-关联容器/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="简述关联容器中的元素时按照关键字来保存和访问的。关联容器支持高效的查找和访问。标准库提供8个关联容器，其主要体现在三个纬度上：1）或者是一个set或者是一个map；2）或者要求不重复的关键字，或者允许重复关键字muti；3）按顺序保存元素或无序unordered保存元素。无序容器使用哈希函数来组织元素。map和multimap定义在头文件map中；set和multiset定义在头文件set中；无序">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-20T14:21:57.537Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第十一章_关联容器">
+<meta name="twitter:description" content="简述关联容器中的元素时按照关键字来保存和访问的。关联容器支持高效的查找和访问。标准库提供8个关联容器，其主要体现在三个纬度上：1）或者是一个set或者是一个map；2）或者要求不重复的关键字，或者允许重复关键字muti；3）按顺序保存元素或无序unordered保存元素。无序容器使用哈希函数来组织元素。map和multimap定义在头文件map中；set和multiset定义在头文件set中；无序">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>28</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第十一章-关联容器" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/20/C-学习笔记第十一章-关联容器/" class="article-date">
+  <time class="post-time" datetime="2018-08-20T08:57:35.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">20</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第十一章_关联容器
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>关联容器中的元素时按照关键字来保存和访问的。关联容器支持高效的查找和访问。<br>标准库提供8个关联容器，其主要体现在三个纬度上：1）或者是一个set或者是一个map；2）或者要求不重复的关键字，或者允许重复关键字muti；3）按顺序保存元素或无序unordered保存元素。<br>无序容器使用哈希函数来组织元素。<br>map和multimap定义在头文件map中；set和multiset定义在头文件set中；无序容器定义在头文件unordered_map和unordered_set中。<br><a id="more"></a></p>
+<h3 id="使用关联容器"><a href="#使用关联容器" class="headerlink" title="使用关联容器"></a>使用关联容器</h3><p>map的元素类型返回一个pair类型。</p>
+<h3 id="关联容器概述"><a href="#关联容器概述" class="headerlink" title="关联容器概述"></a>关联容器概述</h3><p>关联容器的迭代器都是双向的。<br><strong>关键字类型的要求</strong><br>对有序关联容器，关键字必须定义元素的比较方法。默认情况下，标准库使用关键字类型的&lt;运算符来比较两个关键字。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiset&lt;Sales_data, decltype(compareIsbn)*&gt; bookstore(compareIsbn); //在该集合中添加元素的时候使用compareIsbn代替默认的&lt;运算符。</span><br></pre></td></tr></table></figure></p>
+<p><strong>pair类型</strong><br>pair的标准库类型，定义在utility中。<br>pair的成员是public的，两个成员名字分别是first、second。<br>pair支持的操作：make_pair(v1,v2);//返回一个用v1和v2初始化的pair。pair的类型从v1和v2推断出来；p.first; p.second; &lt; &lt;= &gt; &gt;= == !=<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pair&lt;string,int&gt;</span><br><span class="line">process(vector&lt;string&gt; &amp;v)&#123;</span><br><span class="line">	//处理v</span><br><span class="line">	if(!v.empty())</span><br><span class="line">	   return &#123;v.back(),v.back().size()&#125;;</span><br><span class="line">	else</span><br><span class="line">	   return pair&lt;string,int&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="关联容器操作"><a href="#关联容器操作" class="headerlink" title="关联容器操作"></a>关联容器操作</h3><p>关联容器额外的类型别名：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key_type</td>
+<td>此容器类型的关键字类型</td>
+</tr>
+<tr>
+<td>mapped_type</td>
+<td>每个关键字关联的类型；只适用于map</td>
+</tr>
+<tr>
+<td>value_type</td>
+<td>对set，与key_type相同；对map，为pair&lt;\const key_type, mapped_type&gt;</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关联容器迭代器</strong><br>set类型同时定义了iterator和const_iterator，但是两种类型都只允许只读访问set中的元素。<br>通常不对关联容器使用泛型算法。<br>对一个关联容器使用算法，要么将它当做一个原序列，要么当做目的位置。<br><strong>添加元素</strong><br>关联容器insert操作：<br>| 操作|解释|<br>|c.insert(v), c.emplace(args)|v是value_type类型的对象；args用来构造一个元素；对map和set，只有当元素的关键字不在c中时，才插入元素。函数返回一个pair，包含一个迭代器，指向具有指定关键字的元素，以及一个指示插入成功的bool值。对于multimap和multiset，总会插入给定元素，并返回一个指向新元素的迭代器|<br>|c.insert(b,e),c.insert(il)|b和e是迭代器，表示一个c::value_type类型值的范围；il是这种纸的花括号列表。函数返回void; 对于map和set，只会插入不在c中的元素。对于multimap和multiset，则会插入范围中的每个元素|<br>|c.insert(p,v), c.insert(p,args)|类似insert(v)或emplace(args)，但将迭代器p作为一个提示，指出从哪里开始搜索新元素应该存储的位置。返回一个迭代器，只想具有给定关键字的元素|<br><strong>删除元素</strong><br>从关联容器中删除元素：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c.erase(k)</td>
+<td>从c中删除每个关键字为k的元素。返回一个size_type值，指出删除的元素数量</td>
+</tr>
+<tr>
+<td>c.erase(p)</td>
+<td>从c中删除迭代器p指定的元素。p必须指向c中一个真实元素，不能等于c.end()。返回一个指向p之后元素的迭代器，若p指向c中的尾元素，则返回c.end()</td>
+</tr>
+<tr>
+<td>c.erase(b,e)</td>
+<td>删除迭代器对b和e所表示范围中的元素。返回e</td>
+</tr>
+</tbody>
+</table>
+<p><strong>map的下标操作</strong><br>我们不能对multimap或unordered_multimap进行下标操作，因为这些容器中可能有多个值与一个关键字关联。<br>若下标操作关键字不在map中，则会创建一个加入到map中。所以我们只能对非const的map进行下标操作。<br>c[k] 返回关键字为k的元素，若k不在c中，添加一个关键字为k的元素，对其进行值初始化；<br>c.at(k) 访问关键字为k的元素，带参数检查；若k不在c中，抛出一个out_of_range异常；<br>使用下标操作map，返回一个mapped_type对象。<br><strong>访问元素</strong><br>在一个关联容器中查找元素的操作<br>lower_bound和upper_bound不适用于无序容器。<br>下标和at操作只适用于非const的map和unordered_map。</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c.find(k)</td>
+<td>返回一个迭代器，指向第一个关键字为k的元素，若k不在容器中，则返回尾后迭代器</td>
+</tr>
+<tr>
+<td>c.count(k)</td>
+<td>返回关键字等于k的元素的数量。对于不允许重复关键字的容器，返回值永远是0或1</td>
+</tr>
+<tr>
+<td>c.lower_bound(k)</td>
+<td>返回一个迭代器，指向第一个关键字不小于k的元素</td>
+</tr>
+<tr>
+<td>c.upper_bound(k)</td>
+<td>返回一个迭代器，指向第一个关键字大于k的元素</td>
+</tr>
+<tr>
+<td>c.equal_range(k)</td>
+<td>返回一个迭代器pair，表示关键字等于k的元素的范围。若k不存在，pair的两个值均为c.end()</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一个单词转换的map</strong></p>
+<h3 id="无序容器"><a href="#无序容器" class="headerlink" title="无序容器"></a>无序容器</h3><p>无序容器不使用比较运算符来组织元素，而是使用一个哈希函数和关键字类型的==运算符。<br>无序容器在存储上组织为一组桶，每个桶保存零个或多个元素。无需容器使用一个哈希函数将元素映射到桶。<br>无序容器的性能依赖于哈希函数的质量和桶的数量和大小。<br>无序容器管理操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>桶接口</td>
+</tr>
+<tr>
+<td>c.bucket_count()</td>
+<td>正在使用的桶的数目</td>
+</tr>
+<tr>
+<td>c.max_bucket_count()</td>
+<td>能容纳的最多的桶的数量</td>
+</tr>
+<tr>
+<td>c.bucker_size(n)</td>
+<td>第n个桶中有多少个元素</td>
+</tr>
+<tr>
+<td>c.bucket(k)</td>
+<td>关键字为k的元素在哪个桶</td>
+</tr>
+<tr>
+<td>桶迭代</td>
+</tr>
+<tr>
+<td>local_iterator</td>
+<td>可以用来访问桶中元素的迭代器类型</td>
+</tr>
+<tr>
+<td>const_local_iterator</td>
+<td>桶迭代器的const版本</td>
+</tr>
+<tr>
+<td>c.begin(n), c.end(n)</td>
+<td>桶n的首元素的迭代器和尾后元素的迭代器</td>
+</tr>
+<tr>
+<td>c.cbegin(n), c.cend(n)</td>
+<td>与前两个函数类似，但返回const_local_iterator</td>
+</tr>
+<tr>
+<td>哈希策略</td>
+</tr>
+<tr>
+<td>c.load_factor()</td>
+<td>每个桶的平均元素数量，返回float值</td>
+</tr>
+<tr>
+<td>c.max_load_factor()</td>
+<td>c试图维护的平均桶大小，返回float值。c会在需要时添加新的桶，以使得load_factor&lt;=max_load_factor</td>
+</tr>
+<tr>
+<td>c.rehash(n)</td>
+<td>重组存储，使得bucket_count&gt;=n，且bucket_count&gt;size/max_load_factor</td>
+</tr>
+<tr>
+<td>c.reserve(n)</td>
+<td>重组存储，使得c可以保存n个元素且不必rehash</td>
+</tr>
+</tbody>
+</table>
+<p><strong>无序容器对关键字的要求</strong><br>无序容器关键字类型用==比较元素，而且使用一个hash&lt;\key_value&gt;类型的对象来生成每个元素的哈希值。标准库为内置类型提供了hash模版，还为一些标准库类型，包括string和我们将要在第12章介绍的智能指针类型定义了hash。<br>对于自定义类类型的无序容器，我们要提供自己的hash模版版本。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/20/C-学习笔记第十一章-关联容器/" data-id="cjl2b47vr000i38v7e0z3m3xe" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/19/C-学习笔记第十章-泛型算法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第十章_泛型算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>28</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
