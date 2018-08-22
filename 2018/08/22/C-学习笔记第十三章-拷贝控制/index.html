@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>清心决_道家 | 致良知，事上练</title>
+  <title>C++学习笔记第十三章_拷贝控制 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="心若冰清天塌不惊 万变犹定神怡气静 尘垢不沾俗相不染 虚空甯宓 [níng mì]混然无物">
-<meta name="keywords" content="哲学,道家">
+  <meta name="description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。">
+<meta name="keywords" content="计算机语言,C++">
 <meta property="og:type" content="article">
-<meta property="og:title" content="清心决_道家">
-<meta property="og:url" content="http://banyibu.com/2018/07/17/清心决-道家/index.html">
+<meta property="og:title" content="C++学习笔记第十三章_拷贝控制">
+<meta property="og:url" content="http://banyibu.com/2018/08/22/C-学习笔记第十三章-拷贝控制/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="心若冰清天塌不惊 万变犹定神怡气静 尘垢不沾俗相不染 虚空甯宓 [níng mì]混然无物">
+<meta property="og:description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-07-17T14:09:40.005Z">
+<meta property="og:updated_time" content="2018-08-22T14:49:46.046Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="清心决_道家">
-<meta name="twitter:description" content="心若冰清天塌不惊 万变犹定神怡气静 尘垢不沾俗相不染 虚空甯宓 [níng mì]混然无物">
+<meta name="twitter:title" content="C++学习笔记第十三章_拷贝控制">
+<meta name="twitter:description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -77,12 +77,12 @@
   </div>
 </div>
 
-        <section id="main"><article id="post-清心决-道家" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-C-学习笔记第十三章-拷贝控制" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/07/17/清心决-道家/" class="article-date">
-  <time class="post-time" datetime="2018-07-17T14:03:43.000Z" itemprop="datePublished">
-    <span class="post-month">7月</span><br/>
-    <span class="post-day">17</span>
+    <a href="/2018/08/22/C-学习笔记第十三章-拷贝控制/" class="article-date">
+  <time class="post-time" datetime="2018-08-22T14:47:04.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">22</span>
   </time>
 </a>
    
@@ -94,14 +94,14 @@
         
   
     <h1 class="article-title" itemprop="name">
-      清心决_道家
+      C++学习笔记第十三章_拷贝控制
     </h1>
   
 
         <div>
           
   <div class="article-category">
-    <a class="article-category-link" href="/categories/哲学文学/">哲学文学</a>,<a class="article-category-link" href="/categories/哲学文学/道家/">道家</a>
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
   </div>
 
           
@@ -113,27 +113,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>心若冰清天塌不惊 万变犹定神怡气静</p>
-<p>尘垢不沾俗相不染 虚空甯宓 [níng mì]混然无物<br><a id="more"></a></p>
-<p>无有相生难易相成 份与物忘同乎浑涅</p>
-<p>天地无涯万物齐一 飞花落叶虚怀若谷</p>
-<p>千般烦忧才下心头 即展眉头灵台清悠</p>
-<p>心无罣碍意无所执 解心释神莫然无魂</p>
-<p>水流心不惊云在意俱迟</p>
-<p>一心不赘物古今自逍遥</p>
-<p>清心如水，清水即心。微风无起，波澜不惊。</p>
-<p>幽篁独坐，长啸鸣琴。禅寂入定，毒龙遁形。</p>
-<p>我心无窍，天道酬勤。我义凛然，鬼魅皆惊。</p>
-<p>我情豪溢，天地归心。我志扬迈，水起风生！</p>
-<p>天高地阔，流水行云。清新治本，直道谋身。</p>
-
+        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。<br><a id="more"></a></p>
+<h3 id="拷贝、赋值与销毁"><a href="#拷贝、赋值与销毁" class="headerlink" title="拷贝、赋值与销毁"></a>拷贝、赋值与销毁</h3><h3 id="拷贝控制和资源管理"><a href="#拷贝控制和资源管理" class="headerlink" title="拷贝控制和资源管理"></a>拷贝控制和资源管理</h3><h3 id="交换操作"><a href="#交换操作" class="headerlink" title="交换操作"></a>交换操作</h3><h3 id="拷贝控制示例"><a href="#拷贝控制示例" class="headerlink" title="拷贝控制示例"></a>拷贝控制示例</h3><h3 id="动态内存管理"><a href="#动态内存管理" class="headerlink" title="动态内存管理"></a>动态内存管理</h3><h3 id="对象移动"><a href="#对象移动" class="headerlink" title="对象移动"></a>对象移动</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/07/17/清心决-道家/" data-id="cjl59abv900287ov7abmx74ed" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/22/C-学习笔记第十三章-拷贝控制/" data-id="cjl59abuj000u7ov7la5o7hh4" class="article-share-link">分享</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/哲学/">哲学</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/道家/">道家</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
 
     </footer>
   </div>
@@ -141,19 +129,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2018/07/19/共识问题/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">上一篇</strong>
-      <div class="article-nav-title">
-        
-          共识问题概述
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/07/17/语录杂记/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/08/21/C-学习笔记第二部分C-标准库，8-12章总结/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">下一篇</strong>
-      <div class="article-nav-title">南怀瑾语录杂记</div>
+      <div class="article-nav-title">C++学习笔记第二部分C++标准库，8-12章总结</div>
     </a>
   
 </nav>
