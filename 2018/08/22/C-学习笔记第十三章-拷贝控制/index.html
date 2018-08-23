@@ -5,18 +5,18 @@
   
   <title>C++学习笔记第十三章_拷贝控制 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。">
+  <meta name="description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。拷贝和移动构造函数，定义了当时用同类型的另一个对象初始化本对象时做什么。拷贝和赋值运算符定义了将一个对象赋予同类型的另一个对象时做什么。">
 <meta name="keywords" content="计算机语言,C++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C++学习笔记第十三章_拷贝控制">
 <meta property="og:url" content="http://banyibu.com/2018/08/22/C-学习笔记第十三章-拷贝控制/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。">
+<meta property="og:description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。拷贝和移动构造函数，定义了当时用同类型的另一个对象初始化本对象时做什么。拷贝和赋值运算符定义了将一个对象赋予同类型的另一个对象时做什么。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-22T14:49:46.046Z">
+<meta property="og:updated_time" content="2018-08-23T14:02:28.250Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++学习笔记第十三章_拷贝控制">
-<meta name="twitter:description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。">
+<meta name="twitter:description" content="简述拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。拷贝和移动构造函数，定义了当时用同类型的另一个对象初始化本对象时做什么。拷贝和赋值运算符定义了将一个对象赋予同类型的另一个对象时做什么。">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -113,8 +113,26 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。<br><a id="more"></a></p>
-<h3 id="拷贝、赋值与销毁"><a href="#拷贝、赋值与销毁" class="headerlink" title="拷贝、赋值与销毁"></a>拷贝、赋值与销毁</h3><h3 id="拷贝控制和资源管理"><a href="#拷贝控制和资源管理" class="headerlink" title="拷贝控制和资源管理"></a>拷贝控制和资源管理</h3><h3 id="交换操作"><a href="#交换操作" class="headerlink" title="交换操作"></a>交换操作</h3><h3 id="拷贝控制示例"><a href="#拷贝控制示例" class="headerlink" title="拷贝控制示例"></a>拷贝控制示例</h3><h3 id="动态内存管理"><a href="#动态内存管理" class="headerlink" title="动态内存管理"></a>动态内存管理</h3><h3 id="对象移动"><a href="#对象移动" class="headerlink" title="对象移动"></a>对象移动</h3>
+        <h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>拷贝构造函数、移动构造函数、拷贝赋值运算符、移动赋值运算符、析构函数。<br>拷贝和移动构造函数，定义了当时用同类型的另一个对象初始化本对象时做什么。拷贝和赋值运算符定义了将一个对象赋予同类型的另一个对象时做什么。<br><a id="more"></a></p>
+<h3 id="拷贝、赋值与销毁"><a href="#拷贝、赋值与销毁" class="headerlink" title="拷贝、赋值与销毁"></a>拷贝、赋值与销毁</h3><p><strong>拷贝构造函数</strong><br>拷贝构造函数的第一个参数必须是该类型的引用，且其他参数都有默认值。<br>直接初始化和拷贝初始化差异：直接初始化时，要求编译器使用普通的函数匹配来选择与我们提供的参数最匹配的构造函数。使用拷贝初始化时，我们要求编译器将右侧运算符对象拷贝到正在创建的对象中，如果需要的话，还要进行类型转换。<br>拷贝初始化，在我们使用=定义变量时会发生。在参数值传递、函数返回非引用对象用花括号列表初始化一个数组中的元素或一个聚合类中的成员时、某些类类型会对它们所分配的对象使用拷贝初始化（例如：初始化标准库容器或调用其insert或push成员），与之相对，使用emplace成员创建元素都进行直接初始化。<br>编译器可以绕过拷贝构造函数而直接创建对象，但是拷贝构造函数必须存在且能访问。<br><strong>拷贝赋值运算符</strong><br>赋值运算符通常应该返回一个指向其左侧运算对象的引用。<br><strong>析构函数</strong><br>在一个构造函数中，成员的初始化是在函数体执行之前完成的，且按照他们在类中出现的顺序进行初始化。在一个析构函数中，首先执行函数体，然后销毁成员。成员按初始化顺序的逆序销毁。<br><strong>三/五法则</strong><br>需要析构函数的类也需要拷贝和赋值操作、需要拷贝操作的类也需要赋值操作，反之亦然。<br><strong>使用=default：</strong><br>使用=default修饰成员的声明时，合成的函数隐式的声明为内联的。如果我们不希望合成的成员是内联的，一个只对成员类的类外定义使用=default。<br><strong>阻止拷贝</strong><br>大多数类应该定义默认构造函数、拷贝构造函数和拷贝构造运算符，无论是隐式的还是显示的。<br>定义删除的函数：在函数参数列表后使用=delete指出，该修饰符必须出现在函数第一次声明的地方。可以对任何函数指定为=delete。<br>析构函数不能定义为删除的成员，对于析构函数已经删除的类型，不能定义该类型的变量或释放指向该类型动态分配对象的指针。<br>合成的拷贝控制成员可能是删除的：</p>
+<ol>
+<li>如果类的某个成员的析构函数是删除的或不可访问的，则类的合成析构函数被定义为删除的；</li>
+<li>如果类的某个成员的拷贝构造函数是删除的或不可访问的，则类的合成拷贝构造函数被定义为删除的。如果类的某个成员的析构函数是删除的或不可访问的，则类的合成拷贝构造函数也被定义为删除的；</li>
+<li>如果类的某个成员的析构函数时删除的或不可访问的，或是类有一个引用成员，它没有初始化器，或类有一个const成员，它没有类内初始化器且其类型未显示定义默认构造函数，则该类型的默认构造函数被定义为删除的。<h3 id="拷贝控制和资源管理"><a href="#拷贝控制和资源管理" class="headerlink" title="拷贝控制和资源管理"></a>拷贝控制和资源管理</h3>管理类外资源的类必须定义拷贝控制成员。<h3 id="交换操作"><a href="#交换操作" class="headerlink" title="交换操作"></a>交换操作</h3>编写自己的swap函数，可以避免不必要的数据拷贝。在使用swap函数时应该使用swap而不是std::swap，前者会优先选择元素自己定义的swap。<br>在赋值运算中使用swap:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HasPtr&amp; HasPtr::operator=(HasPtr rhs)&#123;</span><br><span class="line">	swap(*this,rhs); //swap实现与一个临时变量交换。</span><br><span class="line">	return *this;</span><br><span class="line">&#125; //退出函数，临时变量消失</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="拷贝控制示例"><a href="#拷贝控制示例" class="headerlink" title="拷贝控制示例"></a>拷贝控制示例</h3><p>拷贝赋值运算符通常执行拷贝构造函数和析构函数中也要做的工作。</p>
+<h3 id="动态内存管理"><a href="#动态内存管理" class="headerlink" title="动态内存管理"></a>动态内存管理</h3><p>移动构造函数：将资源从给定对象“移动”而不是拷贝到正在创建的对象。<br>std::move：定义在utility头文件中，使用时直接使用std::move而不是move</p>
+<h3 id="对象移动"><a href="#对象移动" class="headerlink" title="对象移动"></a>对象移动</h3><p>IO类或unique_ptr对象可以移动但是不能拷贝，标准库类型、string和shared_ptr类即支持移动也支持拷贝。<br><strong>右值引用</strong><br>&amp;&amp;获得右值引用，右值引用只能绑定到一个将要销毁的对象。右值引用可以绑定到要求转换的表达式、字面常量或返回右值的表达式。<br>左值持久，右值短暂，右值引用特点：所引用的对象将要被销毁、该对象没有其他用户。<br>标准库move函数：<code>int &amp;&amp;rr3 = std::move(rr1);</code><br><strong>移动构造函数和移动赋值运算符</strong><br>移动构造函数：<code>StrVec::StrVec(StrVec &amp;&amp;s) noexecpt:……{……;}</code><br>不抛出异常的移动构造函数和移动赋值运算符必须标记为noexcept。不抛出移动赋值运算符的函数也应该标记为noexcept。<br>某些类没有移动构造函数或移动赋值运算符，类会用拷贝构造函数和拷贝赋值运算符代替。<br>只有当一个类没有定义任何自己版本的拷贝控制成员，且类的每个非static数据成员都可以移动时，编译器才会为它合成移动构造函数或移动构造运算符。<br>移动操作永远不会隐式定义为删除的函数。<br>我们可以显示的要求编译器生成=default的移动操作，但是在以下情况下，移动操作会被定义为删除的：</p>
+<ol>
+<li>有类成员定义了自己的拷贝构造函数但是没有定义移动构造函数或类成员未定义自己的拷贝构造函数且编译器不能为其生成移动构造函数。</li>
+<li>如果有类成员的移动构造函数或移动赋值运算符被定义为删除的或不可访问的；</li>
+<li>如果类的析构函数被定义为删除的或不可访问的；</li>
+<li>如果有类成员是const或引用；<br>定义了一个移动构造函数或移动赋值运算符的类必须定义自己的拷贝操作，否则这些成员默认被定义为删除的。<br>移动左值，拷贝右值，但如果没有移动构造函数，右值也被拷贝。<br>移动迭代器适配器：移动迭代器解引用生成一个右值引用。<br>使用make_move_iterator函数，将一个普通迭代器转换为一个移动迭代器。<br>调用move时，必须绝对确定移后源对象没有其他用户。<br><strong>右值引用和成员函数</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class Foo&#123;</span><br><span class="line">	public:</span><br><span class="line">	   Foo &amp;operator=(const Foo&amp;) &amp;; //只能向可修改的左值赋值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>可以在函数参数列表后使用&amp;或&amp;&amp;分别指出this是左值或右值，其必须出现在函数的申明和定义中。<br>当一个函数同时被const和&amp;/&amp;&amp;修饰时，const放在引用修饰符前面。<br>引用限定符也可以区分重载版本。<br>对我们定义的同名函数，若一个加了引用限定符，则其他同名函数也必须加。</p>
+
       
     </div>
     <footer class="article-footer">
