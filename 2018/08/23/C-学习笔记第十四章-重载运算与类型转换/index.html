@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第十四章_重载运算与类型转换 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述调用形式、类类型转换、类型转换运算符、显示的类型转换运算符、函数对象、函数表、函数模版、重载的运算符。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第十四章_重载运算与类型转换">
+<meta property="og:url" content="http://banyibu.com/2018/08/23/C-学习笔记第十四章-重载运算与类型转换/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述调用形式、类类型转换、类型转换运算符、显示的类型转换运算符、函数对象、函数表、函数模版、重载的运算符。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-24T13:33:49.451Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第十四章_重载运算与类型转换">
+<meta name="twitter:description" content="概述调用形式、类类型转换、类型转换运算符、显示的类型转换运算符、函数对象、函数表、函数模版、重载的运算符。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第十四章-重载运算与类型转换" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/23/C-学习笔记第十四章-重载运算与类型转换/" class="article-date">
+  <time class="post-time" datetime="2018-08-23T14:13:47.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">23</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第十四章_重载运算与类型转换
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>调用形式、类类型转换、类型转换运算符、显示的类型转换运算符、函数对象、函数表、函数模版、重载的运算符。<br><a id="more"></a></p>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>重载运算符时，第一个参数会被绑定到this上。所以函数的显示参数数量比运算对象的数量少一个。<br>可以重载的运算符：+ - * / % ^ &amp; | ~ ! , = &lt; &gt; &lt;= &gt;= ++ – &lt;&lt; &gt;&gt; == != &amp;&amp; || += -= /= %= ^= &amp;= |= *= &lt;&lt;= &gt;&gt;= [] () -&gt; -&gt;* new new[] delete delete[]<br>不能重载的运算符：:: .* . ?:<br>重载的运算符，其规定的求值顺序不会被保留。因此，逻辑与、逻辑或，逗号运算符不建议重载。<br>逗号运算符和取地址运算符在类类型中有其特殊含义，所以也不建议重载。<br>重载运算符，应该使用与内置类型一致的含义。<br>重载运算符时，定义为成员函数还是非成员函数：</p>
+<ol>
+<li>= [] () -&gt;必须是成员；</li>
+<li>复合赋值运算符一般来说应该是成员，但不是必须；</li>
+<li>改变对象状态的运算符或与给定类型密切相关的运算符，如递增、递减、解引用运算符，通常应该是成员；</li>
+<li>具有对称性的运算符可能转换任意一端的运算对象，例如算术、相等性、关系和位运算符等，因此他们应该是普通的非成员函数。<h3 id="输入和输出运算符"><a href="#输入和输出运算符" class="headerlink" title="输入和输出运算符"></a>输入和输出运算符</h3><strong>重载输出运算符&lt;&lt;</strong><br>参数，一个非常量ostream的引用，一个常量的引用，后者是我们要打印的值。<br><code>ostream &amp;operator&lt;&lt;(ostream &amp;os, const Sales_data &amp;item)</code><br>通常输出运算符应该主要负责打印对象的内容而非控制格式，输出运算符不应该打印换行符。<br>输入输出运算符必须是非成员函数。IO运算符一般被声明为友元。<br><strong>重载运算符&gt;&gt;</strong><br><code>istream &amp;operator&gt;&gt;(istream &amp;is, Sale_data &amp;item)</code><br>当读取操作发生错误时，输入运算符应该负责从错误中恢复。<h3 id="算数和关系运算符"><a href="#算数和关系运算符" class="headerlink" title="算数和关系运算符"></a>算数和关系运算符</h3>通常情况下，定义为非成员函数以允许对左侧或右侧的运算对象进行转换。<br>如果定义了算数运算符和相关的复合赋值运算符，则通常情况下应该使用复合赋值运算符来实现算数运算符。<br><strong>相等运算符</strong><br>传递性、相等与不等应该同时定义、可以判断重复元素、相等和不等可以相互调用，也即只有一个运算符真正实现，另一个调用即可。<br><strong>关系运算符</strong><br>关系运算符应该：定义顺序关系、与等于和不等运算符保持一致<br>如果存在唯一的一种逻辑可靠的&lt;定义，则应该考虑为这个类定义&lt;运算符。如果该类还有==，则仅当&lt;的定义和==产生的结果一致时，才定义&lt;运算符。<h3 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h3>我们可以重载赋值运算符，不论形参的类型是什么，赋值运算符都必须定义为成员的函数。<br>复合赋值运算符不非得是类的成员，不过我们还是倾向于把包括复合赋值运算符在内的所有赋值运算都定义在类的内部。<h3 id="下标运算符"><a href="#下标运算符" class="headerlink" title="下标运算符"></a>下标运算符</h3>下标运算符必须是成员函数。如果一个类包含下标运算符，则它通常会定义两个版本：一个返回普通引用，另一个是类的常量成员并且返回常量引用。<h3 id="递增和递减运算符"><a href="#递增和递减运算符" class="headerlink" title="递增和递减运算符"></a>递增和递减运算符</h3>定义递增递减运算符的类应该同时定义前置版本和后置版本。这些运算符通常应该被定义为类的成员。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//前置递增和递减</span><br><span class="line">StrBlobPtr&amp; operator++();</span><br><span class="line">StrBlobPtr&amp; operator--();</span><br><span class="line">//后置递增递减</span><br><span class="line">StrBlobPtr operator++(int);</span><br><span class="line">StrBlobPtr operator--(int);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="成员访问运算符"><a href="#成员访问运算符" class="headerlink" title="成员访问运算符"></a>成员访问运算符</h3><p>箭头运算符必须是类的成员。解引用运算符通常也是类的成员，尽管并非必须如此。<br>重载的箭头运算符必须返回类的指针或自定义的了箭头运算符的某个类的对象。</p>
+<h3 id="函数调用运算符"><a href="#函数调用运算符" class="headerlink" title="函数调用运算符"></a>函数调用运算符</h3><p>函数调用运算符必须是成员函数。一个类可以定义多个不同版本的调用运算符，相互之间应该在参数数量或类型上有区别。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">class PrintString&#123;</span><br><span class="line">	public:</span><br><span class="line">	   PrintString(ostream &amp;o=cout, char c=&apos; &apos;): os(o), sep(c)&#123;&#125;</span><br><span class="line">	   void operator()(const string &amp;s) const &#123;os&lt;&lt;s&lt;&lt;sep;&#125;</span><br><span class="line">	private:</span><br><span class="line">	   ostream &amp;os;</span><br><span class="line">	   char sep;</span><br><span class="line">&#125;</span><br><span class="line">PrintString printer;</span><br><span class="line">printer(s);</span><br><span class="line">PrintString errors(cerr,&apos;\n&apos;);</span><br><span class="line">errors(s);</span><br><span class="line"></span><br><span class="line">for_each(vs.begin(),vs.end(), PrintString(cerr,&apos;\n&apos;));</span><br></pre></td></tr></table></figure></p>
+<p>如果类重载了函数调用运算符，则该类的对象被称为“函数对象”。<br><strong>lambda是函数对象</strong><br>当我们编写一个lambda后，编译器将该表达式翻译成一个未命名类的未命名对象。<br><strong>标准库定义的函数对象</strong><br>这些类都被定义为了模版类，在functional头文件中：<br>算术运算：plus<type> minus<type> multiplies<type> divides<type> modulus<type> negate<type><br>关系：equal_to<type> not_equal_to<type> greater<type> greater_equal<type> less<type> less_equal<type><br>逻辑：logical_and<type> logical_or<type> logical_not<type><br>表示运算符的函数对象通常用来替换算法中的默认运算符。<br><strong>可调用对象与function</strong><br>函数、函数指针、lambda表达式、bind创建的对象以及重载了函数调用运算符的类。<br>不同的类型可能有相同的调用形式。<br>函数表:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">map&lt;string int(*)(int,int)&gt; binops;</span><br><span class="line">binops.insert(&#123;&quot;+&quot;,add&#125;); //add是一个函数 int add(int i,int j); 但是对于同样调用形式的lambda表达式则不能加入到该map中</span><br></pre></td></tr></table></figure></type></type></type></type></type></type></type></type></type></type></type></type></type></type></type></p>
+<p>标准库function类型可以解决上述问题，其定义在function头文件中：<br>function的操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>function<t> f;</t></td>
+<td>f是一个用来存储可调用对象的空function，这些可调用对象的调用形式应该和函数类型T相同</td>
+</tr>
+<tr>
+<td>function<t> f(nullptr)</t></td>
+<td>显示构造一个空function</td>
+</tr>
+<tr>
+<td>function<t> f(obj);</t></td>
+<td>f中存储可调用对象obj的副本</td>
+</tr>
+<tr>
+<td>f</td>
+<td>将f作为一个条件，当f含有一个可调用对象时为真，否则为假</td>
+</tr>
+<tr>
+<td>f(args)</td>
+<td>调用f中的对象，参数是args</td>
+</tr>
+<tr>
+<td>定义function<t>的成员的类型</t></td>
+</tr>
+<tr>
+<td>result_type</td>
+<td>该function类型的可调用对象的返回类型</td>
+</tr>
+<tr>
+<td>argument_type first_argument_type second_argument_type</td>
+<td>当T有一个或两个实参时的类型。如果T只有一个实参，则argument_type是该类型的同义词；如果T有两个实参，则first_argument_type和second_argument_type分别代表两个实参的类型</td>
+</tr>
+</tbody>
+</table>
+<p>重载的函数名字不能直接存入function类型的对象中。这是，function对象分不清将要存储哪个函数，应该使用函数指针间接存入。</p>
+<h3 id="重载、类型转换与运算符"><a href="#重载、类型转换与运算符" class="headerlink" title="重载、类型转换与运算符"></a>重载、类型转换与运算符</h3><p>转换构造函数和类型转换运算符共同定义了类类型转换，这样的转换有时也被称为用户定义的类型转换。<br><strong>类型转换运算符</strong><br>隐式的类型转换运算符其形式如下：<br><code>operator type() const; //其中type表示某种类型</code><br>类型转换运算符既没有显示的返回类型，也没有形参，而且必须定义成类的成员函数，且一般其被定义为const成员。<br>尽管编译器一次只能执行一个用户定义的类型转换，但是隐式的用户类型转换可以置于一个标准类型转换之前或者之后，并与其一起使用。<br>对于类型直接不存在一对一映射关系的类，我们不应该为其定义相应的类型转换函数。<br>显示的类型转换运算符：<br><code>explicit operator int() const;</code><br>显示的类型转换运算符不会自动用于隐式的类型转换，但是在被用作条件表达式时，编译器会将显示的类型转换自动应用于它。<br>即在：if whil及do语句的条件部分、for语句的条件表达式、逻辑非! || &amp;&amp;运算对象、 ?:的条件表达式<br>向bool的类型转换通常在条件部分，因此operator bool一般定义成explicit的。<br><strong>避免有二义性的类型转换</strong><br>如果类中包含一个或多个类型转换，则必须保证在类类型和目标类型之间只存在唯一的转换方式。<br>通常情况下不要为类定义相同的类型转换，也不要在类中定义两个及两个以上转换源或转换目的是算术类型的转换。<br>当我们使用两个用户定义的类型转换时，如果转换函数之前或之后存在标准类型转换，则标准类型转换将决定最佳匹配到底时哪个。<br>除了显示地向bool类型的转换外，我们应该尽量避免定义类型转换函数并尽可能地限制那些“显然正确”的非显示构造函数。<br>重载函数与转换构造函数。<br>重载函数与用户定义的类型转换：当调用函数时，如果两个用户定义的类型转换都提供了可行匹配，则我们认为这些类型转换一样好。<br>在调用重载函数时，如果需要额外的标准类型转换，则该转换的级别只有当所有可行函数都请求同一个用户定义的类型转换时才有用。如果所需的用户定义类型转换不止一个，则该调用具有二义性。<br><strong>函数匹配与重载运算符</strong><br>当我们再表达式中使用重载运算符时，无法判断正在使用的是成员函数还是非成员函数，因此二者都在考虑之列。<br>如果我们对同一个类既提供了转换目标是算术类型的类型转换，也提供了重载的运算符，则将会遇到重载运算符与内置运算符的二义性问题。</p>
+<p>只接受单独一个参数的非显示构造函数定义了从一个实参类型到类类型的类型转换；而非显示的类型转换，定义了从类类型到其他类型的转换。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/23/C-学习笔记第十四章-重载运算与类型转换/" data-id="cjl81fx260012zwv7l67dvfpy" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/08/24/C-学习笔记第十五章-面向对象程序设计/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          C++学习笔记第十五章_面向对象程序设计
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/22/C-学习笔记第十三章-拷贝控制/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第十三章_拷贝控制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
