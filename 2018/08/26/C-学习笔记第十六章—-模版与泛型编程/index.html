@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第十六章—_模版与泛型编程 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述面向对象编程和泛型编程都能处理在编程时不知道类型的情况。不同之处在于：OPP能处理类型在程序运行之前都未知的情况；而泛型编程中，在编译时就能获知类型了。一个模版就是创建类或函数的蓝图或者说是公式。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第十六章—_模版与泛型编程">
+<meta property="og:url" content="http://banyibu.com/2018/08/26/C-学习笔记第十六章—-模版与泛型编程/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述面向对象编程和泛型编程都能处理在编程时不知道类型的情况。不同之处在于：OPP能处理类型在程序运行之前都未知的情况；而泛型编程中，在编译时就能获知类型了。一个模版就是创建类或函数的蓝图或者说是公式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-27T14:04:12.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第十六章—_模版与泛型编程">
+<meta name="twitter:description" content="概述面向对象编程和泛型编程都能处理在编程时不知道类型的情况。不同之处在于：OPP能处理类型在程序运行之前都未知的情况；而泛型编程中，在编译时就能获知类型了。一个模版就是创建类或函数的蓝图或者说是公式。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第十六章—-模版与泛型编程" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/26/C-学习笔记第十六章—-模版与泛型编程/" class="article-date">
+  <time class="post-time" datetime="2018-08-26T06:18:20.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">26</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第十六章—_模版与泛型编程
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>面向对象编程和泛型编程都能处理在编程时不知道类型的情况。不同之处在于：OPP能处理类型在程序运行之前都未知的情况；而泛型编程中，在编译时就能获知类型了。<br>一个模版就是创建类或函数的蓝图或者说是公式。<br><a id="more"></a></p>
+<h3 id="定义模版"><a href="#定义模版" class="headerlink" title="定义模版"></a>定义模版</h3><p><strong>函数模版</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt; //模版参数列表，逗号分隔的一个或多个模版参数</span><br><span class="line">int compare(const T &amp;v1, const T &amp;v2)&#123;……&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在模版定义中，模版参数列表不能为空。<br>编译器生成的版本通常称为模版的实例。<br>模版类型参数：类型参数前必须使用关键字class或typename<br>非类型模版参数：表示一个值而非一个类型，其必须是一个常量表达式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template&lt;unsigned N, unsigned M&gt;</span><br><span class="line">int compare(const char (&amp;p1)[N], const char (&amp;p2)[M])&#123;……&#125;</span><br><span class="line"></span><br><span class="line">compare(&quot;hi&quot;, &quot;mom&quot;); //当调用时，编译器会使用字面常量的大小来代替M和N</span><br></pre></td></tr></table></figure></p>
+<p>函数模版可以申明为inline或constexpr的，关键字放在模版参数列表之后。<br>模版程序应该尽量减少对实参类型的要求。<br>函数模版和类模版成员函数的定义通常放在头文件中。<br>保证传递给模版的实参支持模版所要求的操作，以及这些操作在模版中能正确工作，是调用者的责任。<br><strong>类模版</strong><br>类模版是用来生成类的蓝图，编译器不能为类模版推断模版参数类型。<br>定义在类模版之外的成员函数就必须以关键字template开始，后面接模版参数列表。<br><code>template &lt;typename T&gt; void Blod&lt;T&gt;::check(……){}</code><br>构造函数的定义要以模版参数开始：<code>template &lt;typename T&gt; Blob&lt;T&gt;::Blob(): data(……){}</code><br>一个类模版的成员函数只有当程序用到它时才进行实例化。<br>在一个类模版的作用域内，可以直接使用模板名而不提供实参。在一个类模版的作用域外则必须提供类型实参。<br>类模版和友元：当一个类包含一个友元声明时，类与友元各自是否是模版是互无关系。如果一个类模版包含一个非类模版友元，则友元被授权可以访问所有模版实例。如果友元自身是模版，类可以授权给所有友元模版实例，也可以只授权给定实例。<br>一对一友好关系：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename&gt; class BlobPtr;</span><br><span class="line">template &lt;typename&gt; class Blob;</span><br><span class="line">template &lt;typename T&gt;</span><br><span class="line">    bool operator==(const Blob&lt;T&gt;&amp;, const Blob&lt;T&gt;&amp;);</span><br><span class="line">template &lt;typename T&gt; class Blob&#123;</span><br><span class="line">	friend class BlobPtr&lt;T&gt;;</span><br><span class="line">	friend bool operator==&lt;T&gt; (const Blob&lt;T&gt;&amp;, const Blob&lt;T&gt;&amp;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>通用和特定的模版友好关系<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">//前置申明，在将模版的一个特定实例申明为友元时要用到</span><br><span class="line">template&lt;typename T&gt; class Pal;</span><br><span class="line"></span><br><span class="line">class C&#123; //C是一个普通的非模版类</span><br><span class="line">	friend class Pal&lt;C&gt;; //所有用C实例化的Pal是C的一个友元</span><br><span class="line">	//Pal2的所有实例都是C的友元；这种情况无需前置申明</span><br><span class="line">	template&lt;typename T&gt; friend class Pal2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">template &lt;typename T&gt; calss C2&#123; //C2是一个模版类</span><br><span class="line">	//C2的每个实例将相同实例化的Pal声明为友元</span><br><span class="line">	friend class Pal&lt;T&gt;; //Pal的模版什么必须在作用域之内</span><br><span class="line">	//Pal2的所有实例都是C2的每个实例的友元，不需要前置申明</span><br><span class="line">	template &lt;typename X&gt; friend class Pal2;</span><br><span class="line">	//Pal3是一个非模版类，它是C2所有实例的友元</span><br><span class="line">	friend class Pal3; //不需要Pal3的前置声明</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为了让所有实例成为友元，友元声明中必须使用与类模版本身不同的模版参数。<br>令模版自己的类型参数成为友元：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename Type&gt; class Bar &#123;</span><br><span class="line">	friend Type; //将访问权限授予用来实例化Bar的类型</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>模版类型别名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt; using twin=pair&lt;T,T&gt;;</span><br><span class="line">twin&lt;string&gt; authors; //authors是一个pair&lt;string,string&gt;类型</span><br></pre></td></tr></table></figure></p>
+<p>类模版的static成员：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt; class Foo&#123;</span><br><span class="line">	public:</span><br><span class="line">	   static std::size_t count()&#123;return ctr;&#125;</span><br><span class="line">	private:</span><br><span class="line">	   static std::size_t ctr;</span><br><span class="line">&#125;</span><br><span class="line">template &lt;typename T&gt; size_t Foo&lt;T&gt;::ctr=0;</span><br></pre></td></tr></table></figure></p>
+<p><strong>模版参数</strong><br>模版参数与作用域：模版参数名会隐藏外层作用域中声明的相同名字，但是在内层作用域中，不能重用模版参数名。<br>模版声明：模版声明必须包含模版参数，但是模版声明中使用的模版参数名和模版定义中使用的模版参数名不必一样。<br>一个特定文件中所需要的所有模版的申明通常一起放置在文件开始位置，出现于任何使用这些模版的代码之前。<br>使用类的类型成员：<code>T::size_type *p; //这样有误</code>而应该使用<code>typename T::value_type ……</code><br>当我们希望通知编译器一个名字表示类型时，必须使用关键字typename，而不能使用class。<br>默认模版实参：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T, typename F=less&lt;T&gt;&gt;</span><br><span class="line">int compare(const T &amp;v1, const T &amp;v2, F f=F())&#123;</span><br><span class="line">	……;</span><br><span class="line">&#125;</span><br><span class="line">int i = compare(0,42); //使用less；i为-1</span><br><span class="line">int j = compare(item1,item2,compareIsbn);</span><br></pre></td></tr></table></figure></p>
+<p>与函数默认参数一样，对于一个模版参数，只有当它右侧所有的参数都有默认实参时，它才可以有默认实参。<br>模版默认实参与类模版，即便类模版的模版参数提供了所有默认实参，但是需要使用默认类型时，还是必须加尖括号。<br><strong>成员模版</strong><br>一个类可以包含本身是模版的成员函数，这种成员称为成员模版。成员模版不能是虚函数。<br>当我们在类外定义一个函数模版时，必须同时为类模版和成员模版提供模版参数列表。类模版的参数列表在前，后跟成员自己的模版参数列表。<br><strong>控制实例化</strong><br>显示实例化可以避免在多个文件中实例化相同的模版类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">exetrn templaec class Blob&lt;string&gt;; //申明</span><br><span class="line">template int compare(const int&amp;, const int&amp;); //定义</span><br></pre></td></tr></table></figure></p>
+<p>若对实例化进行了申明，则在其他文件中必须包含实例化的定义。<br>实例化定义会实例化所有成员。<br>在一个类模版的实例化定义中，所有类型必须能用于模版的所有成员函数。<br><strong>效率与灵活性</strong><br>shared_ptr的删除器在运行时绑定删除器<br>unque_ptr的删除器在编译时绑定。<br>其中后者在效率上更高。</p>
+<h3 id="模版实参推断"><a href="#模版实参推断" class="headerlink" title="模版实参推断"></a>模版实参推断</h3><p><strong>类型转换与模版类型参数</strong><br>对模版函数，编译器通常不是对形参类型进行转换，而是生成一个新的模版实例。<br>可以使用的转换规则：</p>
+<ol>
+<li>无论是在形参中还是在实参中，顶层const都会被忽略；</li>
+<li>const转换：可以将非const对象的引用或指针传递给一个const的引用或指针；</li>
+<li>数组或函数指针转换，如果函数形参不是引用类型，则可以对数组或函数类型的实参应用正常的指针转换。<br>其他类型转换，如算数转换、派生类向基类的转换、用户自定义的转换，都不能应用于函数模版。<br>将实参传递给带模板类型的函数形参时，能够自动应用的类型转换只有const转换及数组或指针的转换。<br>使用相同模版参数类型的函数形参，在调用时传递给这些形参的实参必须有相同的类型。<br>正常类型转换应用于普通函数实参。<br><strong>函数模版显示实参</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T1, typename T2, typename T3&gt;</span><br><span class="line">T1 sum(T2, T3);</span><br><span class="line">auto val3 = sum&lt;long long&gt;(i,lng); //long long sum(int, long)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>显示模版实参按照由左到右与对应的模版参数匹配。<br>正常类型转换应用于显示指定的实参。<br><strong>尾置返回类型与类型转换</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename It&gt;</span><br><span class="line">auto fcn(It beg, It end)-&gt;decltype(*beg)&#123; //返回的是引用类型</span><br><span class="line">	//处理序列</span><br><span class="line">	return *beg;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>由于尾置返回出现在参数列表之后，它可以使用函数的参数。<br>进行类型转换的标准库模版类：这些模版定义在type_traits中。<br><code>remove\_reference&lt;decltype(*beg)&gt;::type</code>返回*beg的元素类型。<br>注意：type是一个类的成员，而该类依赖于一个模版参数，所以使用时，需要在前面加typename来告知编译器，type表示一种类型。</p>
+<p>标准类型转换模版：<br>|对Mod<t>，其中MOD为|若T为|则Mod<t>::type为|<br>|-|-|-|<br>|remove_reference|X&amp;或X&amp;&amp;; 否则|X; 否则T|<br>|add_const|X&amp;,const X或函数; 否则|T; 否则const T|<br>|add_lvalue_reference|X&amp;; X&amp;&amp;; 否则|T; X&amp;; T&amp;|<br>|add_revalue_reference|X&amp;或X&amp;&amp;; 否则|T; T&amp;&amp;|<br>|remove_pointer|X*; 否则|X; T|<br>|add_pointer|X&amp;或X&amp;&amp;; 否则|X*; T*|<br>|make_signed|unsigned X; 否则|X; T|<br>|remove_extent|X[n]; 否则|X; T|<br>|remove_all_extents|X[n1][n2]; 否则|X, T|<br><strong>函数指针和实参推断</strong><br>当我们用一个函数模版初始化一个函数指针或为一个函数指针赋值时，编译器使用指针的类型来推断模版实参。<br>当参数是一个函数模版实例的地址时，程序上下文必须满足：对每个模版参数，能唯一确定其类型或值。<br><strong>模板实参推断和引用</strong><br>从左值引用函数参数推断类型：函数参数是const和非const，其推测出的模版参数类型是不同的。<br>从右值引用函数参数推断类型：<br>引用折叠和右值引用参数：通过类型别名或者模板类型参数可以间接的定义引用的引用。<br>引用折叠：X&amp; &amp;、X&amp; &amp;&amp;和X&amp;&amp; &amp;都折叠成类型X&amp;；类型X&amp;&amp; &amp;&amp; 折叠成X&amp;&amp;<br>引用折叠只能应用于间接创建的引用的引用，如类型别名或模版参数。<br>重要结果：<br>如果一个函数参数是一个指向模版类型参数的右值引用（如T&amp;&amp;），则它可以被绑定到一个左值，且<br>如果实参是一个左值，则推断出的模版实参类型将是一个左值引用，且函数参数将被实例化为一个普通左值引用参数（T&amp;）。<br>也即，我们可以将任意类型的实参传递给T&amp;&amp;类型的函数实参。<br>在实际中，右值引用通常用于两种情况：模版转发其实参或模版被重载。<br><strong>理解std::move</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">typename remove_reference&lt;T&gt;::type&amp;&amp; move(T&amp;&amp; t)&#123;</span><br><span class="line">	return static_cast&lt;typename remove_reference&lt;T&gt;::type&amp;&amp;&gt;(t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></t></t></p>
+<p>从一个左值static_cast到一个右值引用是允许的。<br><strong>转发</strong><br>某些函数需要将其一个或多个实参连同类型不变的转发给其他函数。<br>如果一个函数参数是指向模版类型参数的右值引用（如：T&amp;&amp;），它对应的实参的const属性和左值/右值属性会被保持。<br>在调用中使用std::forward保存类型信息，forward和move类似，也定义在头文件utility中。<br>forward<t>的返回类型是T&amp;&amp;。<br>当用于一个向模版参数类型的右值引用函数参数（T&amp;&amp;）时，forward会保持实参类型的所有细节。</t></p>
+<h3 id="重载与模版"><a href="#重载与模版" class="headerlink" title="重载与模版"></a>重载与模版</h3><p>若涉及函数模版，则匹配规则如下：</p>
+<ol>
+<li>对一个调用，其候选函数包括所有模版实参推断成功的函数模版；</li>
+<li>候选的函数模版总是可行的，因为模版实参推断会排除任何不可信的模版；</li>
+<li>可行函数按照类型转换排序；</li>
+<li>如果恰有一个函数提供比任何其他函数都更好的匹配，则选择此函数。但是如果多个函数提供同样好的匹配，则：<br>  如果同样好函数中有非模版函数，则选择此函数；<br>  如果同样好的函数中没有非模版函数，而有多个函数模版，且其中一个模版比其他更好，则选择此模版。<br>  否则，此调用有歧义。<br>当有多个重载模版对一个调用提供同样好的匹配时，应该选择最特例化的版本。<br>在定义任何函数之前，记得声明所有重载的函数版本。这样就不必担心编译器由于未遇到你希望调用的函数而实例化一个并非你所需要的版本。<h3 id="可变参数模版"><a href="#可变参数模版" class="headerlink" title="可变参数模版"></a>可变参数模版</h3>可变数目的参数被称为参数包：模版参数表，表示零个或多个模版参数；函数参数包，表示零个或多个函数参数。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">template &lt;typename T, typename... Args&gt;</span><br><span class="line">void foo(const T &amp;t, const Args&amp; ...rest);</span><br><span class="line"></span><br><span class="line">int i=0; double d=3.14; string s=&quot;hello&quot;;</span><br><span class="line">foo(i,s,42,d); //包中有三个参数</span><br><span class="line">foo(s,42,&quot;hi&quot;);//包中有两个参数</span><br><span class="line">foo(d,s); //包中有一个参数</span><br><span class="line">foo(&quot;hi&quot;); //空包</span><br><span class="line"></span><br><span class="line">对应会被实例化为：</span><br><span class="line">void foo(const int&amp;, const string&amp;,const int&amp;,const double&amp;);</span><br><span class="line">void foo(const string&amp;,const int&amp;,const char[3]&amp;);</span><br><span class="line">void foo(const double&amp;, const string&amp;);</span><br><span class="line">void foo(constt char[3]&amp;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>sizeof…运算符：当我们需要知道包中含有多少元素时，可以使用sizeof…运算符。<br><strong>编写可变参数函数模版</strong><br>我们用一个initializer_list来定义一个可接受可变数目实参的函数。但是，所有实参必须是相同的类型。<br>当参数数目未知，类型未知时，可以使用参数包。<br><strong>包扩展</strong><br>扩展一个包就是将它分解为构成的元素，对每个元素应用模式，获得扩展后的列表。我们通过在模式右边放一个省略号来触发扩展操作：<br>扩展中的模式会独立地应用于包中的每个元素。<br><code>print(os, debug_rep(rest)...); //对rest中的每个元素执行debug调用，并扩展</code><br><strong>转发参数包</strong><br>可变参数函数通常将他们的参数转发给其他函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename... Args&gt;</span><br><span class="line">void fun(Args&amp;&amp;... args)&#123; //将Args扩展为一个右值引用的列表</span><br><span class="line">	work(std::forward&lt;Args&gt;(args)...);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="模版特例化"><a href="#模版特例化" class="headerlink" title="模版特例化"></a>模版特例化</h3><p>当我们不能或不希望使用模版版本时，可以定义类或函数模版的一个特例化版本。其中一个或多个模版参数被指定为特定类型。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template&lt;&gt;</span><br><span class="line">int compare(const char* const &amp;p1, const char* const &amp;p2)&#123; //compare的特殊版本，处理字符数组的指针</span><br><span class="line">	return strcmp(p1,p2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>函数重载与模版特例化：特例化的本质是实例化一个模版，而非重载它。因此特例化不影响函数匹配。<br>为了特例化一个模版，原模版的声明必须在作用域中。<br>模版及其特例化版本应该声明在同一个头文件中。所有同名模版的声明一个放在前面，然后是这些模版的特例化版本。<br>类模版特例化：<br>我们只能部分特例化类模版，而不能部分特例化函数模版。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/26/C-学习笔记第十六章—-模版与泛型编程/" data-id="cjlccta8z0012hsv73fgjen1h" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/24/C-学习笔记第十五章-面向对象程序设计/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第十五章_面向对象程序设计</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

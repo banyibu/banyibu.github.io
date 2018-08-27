@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="致良知，事上练">
 <meta property="og:description" content="概述调用形式、类类型转换、类型转换运算符、显示的类型转换运算符、函数对象、函数表、函数模版、重载的运算符。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-24T13:33:49.451Z">
+<meta property="og:updated_time" content="2018-08-27T04:01:52.775Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C++学习笔记第十四章_重载运算与类型转换">
 <meta name="twitter:description" content="概述调用形式、类类型转换、类型转换运算符、显示的类型转换运算符、函数对象、函数表、函数模版、重载的运算符。">
@@ -43,7 +43,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
       <a href="/categories"><div><strong>19</strong><br>分类</div></a>
       <a href="/tags"><div><strong>20</strong><br>标签</div></a>
     </div>
@@ -168,13 +168,12 @@
 </tbody>
 </table>
 <p>重载的函数名字不能直接存入function类型的对象中。这是，function对象分不清将要存储哪个函数，应该使用函数指针间接存入。</p>
-<h3 id="重载、类型转换与运算符"><a href="#重载、类型转换与运算符" class="headerlink" title="重载、类型转换与运算符"></a>重载、类型转换与运算符</h3><p>转换构造函数和类型转换运算符共同定义了类类型转换，这样的转换有时也被称为用户定义的类型转换。<br><strong>类型转换运算符</strong><br>隐式的类型转换运算符其形式如下：<br><code>operator type() const; //其中type表示某种类型</code><br>类型转换运算符既没有显示的返回类型，也没有形参，而且必须定义成类的成员函数，且一般其被定义为const成员。<br>尽管编译器一次只能执行一个用户定义的类型转换，但是隐式的用户类型转换可以置于一个标准类型转换之前或者之后，并与其一起使用。<br>对于类型直接不存在一对一映射关系的类，我们不应该为其定义相应的类型转换函数。<br>显示的类型转换运算符：<br><code>explicit operator int() const;</code><br>显示的类型转换运算符不会自动用于隐式的类型转换，但是在被用作条件表达式时，编译器会将显示的类型转换自动应用于它。<br>即在：if whil及do语句的条件部分、for语句的条件表达式、逻辑非! || &amp;&amp;运算对象、 ?:的条件表达式<br>向bool的类型转换通常在条件部分，因此operator bool一般定义成explicit的。<br><strong>避免有二义性的类型转换</strong><br>如果类中包含一个或多个类型转换，则必须保证在类类型和目标类型之间只存在唯一的转换方式。<br>通常情况下不要为类定义相同的类型转换，也不要在类中定义两个及两个以上转换源或转换目的是算术类型的转换。<br>当我们使用两个用户定义的类型转换时，如果转换函数之前或之后存在标准类型转换，则标准类型转换将决定最佳匹配到底时哪个。<br>除了显示地向bool类型的转换外，我们应该尽量避免定义类型转换函数并尽可能地限制那些“显然正确”的非显示构造函数。<br>重载函数与转换构造函数。<br>重载函数与用户定义的类型转换：当调用函数时，如果两个用户定义的类型转换都提供了可行匹配，则我们认为这些类型转换一样好。<br>在调用重载函数时，如果需要额外的标准类型转换，则该转换的级别只有当所有可行函数都请求同一个用户定义的类型转换时才有用。如果所需的用户定义类型转换不止一个，则该调用具有二义性。<br><strong>函数匹配与重载运算符</strong><br>当我们再表达式中使用重载运算符时，无法判断正在使用的是成员函数还是非成员函数，因此二者都在考虑之列。<br>如果我们对同一个类既提供了转换目标是算术类型的类型转换，也提供了重载的运算符，则将会遇到重载运算符与内置运算符的二义性问题。</p>
-<p>只接受单独一个参数的非显示构造函数定义了从一个实参类型到类类型的类型转换；而非显示的类型转换，定义了从类类型到其他类型的转换。</p>
+<h3 id="重载、类型转换与运算符"><a href="#重载、类型转换与运算符" class="headerlink" title="重载、类型转换与运算符"></a>重载、类型转换与运算符</h3><p>转换构造函数和类型转换运算符共同定义了类类型转换，这样的转换有时也被称为用户定义的类型转换。<br><strong>类型转换运算符</strong><br>隐式的类型转换运算符其形式如下：<br><code>operator type() const; //其中type表示某种类型</code><br>类型转换运算符既没有显示的返回类型，也没有形参，而且必须定义成类的成员函数，且一般其被定义为const成员。<br>尽管编译器一次只能执行一个用户定义的类型转换，但是隐式的用户类型转换可以置于一个标准类型转换之前或者之后，并与其一起使用。<br>对于类型直接不存在一对一映射关系的类，我们不应该为其定义相应的类型转换函数。<br>显示的类型转换运算符：<br><code>explicit operator int() const;</code><br>显示的类型转换运算符不会自动用于隐式的类型转换，但是在被用作条件表达式时，编译器会将显示的类型转换自动应用于它。<br>即在：if whil及do语句的条件部分、for语句的条件表达式、逻辑非! || &amp;&amp;运算对象、 ?:的条件表达式<br>向bool的类型转换通常在条件部分，因此operator bool一般定义成explicit的。<br><strong>避免有二义性的类型转换</strong><br>如果类中包含一个或多个类型转换，则必须保证在类类型和目标类型之间只存在唯一的转换方式。<br>通常情况下不要为类定义相同的类型转换，也不要在类中定义两个及两个以上转换源或转换目的是算术类型的转换。<br>当我们使用两个用户定义的类型转换时，如果转换函数之前或之后存在标准类型转换，则标准类型转换将决定最佳匹配到底时哪个。<br>除了显示地向bool类型的转换外，我们应该尽量避免定义类型转换函数并尽可能地限制那些“显然正确”的非显示构造函数。<br>重载函数与转换构造函数。<br>重载函数与用户定义的类型转换：当调用函数时，如果两个用户定义的类型转换都提供了可行匹配，则我们认为这些类型转换一样好。<br>在调用重载函数时，如果需要额外的标准类型转换，则该转换的级别只有当所有可行函数都请求同一个用户定义的类型转换时才有用。如果所需的用户定义类型转换不止一个，则该调用具有二义性。<br><strong>函数匹配与重载运算符</strong><br>当我们再表达式中使用重载运算符时，无法判断正在使用的是成员函数还是非成员函数，因此二者都在考虑之列。<br>如果我们对同一个类既提供了转换目标是算术类型的类型转换，也提供了重载的运算符，则将会遇到重载运算符与内置运算符的二义性问题。<br>只接受单独一个参数的非显示构造函数定义了从一个实参类型到类类型的类型转换；而非显示的类型转换，定义了从类类型到其他类型的转换。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/23/C-学习笔记第十四章-重载运算与类型转换/" data-id="cjl81fx260012zwv7l67dvfpy" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/23/C-学习笔记第十四章-重载运算与类型转换/" data-id="cjlccta920018hsv7opiotwsy" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -283,7 +282,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>33</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>34</strong><br>文章</div></a>
       <a href="/categories"><div><strong>19</strong><br>分类</div></a>
       <a href="/tags"><div><strong>20</strong><br>标签</div></a>
     </div>
