@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第十八章_用于大型程序的工具 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述异常处理、命名空间、多重继承与虚函数大规模程序的特殊要求：  在独立开发的子系统之间协同处理错误的能力； 使用各种库进行协同开发； 对比较复杂的应用感念建模的能力。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第十八章_用于大型程序的工具">
+<meta property="og:url" content="http://banyibu.com/2018/08/31/C-学习笔记第十八章-用于大型程序的工具/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述异常处理、命名空间、多重继承与虚函数大规模程序的特殊要求：  在独立开发的子系统之间协同处理错误的能力； 使用各种库进行协同开发； 对比较复杂的应用感念建模的能力。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-c7e04b5888778530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-31T15:07:23.165Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第十八章_用于大型程序的工具">
+<meta name="twitter:description" content="概述异常处理、命名空间、多重继承与虚函数大规模程序的特殊要求：  在独立开发的子系统之间协同处理错误的能力； 使用各种库进行协同开发； 对比较复杂的应用感念建模的能力。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-c7e04b5888778530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>37</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第十八章-用于大型程序的工具" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/31/C-学习笔记第十八章-用于大型程序的工具/" class="article-date">
+  <time class="post-time" datetime="2018-08-31T03:49:50.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">31</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第十八章_用于大型程序的工具
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>异常处理、命名空间、多重继承与虚函数<br>大规模程序的特殊要求：</p>
+<ol>
+<li>在独立开发的子系统之间协同处理错误的能力；</li>
+<li>使用各种库进行协同开发；</li>
+<li>对比较复杂的应用感念建模的能力。<a id="more"></a>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3>异常处理将问题的检测与问题的处理分开来了。<br><strong>抛出异常</strong><br>抛出、引发、处理代码<br>throw语句通常作为条件语句的一部分或作为某个函数的最后一条语句。<br>栈展开过程：沿着嵌套函数的调用链不断查找，知道找到异常匹配的catch子句为止。或一直未找到，则终止程序。<br>栈展开的过程中对象被自动销毁。<br>析构函数和异常：应该栈展开的过程中会调用析构函数析构对象，所以析构函数不应该抛出不能被它自身处理的异常。<br>异常对象：是一种特殊对象，编译器使用异常抛出表达式来对异常对象进行拷贝初始化。<br>抛出指针要求在任何对应的处理代码存在的地方，指针所指的对象都必须存在。<br><strong>捕获异常</strong><br>通常情况下，如果catch接受的异常与某个继承体系有关，则最好将改catch的参数定义成引用类型。<br>异常的类型和catch申明的类型的匹配：</li>
+<li>允许从非常量向常量的转换；</li>
+<li>允许从派生类向基类的类型转换；</li>
+<li>数组和函数转换成相应的指针。<br>如果多个catch语句的类型之间存在继承关系，则我们应该把继承链最低端的类放在前面，而将继承链最顶端的类放在后面。<br>重新抛出：throw; 空的throw语句只能出现在catch语句或catch语句直接或间接调用的函数之内。<br>捕获所有异常：catch(…){}<br>如果catch(…)与其他几个catch语句一起出现，则catch(…)必须在最后的位置。<br><strong>函数try语句块与构造函数</strong><br>构造函数体内的catch语句无法处理构造函数初始值列表抛出的异常。处理构造函数初始值异常的唯一方法是将构造函数写成try语句块。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">Blob&lt;T&gt;::Blob(std::initializer_list&lt;T&gt; il)try: data(std::make_shared&lt;std::vector&lt;T&gt;&gt;(il))&#123;</span><br><span class="line">	……;</span><br><span class="line">&#125;catch(const std::bad_alloc &amp;e)&#123;handle_out_of_memory(e);&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注意，在这里，初始化函数参数抛出的异常只能在调用者所在的上下文处理。<br><strong>noexcept异常说明</strong><br>noexcept放在函数参数列表后面。且在函数所有声明和定义中要么都出现，要么都不出现。在成员函数中，noexcept说明符需要跟在const及引用限定符之后，而在final、override或虚函数的=0之前。<br>noexcept出现在两种情况下：确认函数不会抛出异常、不知道如何处理异常。在出现noexcept的位置用throw()代替，效果是一样的。<br>异常说明符参数noexcept(arg); 其接受一个参数的版本，若参数为true，不抛出异常，否则可能抛出。<br>noexcept运算符：noexcept(e);当e调用的所有函数都做了不抛出说明且e本身不含有throw语句时，返回true；否则返回false。<br><code>void f() noexcept(noexcept(g())); //f和g的异常类型说明符一致</code><br>函数指针及指针指向的函数必须具有一致的异常说明。即指针做了不抛出异常的声明，则其只能指向不抛出异常的函数。相反，若我们显示或隐式的说明了指针可以抛出异常，则该指针可以指向任意类型函数。<br>如果一个虚函数承诺了不抛出异常，则后续派生类的虚函数必须做同样的承诺。相反，派生类的虚函数可以抛出异常也可以不抛出异常。<br><strong>异常类层次</strong><br><img src="https://upload-images.jianshu.io/upload_images/12985001-c7e04b5888778530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="标准库异常类"><br>实际的应用程序通常会自定义exception的派生类以扩展其继承体系。</p>
+<h3 id="命名空间"><a href="#命名空间" class="headerlink" title="命名空间"></a>命名空间</h3><p><strong>命名空间定义</strong><br>只要能出现在全局作用域中的声明就能置于命名空间内，主要包括：类、变量机器初始化操作、函数及其定义、模板和其他命名空间。<br>命名空间可以定义在全局作用域，也可以定义在其他命名空间之中，但是不能定义在函数或类的内部。<br>命名空间作用域后面无需分号。<br>每个命名空间就是一个作用域、命名空间可以是不连续的；</p>
+<ol>
+<li>命名空间的一部分成员的作用是定义类，以及声明作为类接口的函数和对象，则这些成员应该置于头文件中，这些头文件将被包含在使用了这些成员的文件中；</li>
+<li>命名空间成员的定义部分则置于另外的源文件中。<br>定义多个类型不相干的命名空间应该使用单独的文件分别表示每个类型。<br>命名空间中成员的定义可以是在其相应的命名空间中，也可以是在全局作用域中，但是不能在一个不相干的作用域中。<br>模板特例化必须在原始模板所属的命名空间中定义，或在命名空间中声明，在外部定义。<br>全局命名空间，使用全局命名空间<code>::member_name //使用全局命名空间中的member_name名称</code><br>嵌套的命名空间<br>内联的命名空间：内联命名空间中的名字可以直接被其外层命名空间直接使用。定义内联的命名空间是在关键字namespace 前加关键字inline。且关键字inline必须出现在命名空间第一次定义的地方。<br>未命名的命名空间：与其他命名空间不同，未命名的命名空间仅在特定的文件内有效，其所用范围不会横跨多个不同的文件。定义在未命名的命名空间中的名字可以直接使用，对未命名命名空间的名字也不能使用作用域运算符。<br>未命名空间中定义的名字拥有静态的生命周期。且未命名的命名空间中的名字的作用域与该命名空间所在的作用域相同。<br>在文件中进行静态声明的做法已经被C++标准取消了，现在的做法是使用未命名的命名空间。<br><strong>使用命名空间的成员</strong><br>命名空间的别名：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">namespace cplusplus_primer&#123;</span><br><span class="line">	……;</span><br><span class="line">&#125;</span><br><span class="line">namespace primer=cplusplus_primer;</span><br><span class="line">namespace Qlib=cplusplus_primer::QueryLib;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>一个命名空间可以有好几个同义词或别名，所有别名都与命名空间原来的名字等价。<br>using声明，一次引入一个名字；using指示一次引入一个命名空间中的名字。<br>using指示可以出现在全局作用域、局部作用域和命名空间作用域中，但是不能出现在类的作用域。<br>using指示将命名空间成员提升到包含命名空间本身和using指示的最近作用域的能力。<br><strong>头文件和using声明或指示</strong><br>头文件最多只能在它的函数或命名空间内使用using指示或using申明。<br><strong>类、命名空间与作用域</strong><br>可以从函数的限定名推断出查找名字时检查作用域的次序，限定名以相反次序指出被查找的作用域。<br>实参相关的查找与类类型形参：当我们传递给函数一个类类型相关的对象时，除了在常规的作用域查找外还会查找实参所属的命名空间。<br>查找与std::move和std::forward<br>友元声明与实参相关的查找：即便友元只在类内声明，若友元含有包含类在命名空间中的名字为参数，则该友元声明会被找到。<br><strong>重载与命名空间</strong><br>using声明或using指示能将某些函数添加到候选集。<br>与实参相关的查找与重载：接受类类型实参的函数，将会在实参类所在的命名空间中查找候选函数。<br>重载与using申明：using声明语句将同名的所有函数版本都引入到当前作用域。若using申明引入的一个函数与当前作用域中的一个函数冲突，则using语句出错。<br>重载与using指示：与using声明不同，using指示将引入一个已有函数形参列表完全相同的函数不会产生错误，只要我们指明调用的事命名空间中的函数版本函数当前作用域的版本即可。</p>
+<h3 id="多重继承与虚函数"><a href="#多重继承与虚函数" class="headerlink" title="多重继承与虚函数"></a>多重继承与虚函数</h3><p>从多个直接基类产生派生类的能力。<br><strong>多重继承</strong><br>多重继承的派生类从每个基类中继承状态。<br>基类的构造顺序与派生类列表中基类的出现顺序保持一致。<br>如果一个类从它的多个基类中继承了相同的构造函数，则这个类必须为该构造函数定义它自己的版本。<br>析构函数与多重继承：析构顺序与构造顺序相反，派生类的析构函数只负责清除派生类本身的资源。<br>多重继承的派生类的拷贝与移动操作：多重继承的派生类如果定义了自己的拷贝/赋值/构造函数和符纸运算符，则必须在完整的对象上执行拷贝、移动或赋值操作。<br><strong>类型转换与多个基类</strong><br>我们可以令某个可访问基类的指针或引用直接指向一个派生类对象。在编译器看来，派生类向基类的任意一种转换都一样好。<br><strong>多重继承下的类的作用域</strong><br>当一个类拥有多个基类时，有可能出现派生类从两个或更多基类中继承了同名成员的情况。此时不加前缀限定符直接使用该名字将引发二义性。<br>即使派生类继承的两个同名函数形参列表不同也会引发二义性。或两个同名成员一个公有一个私有，也会产生二义性。消除这种二义性最好的方法是在派生类中重新定义一个同名成员。<br><strong>虚继承</strong><br>派生类可以多次继承同一个基类。<br>默认情况下，派生类中含有继承链上的每个类对应的子部分。如果某个类在派生过程中出现多次，则派生类中将包含该类的多个子对象。<br>虚继承可以解决上述对象，虚继承的目的是令某个类做出申明，愿意共享它的基类。其中共享的基类叫虚基类。<br>虚派生只影响从指定了虚基类的派生类中进一步派生出的类，它不会影响派生类本身。<br>指定虚基类的方式是在派生列表中添加关键字virtual，其中public和virtual关键字顺序随意。<br>支持向基类的常规类型转换。<br>如果虚基类的成员有一条派生路径未被覆盖，则我们仍然可以访问被覆盖的成员。佛则，我们不可以直接访问被覆盖的成员。<br><strong>构造函数与虚继承</strong><br>在虚派生中，虚基类是由最底层的派生类初始化的。<br>虚继承的对象的构造方法：首先使用提供给最底层派生类构造函数的初始值初始化该对象的虚基类部分，接下来按照直接基类在派生类列表中出现的顺序依次对其进行初始化。<br>虚基类总是先于非虚基类构造，与他们在继承体系中的次序和位置无关。<br>构造函数与析构函数次序：先按照继承列表扫描虚基类，进行构造。然后构造非虚基类。<br>terminate是一个标准库函数，当异常未被捕获或则在处理异常的郭冲中发生了一个异常时，terminate负责结束程序的执行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/31/C-学习笔记第十八章-用于大型程序的工具/" data-id="cjli4twn10035jsv7kkhbchz9" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/30/C-学习笔记第十七章-标准库特殊设施/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第十七章_标准库特殊设施</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>37</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
