@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第十七章_标准库特殊设施 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述tuple、bitset、正则表达式、随机数、附加的IO库功能">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第十七章_标准库特殊设施">
+<meta property="og:url" content="http://banyibu.com/2018/08/30/C-学习笔记第十七章-标准库特殊设施/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述tuple、bitset、正则表达式、随机数、附加的IO库功能">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-31T03:47:47.696Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第十七章_标准库特殊设施">
+<meta name="twitter:description" content="概述tuple、bitset、正则表达式、随机数、附加的IO库功能">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>36</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第十七章-标准库特殊设施" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/30/C-学习笔记第十七章-标准库特殊设施/" class="article-date">
+  <time class="post-time" datetime="2018-08-30T01:52:42.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">30</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第十七章_标准库特殊设施
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>tuple、bitset、正则表达式、随机数、附加的IO库功能<br><a id="more"></a></p>
+<h3 id="tuple类型"><a href="#tuple类型" class="headerlink" title="tuple类型"></a>tuple类型</h3><p>tuple是多种类型数据的一个组合对象。其支持的操作有：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tuple&lt;T1,T2,…,Tn&gt; t;</td>
+<td>t是一个tuple，共有n个成员，第i个成员的类型为Ti。所有成员都进行值初始化</td>
+</tr>
+<tr>
+<td>tuple&lt;T1,T2,…,Tn&gt; t(v1,v2,…,vn);</td>
+<td>每个成员用对应的vi初始化，此构造函数时explicit的</td>
+</tr>
+<tr>
+<td>make_tuple(v1,v2,…,vn)</td>
+<td>返回一个给定初始化的tuple，tuple的类型由初始值推断</td>
+</tr>
+<tr>
+<td>t1==t2</td>
+<td>具有相同数量的成员，且对应成员相等时</td>
+</tr>
+<tr>
+<td>t1!=t2</td>
+<td>…</td>
+</tr>
+<tr>
+<td>t1 relop t2</td>
+<td>关系运算符</td>
+</tr>
+<tr>
+<td>get&lt;\i&gt;(t)</td>
+<td>返回t的第i个数据成员的引用，如果t是一个左值，结果是左值引用，否则是右值引用。tuple的所有成员都是public的</td>
+</tr>
+<tr>
+<td>tuple_size&lt;\tupleType&gt;::value</td>
+<td>返回给定tuple类型中成员的数量</td>
+</tr>
+<tr>
+<td>tuple_element&lt;\i, tupleType&gt;::type</td>
+<td>返回给定tuple类型中，第i个成员的类型</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以将tuple看作一个“快速而随意”的数据结构。<br>由于tuple定义了&lt;和==运算符，我们可以将tuple序列传递给算法，并且可以在无序容器中将tuple作为关键字类型。</p>
+<h3 id="bitset类型"><a href="#bitset类型" class="headerlink" title="bitset类型"></a>bitset类型</h3><p>bitset类定义在bitset头文件中。<br><strong>定义和初始化bitset</strong><br>bitset类是一个模板类，它类似array类，具有固定的大小。<br>初始化bitset的方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bitset&lt;\n&gt; b;</td>
+<td>b有n位；每一位均为0。此构造函数时一个constexpr。</td>
+</tr>
+<tr>
+<td>bitset&lt;\n&gt; b(u);</td>
+<td>b是unsigned long long值u的低n位的拷贝。如果n大于u的长度，则高位置零。</td>
+</tr>
+<tr>
+<td>biset&lt;\n&gt; b(s, pos, m, zero, one);</td>
+<td>b是string s从位置pos开始m个字符的拷贝。是只能包含zero和one；如果s包含任何其他字符，构造函数会抛出invalid_argument异常。字符在b中分别保存为zero和one。pos默认为0，m默认为string::npos，zero默认为‘0’，one默认为‘1’</td>
+</tr>
+<tr>
+<td>bitset&lt;\n&gt; b(cp,pos,m,zero,one)</td>
+<td>同上，cp指向字符数组，若未提供m，则cp必须指向一个c风格字符串。</td>
+</tr>
+</tbody>
+</table>
+<p>string的下标编号习惯与bitset恰好相反。<br><strong>bitset操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b.any()</td>
+<td>b中是否存在置位的二进制位</td>
+</tr>
+<tr>
+<td>b.all()</td>
+<td>b中所有的位都置位了吗</td>
+</tr>
+<tr>
+<td>b.none()</td>
+<td>b中不存在置位的二进制位吗</td>
+</tr>
+<tr>
+<td>b.count()</td>
+<td>b中置位的位数</td>
+</tr>
+<tr>
+<td>b.size()</td>
+<td>一个constexpr函数，返回b中的位数</td>
+</tr>
+<tr>
+<td>b.test(pos)</td>
+<td>若pos位置位，则返回true</td>
+</tr>
+<tr>
+<td>b.set(pos,v) b.set()</td>
+<td>b中pos位设置为bool值v，v默认为true；若未传递参数，则将b中所有位都置位</td>
+</tr>
+<tr>
+<td>b.reset(pos) b.reset()</td>
+<td>将b中是pos位复位或将所有位复位</td>
+</tr>
+<tr>
+<td>b.flip(pos) b.filp()</td>
+<td>改变pos位的状态，或改变所有位置状态</td>
+</tr>
+<tr>
+<td>b[pos]</td>
+<td>访问b中位置pos处的位；若b是const的，则该位置位时返回true，否则返回false</td>
+</tr>
+<tr>
+<td>b.to_ulong() b.to_ullong()</td>
+<td>返回unsigned long或unsigned long long值，若b超过其所能容纳的范围，抛出overflow_error异常</td>
+</tr>
+<tr>
+<td>b.to_string(zero,one)</td>
+<td>返回string，表示b中的位模式。zero和one默认为0和1，用来表示b中的0和1</td>
+</tr>
+<tr>
+<td>os&lt;&lt;\b is&gt;&gt;b</td>
+<td>将b中的二进制位打印为字符1或0，打印到流os；is读取字符存入b，当读到非0和1的字符时或已经读取b.size()个字符时，读取停止</td>
+</tr>
+</tbody>
+</table>
+<h3 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h3><p>C++正则表达式库（RE）。定义在头文件regex中。包含多个组件：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>regex</td>
+<td>表示有一个正则表达式的类</td>
+</tr>
+<tr>
+<td>regex_match</td>
+<td>将一个字符序列与一个正则表达式匹配</td>
+</tr>
+<tr>
+<td>regex_search</td>
+<td>寻找第一个与正则表达式匹配的子序列</td>
+</tr>
+<tr>
+<td>regex_replace</td>
+<td>使用给定格式替换一个正则表达式</td>
+</tr>
+<tr>
+<td>sregex_iterator</td>
+<td>迭代器适配器，调用regex_search来遍历一个string中的所有匹配的子串</td>
+</tr>
+<tr>
+<td>smatch</td>
+<td>容器类，保存在string中搜索的结果</td>
+</tr>
+<tr>
+<td>ssub_match</td>
+<td>string中匹配的子表达式的结果</td>
+</tr>
+</tbody>
+</table>
+<p>regex_search和regex_match的参数（这些操作的返回值都是bool值）：<br>(seq, m, r, mft) 在字符序列seq中查找regex对象r中的正则表达式。seq可以是一个string、表示一个范围的一对迭代器以及一个指向空字符结尾的数组指针。<br>m是一个match对象，用来保存匹配结果的相关细节。m是seq必须兼容的类型。mft是一个可选的regex_constants::match_flag_type值。<br><strong>使用正则表达式库</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//查找不再字符c之后的字符串ei</span><br><span class="line">string pattern(&quot;[^c]ei&quot;);</span><br><span class="line">//我们需要包含pattern的整个单词</span><br><span class="line">pattern = &quot;[[:alpha:]]*&quot; + pattern + &quot;[[:alpha:]]*&quot;;</span><br><span class="line">regex r(pattern); //构造一个用于查找模型的regex</span><br><span class="line">smatch results; //定义一个对象保存搜索结果</span><br><span class="line">//定义一个string保存与模式匹配和不匹配的文本</span><br><span class="line">string test_str = &quot;receipt freind theif receive&quot;;</span><br><span class="line">if(regex_search(test_str, result,r))</span><br><span class="line">   cout&lt;&lt;result.str()&lt;&lt;endl;</span><br></pre></td></tr></table></figure></p>
+<p>regex使用的正则表达式语言是ECMAScrip。在ECMAScrip中，[[:alpha:]]匹配任意字母，符号+和*分别表示我们希望“一个或多个”或“零个或多个”匹配。<br>regex(和wregex)选项：</p>
+<p>|选项|解释|<br>|regex r(re) regex r(re,f)|re表示一个正则表达式，它可以是一个string、一个表示字符范围的迭代器对、一个指向空字符结尾的字符数组的指针、一个字符指针和一个计数器或是一个花括号包围的字符列表。f是指出对象如何处理的标志。f通过下面累出的值来设置。如未指出f，其默认值是ECMAScrip。|<br>|r1=re|将r1中的正则表达式替换为re。re表示一个正则表达式，它可以使另一个regex对象、一个string、一个指向空字符结尾的字符数组的指针或是一个花括号包围的字符列表|<br>|r1.assign(re,f)|与使用赋值运算符的效果一样：可以选择标志f也可以与regex的构造函数中对应的参数含义相同|<br>|r.mark_count()|r中子表达式的数目|<br>|r.flags()|返回r的标志集|<br>|注：构造函数和赋值操作可能会抛出regex_error的异常|<br>|定义regex时指定的标志。下面这些标志定义在regex和regex_constants::syntax_option_type中|<br>|icase|在匹配过程中忽略大小写|<br>|nosubs|不保存匹配的子表达式|<br>|optimize|执行速度犹豫构造速度|<br>|ECMAScrip|使用ECMA-262指定的语法|<br>|basic|使用POSIX基本的正则表达式|<br>|extended|使用POSIX扩展的正则表达式规则|<br>|awk|使用POSIX版本的awk语言的语法|<br>|grep|使用POSIX版本的grep的语法|<br>|egrep|使用POSIX版本的egrep的语法|<br>查找后缀名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//一个或多个数组或字母后接一个‘.’再接“cpp”或“cxx”或“cc”</span><br><span class="line">regex r(&quot;[[:alnum:]]+\\.([cpp|cxx|cc]$)&quot;, regex::icase);</span><br><span class="line">smatch results;</span><br><span class="line">string filename;</span><br><span class="line">while(cin&gt;&gt;filename)&#123;</span><br><span class="line">	cout&lt;&lt;results.str()&lt;&lt;endl; //打印匹配结果</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>正则表达式中的特殊字符‘.’通常匹配任意字符。所以需要加‘\’转义，但是又因为在string中‘\’也需要转义。所以上面连续出现了两个‘\’。<br>一个正则表达式的语法是否正确是在运行时解析的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">try&#123;</span><br><span class="line">	regex r(&quot;[[:alnum:]+\\.(cpp|cxx|cc)$&quot;, regex::icase);</span><br><span class="line">&#125;catch(regex_error e)&#123;</span><br><span class="line">	cout&lt;&lt;e.what()&lt;&lt;&quot;\ncode:&quot;&lt;&lt;e.code()&lt;&lt;endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>正则表达式错误类型：定义在regex和regex_constants::error_type中</p>
+<p>|错误类型|解释|错误类型|解释|<br>|error_coolate|无效的元素校对请求|error_ctype|无效的字符类|<br>|error_escape|无效的转义字符或无效的未置转义|error_backref|不匹配的方括号|<br>|error_paren|不匹配的小括号|error_badbrace|{}中无效的范围|<br>|error_range|无效的字符范围|error_space|内存不足无法处理此正则表达式|<br>|error_badrepeat|重复字符*、?、+、{之前没有有效的正则表达式|error_complexity|要求的匹配过于复杂|<br>|error_stack|栈空间不足，无法处理匹配|<br>构建和赋值一个正则表达式是比较费时的。<br>正则表达式输入和输出序列类型：宽字符版本，可以使用宽字符定义wregex。<br>匹配和迭代器类型：smatch表示string类型的输入序列；cmatch表示字符数组序列；wsmatch、wcmatch；输入和输出类型必须配。<br>正则表达式库类：</p>
+<table>
+<thead>
+<tr>
+<th>输入序列</th>
+<th>使用正则表达式类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>string</td>
+<td>regex、smatch、ssub_match、sregex_iterator</td>
+</tr>
+<tr>
+<td>const char*</td>
+<td>regex、cmatch、csub_match、cregex_iterator</td>
+</tr>
+<tr>
+<td>wstring</td>
+<td>wregex、wsmatch、wssub_match、wsregex_iterator</td>
+</tr>
+<tr>
+<td>const wchar_t*</td>
+<td>wregex、wcmatch、wcsub_match、wcregex_iterator</td>
+</tr>
+</tbody>
+</table>
+<p><strong>匹配与regex迭代器类型</strong><br>sregex_iterator操作：这些操作适用于sregex_iterator、wsregex_iterator和wcregex_iterator</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sregex_iterator it(b,e,r)</td>
+<td>一个sregex_iterator,遍历迭代器b和e表示的string。它调用sregex_search(b,e,r)将it定位到输入中第一个匹配的位置</td>
+</tr>
+<tr>
+<td>sregex_iterator end</td>
+<td>sregex_iterator的尾后迭代器</td>
+</tr>
+<tr>
+<td>*it it-&gt;</td>
+<td>根据最后一个regex_serach的结果，返回一个smatch对象的引用或一个指向smatch对象的指针</td>
+</tr>
+<tr>
+<td>it++ ++it</td>
+<td>从输入序列当前匹配位置开始调用regex_search。</td>
+</tr>
+<tr>
+<td>it1==it2 it1!=it2</td>
+<td>如果两个sregex_iterator都是尾后迭代器，则它们相等，两个非尾后迭代器是从相同的输入序列和regx对象构造，则他们相等</td>
+</tr>
+</tbody>
+</table>
+<p>使用sregex_iterator：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//查找不再字符c之后的字符串ei</span><br><span class="line">string pattern(&quot;[^c]ei&quot;);</span><br><span class="line">//我们需要包含pattern的整个单词</span><br><span class="line">pattern = &quot;[[:alpha:]]*&quot; + pattern + &quot;[[:alpha:]]*&quot;;</span><br><span class="line">regex r(pattern); //构造一个用于查找模型的regex</span><br><span class="line">for(sregex_iterator it(file.begin(), file.end(),r), end_it; it!=end_it; ++it)</span><br><span class="line">    cout&lt;&lt;it-&gt;str()&lt;&lt;endl;</span><br></pre></td></tr></table></figure></p>
+<p>smatch的操作：这些操作也使用与cmatch、wsmatch、wcmatch和对应的csub_match、wssub_match和wcsub_match。</p>
+<table>
+<thead>
+<tr>
+<th>smatch操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>m.ready()</td>
+<td>如果已经通过调用regex_serach或regex_match设置了m，则返回true；否则返回false。如果ready返回false，则对m进行操作是未定义的。</td>
+</tr>
+<tr>
+<td>m.size()</td>
+<td>如果匹配失败则返回0；否则返回最近一次匹配的正则表达式中子表达式的数目</td>
+</tr>
+<tr>
+<td>m.empty()</td>
+<td>若m.size()为0，则返回true</td>
+</tr>
+<tr>
+<td>m.prefix()</td>
+<td>一个ssub_match对象，表示当前匹配之前的序列</td>
+</tr>
+<tr>
+<td>m.suffix()</td>
+<td>一个ssub_match对象，表示当前匹配之后的序列</td>
+</tr>
+<tr>
+<td>m.format(…)</td>
+<td>下回解释</td>
+</tr>
+<tr>
+<td><strong>在接受一个索引的操作中，n的默认值为0且必须小于m.size()。第一个子匹配(索引为0)表示整个匹配</strong></td>
+</tr>
+<tr>
+<td>m.length(n)</td>
+<td>第n个匹配的子表达式的大小</td>
+</tr>
+<tr>
+<td>m.position(n)</td>
+<td>第n个子表达式距离序列开始的距离</td>
+</tr>
+<tr>
+<td>m.str(n)</td>
+<td>第n个子表达式匹配的string</td>
+</tr>
+<tr>
+<td>m[n]</td>
+<td>对应第n个子表达式ssub_match对象</td>
+</tr>
+<tr>
+<td>m.begin(), m.end(), m.cbegin(), m.cend()</td>
+<td>表示m中sub_match元素范围的迭代器。与往常一样，cbegin和cend返回const_iterator</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用子表达式</strong><br>正则表达式中模式通常包含一个或多个子表达式，正则表达式语法通常用括号表示子表达式。<br>ECMAScrip正则表达式的一些语言特性：</p>
+<ol>
+<li>\{d}表示单个数组而\{d}n则表示n个数组序列；</li>
+<li>方括号中的字符集合，表示匹配这些字符集中发任意一个；</li>
+<li>?表示可选的；</li>
+<li>注意\\的特殊含义。<br>子匹配操作：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>子匹配操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>matched</td>
+<td>一个public bool成员，指出ssub_match是否匹配了</td>
+</tr>
+<tr>
+<td>first</td>
+<td>public数据成员，指向匹配序列首元素和尾元素的迭代器。如果未匹配，则first和second是相等的</td>
+</tr>
+<tr>
+<td>length()</td>
+<td>匹配的大小，如果match未false，则返回0</td>
+</tr>
+<tr>
+<td>str()</td>
+<td>返回一个包含输入中匹配部分的string。如果matched未false，则返回空string</td>
+</tr>
+<tr>
+<td>s = ssub</td>
+<td>将ssub_match对象ssub转换为string对象s。等价于s=ssub.str()。转换运算符不是explicit的</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用regex_replace</strong><br>当我们希望在输入徐磊中查找并替换一个正则表达式时，我们可以调用regex_replace<br>正则表达式替换操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>m.format(dest, fmt, mft) m.format(dest, fmt, mft)</td>
+<td>使用格式字符串fmt生成格式化输出，匹配在m中，可选match_flage_type标志在mft中。第一个版本写入迭代器dest指向的目的位置并接受fmt参数，可以是一个string，也可以使表示字符数组中范围的一个指针。第二个版本返回一个string，也可以是一个指向空字符结尾的字符数组的指针。mft的默认值为format_default</td>
+</tr>
+<tr>
+<td>regex_replace(dest, seq, r, fmt, mft) regex_replace(seq, r, fmt, mft)</td>
+<td>遍历seq，用regex_search查找regex对象r匹配的子串。使用格式字符串fmt和可选的match_flag_type标志来生成输出。第一个版本将输出写入到dest指定的位置，并接受一对迭代器deq表示范围。第二版版本返回一个string，保存输出，且seq既可以是一个string也可以是一个指向空字符结尾的字符数组的指针。在所有情况下，fmt既可以使一个string也可以是一个指向空字符结尾的字符数组的指针，且mft的默认值为match_default</td>
+</tr>
+</tbody>
+</table>
+<p>替换字符串由我们想要的字符组合与匹配的子串对应的子表达式组成。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">string fmt = &quot;$2.$5.$7&quot;; //保存的格式将是第二五七个子串且中间用‘.’隔开</span><br><span class="line">regex r(phone); </span><br><span class="line">string number = &quot;(908) 555-18000&quot;;</span><br><span class="line">cout&lt;&lt;regex_replace(number, r, fmt)&lt;&lt;endl;</span><br></pre></td></tr></table></figure></p>
+<p>控制匹配和格式的标志，这写标志可以传递给函数regex_search或regex_match或是类smatch的format成员。<br>匹配或格式化标志的类型为：match_flag_type。这些值都定义在regex_constants的命名空间中。<br><code>using std::regex_constants::format_no_copy;</code></p>
+<table>
+<thead>
+<tr>
+<th>匹配标志</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>match_default</td>
+<td>等价于format_default</td>
+</tr>
+<tr>
+<td>match_not_bol</td>
+<td>不将首字符作为行首处理</td>
+</tr>
+<tr>
+<td>match_not_eof</td>
+<td>不将尾字符作为行尾处理</td>
+</tr>
+<tr>
+<td>match_not_bow</td>
+<td>不将首字符作为单词处理</td>
+</tr>
+<tr>
+<td>match_not_eof</td>
+<td>不将尾字符作为单词处理</td>
+</tr>
+<tr>
+<td>match_any</td>
+<td>如果存在多于一个匹配，则返回任意一个匹配</td>
+</tr>
+<tr>
+<td>match_not_null</td>
+<td>不匹配任何空序列</td>
+</tr>
+<tr>
+<td>match_continuous</td>
+<td>匹配必须从输入的首字符开始</td>
+</tr>
+<tr>
+<td>match_prev_avail</td>
+<td>输入序列包含第一个匹配之前的内容</td>
+</tr>
+<tr>
+<td>format_default</td>
+<td>用ECMAScrip规则替换字符串</td>
+</tr>
+<tr>
+<td>format_sed</td>
+<td>用POSIX sed规则替换字符串</td>
+</tr>
+<tr>
+<td>format_no_copy</td>
+<td>不输出输入序列中未匹配的部分</td>
+</tr>
+<tr>
+<td>format_first_only</td>
+<td>只替换子表达式第一次出现</td>
+</tr>
+</tbody>
+</table>
+<h3 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h3><p>定义在头文件random中的随机数库两个组件来实现随机数生成：随机数引擎：生成随机unsigned整数序列；分布：使用引擎返回服从特定概率的随机数；<br><strong>随机数引擎和分布</strong><br>随机数引擎是函数对象类，不接受参数，返回一个unsigned整数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">default_random_engine e; //生成随机无符号数</span><br><span class="line">for(size_t i=0; i&lt;10; ++i)</span><br><span class="line">    cout&lt;&lt;e()&lt;&lt;&quot;;&quot;</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>随机数引擎操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engine e;</td>
+<td>默认构造函数；使用该引擎类型默认的种子</td>
+</tr>
+<tr>
+<td>Engine e(s);</td>
+<td>使用整型值s做种子</td>
+</tr>
+<tr>
+<td>e.seed(s);</td>
+<td>使用种子s重置引擎</td>
+</tr>
+<tr>
+<td>e.max() e.min()</td>
+<td>此引擎可生成的最小值和最大值</td>
+</tr>
+<tr>
+<td>Engine::result_type</td>
+<td>此引擎生成的unsigned整型类型</td>
+</tr>
+<tr>
+<td>e.discard(u)</td>
+<td>将引擎推进u步；u的类型为unsigned long long</td>
+</tr>
+</tbody>
+</table>
+<p>分布类型和引擎：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//生成0到9之间均匀分布的随机数</span><br><span class="line">uniform_int_distribution&lt;unsigned&gt; u(0,9);</span><br><span class="line">default_random_engine e; //生成无符号随机整数</span><br><span class="line">for(size_t i=0; i&lt;10; ++i)&#123;</span><br><span class="line">	cout&lt;&lt;u(e)&lt;&lt;&quot; &quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>随机数发生器是指分布对象和引擎对象的组合。<br>一个给定的随机数生成器一直会生成相同的随机数序列。一个函数如果定义了局部随机数发生器，应该将其定义为static的。否则，每次调用函数都会生成相同的序列。<br>随机数种子问题：<br><code>default_random_engine e1(time(0));</code>使用系统时间作为种子，但是这种种子值在秒级别的程序中有用。time定义在ctime头文件中。<br><strong>其他随机分布</strong><br>生成随机实数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">default_random_engine e;</span><br><span class="line">uniform_real_distribution&lt;double&gt; u(0,1);</span><br><span class="line">for(size_t i=0; i&lt;10; ++i)&#123;</span><br><span class="line">	cout&lt;&lt;u(e)&lt;&lt;&quot; &quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>分布类型操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dist d;</td>
+<td>默认构造函数；使d准备好被使用；其他构造函数依赖于Dist的类型，参见附录A.3节；分布类型构造函数时explicit</td>
+</tr>
+<tr>
+<td>d(e)</td>
+<td>用相同的e连续调用d，会根据d的分布类型生成一个随机数序列；e是一个随机数引擎对象</td>
+</tr>
+<tr>
+<td>d.min() d.max()</td>
+<td>返回d(e)能生成的最小值和最大值</td>
+</tr>
+<tr>
+<td>d.reset()</td>
+<td>重建d的状态，使其随后对d的使用不依赖于d已经生成的值</td>
+</tr>
+</tbody>
+</table>
+<p>分布类型都是模板，具有单一的模板类型参数，表示随机生成数的类型。这些类型要么生成浮点型要么生成整型。生成浮点型的默认分布类型是double，整型值为int。<br><code>uniform_real_distribution&lt;&gt; u(0,1); //默认深处double类型</code><br>生成非均匀分布的随机数：<code>normal_distribution&lt;&gt; n(4,1.5); //均值4，方差1.5</code>；<code>bernoulli_distribution b(.55); //给参数，则指定了返回为true的概率</code></p>
+<h3 id="IO库再探"><a href="#IO库再探" class="headerlink" title="IO库再探"></a>IO库再探</h3><p>格式控制、未格式化IO和随机访问<br><strong>格式化输入输出</strong><br>操纵符是函数或是一个对象，会影响流的状态。<br>操纵符用于控制数值的输出格式以及控制补白的数量和位置。<br>当操纵符改变流的格式状态时，通常改变后的状态对所有后续IO都生效。<br>控制布尔值的格式：boolalpha/noboolalpha；控制整型值的进制：hex、oct、dec只影响整型运算符对象，浮点值的表示形式不受影响。使用showbase/noshowbase操纵符显示进制前导。可以使用uppercase/nouppercase控制输出十六进制的大小写。<br>控制浮点数格式：</p>
+<ol>
+<li>以多高精度打印浮点数值；</li>
+<li>数值是打印为十六进制、定点十进制还是科学记数法形式；</li>
+<li>对于没有小数部分的浮点值是否打印小数点。<br>指定打印精度：precision成员或使用setprecision操纵符。<br>setprecision和其他接受参数的操纵符都定义在头文件iomanip；<br>定义在iostream中的操纵符：</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>操纵符</th>
+<th>解释</th>
+<th>操纵符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boolalpha/noboolalpha</td>
+<td>输出true/false或0/1</td>
+<td>showbase/noshowbase</td>
+<td>输出表示进制的前缀</td>
+</tr>
+<tr>
+<td>showpoint/noshowpoint</td>
+<td>只有当浮点值包含小数部分时，才显示小数点；或一直显示小数点</td>
+<td>showpos/noshowpos</td>
+<td>对非负数字显示正号或不显示</td>
+</tr>
+<tr>
+<td>uppercase/nouppercase</td>
+<td>在十六进制和科学计数法中使用大小写</td>
+<td>dec oct hex</td>
+<td>整型值按照相应进制显示</td>
+</tr>
+<tr>
+<td>left right internal</td>
+<td>在值的左侧右侧或符号与值的中间添加填充字符</td>
+<td>fixed scientific</td>
+<td>浮点值显示为十进制定点值还是科学计数法</td>
+</tr>
+<tr>
+<td>hexfloat defaultfloat</td>
+<td>浮点值显示为十六进制或十进制</td>
+<td>unitbuf/nounitbuf</td>
+<td>每次输出操作后都刷新缓冲区或默认</td>
+</tr>
+<tr>
+<td>skipws/noskipws</td>
+<td>输入运算符跳过或不跳过空白字符</td>
+<td>flush ends endl</td>
+<td>刷新ostream缓冲区，ends插入空白符，endl插入换行</td>
+</tr>
+</tbody>
+</table>
+<p>控制浮点数精度的操纵符会改变流精度的含义。默认是所有数字位数总数。改变后是小数点之后的位数。<br>输出补白：setw类似endl，不改变输出流的内部状态。只决定下一次输出的大小。setfill可以设置补白的字符。<br>定义在iomanip中的操纵符：</p>
+<table>
+<thead>
+<tr>
+<th>操纵符</th>
+<th>解释</th>
+<th>操纵符</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>setfill(ch)</td>
+<td>用ch补白</td>
+<td>setprecision(n)</td>
+<td>将浮点精度设置为n</td>
+</tr>
+<tr>
+<td>setw(w)</td>
+<td>读或写值的宽度为w个字符</td>
+<td>setbase(b)</td>
+<td>将整数输出为b进制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>未格式化输入/输出操作</strong><br>可以将一个流当做一个无解释的字符序列来处理。<br>单字节底层IO操作：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>解释</th>
+<th>操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>is.get(ch)</td>
+<td>从istream is中读取一个字节存放入字符ch中。返回is</td>
+<td>os.put(ch)</td>
+<td>将字符ch输出到ostream os。返回os</td>
+</tr>
+<tr>
+<td>is.get()</td>
+<td>将is的下一个字节作为int返回</td>
+<td>is.putback(ch)</td>
+<td>将ch放回到is。返回is</td>
+</tr>
+<tr>
+<td>is.unget()</td>
+<td>将is向后移动一个字节。返回is</td>
+<td>is.peek()</td>
+<td>将下一个字节作为int返回，但不从流中删除它</td>
+</tr>
+</tbody>
+</table>
+<p>在读取下一个值之前，标准库保证我们可以退回最多一个值。<br>头文件cstdio定义了一个名为EOF的const。</p>
+<p>多字节底层IO操作：</p>
+<table>
+<thead>
+<tr>
+<th>多字节底层IO操作</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>is.get(sink,size,delim)</td>
+<td>从is中读取最多size个字节，并保存到数组中，字符数组的起始地址由sink给出。故去过程直到遇到delim或读取了size个字节或遇到文件结尾时停止。如果遇到delim，则将其留在留中不读取出来存入sink</td>
+</tr>
+<tr>
+<td>is.getline(sink,size,delim)</td>
+<td>与接受三个参数的get一样，但会读取并丢弃delim</td>
+</tr>
+<tr>
+<td>is.read(sink,size)</td>
+<td>读取最多size个字节，存入字符数组sink中，返回is</td>
+</tr>
+<tr>
+<td>is.gcount()</td>
+<td>返回上一个未格式化读取操作从is读取的字符数</td>
+</tr>
+<tr>
+<td>os.write(source, size)</td>
+<td>将字符数组source中的size个字符写入os。返回os</td>
+</tr>
+<tr>
+<td>is.ignore(size,delim)</td>
+<td>读取并忽略最多size个字符，包括delim。与其他未格式化函数不同，ignore有默认参数：size为1，delim的默认值为文件尾</td>
+</tr>
+</tbody>
+</table>
+<p><strong>流随机访问</strong><br>大多数系统中，绑定到cin cout cerr clog的流不支持随机访问。<br>流随机访问一般只适用于fstream和sstream。</p>
+<p>seek和tell函数</p>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tellp() tellg()</td>
+<td>返回一个输入流中（tellg)或一个输出流（tellp）标记的当前位置</td>
+</tr>
+<tr>
+<td>seekg(pos) seekp(pos)</td>
+<td>在一个输入流或输出流中，将标记重定位到给定的绝对地址。pos通常是一个tellg或tellp的返回的值</td>
+</tr>
+<tr>
+<td>seekp(off, from) seekg(off, from)</td>
+<td>在一个输入流或输出流中将标记定位到from之前或之后off个字符。from可以是：beg偏移量相对于流开始的位置；cur偏移量相当于流当前的位置；end偏移量相当于流结束的位置</td>
+</tr>
+</tbody>
+</table>
+<p>由于只fstream和stringstream只有单一的标记，因此我们再读写操作间切换时，就必须进行seek操作来重定位标记。<br>pos_type表示一个文件位置，off_type表示距离当前位置的一个偏移量。<br>访问标记pos_type：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ostringstream writeStr; </span><br><span class="line">ostringstream::pos_type mark=writeStr.tellp();</span><br><span class="line"></span><br><span class="line">……;</span><br><span class="line">writeStr.seekp(mark); //回到刚才记住的位置</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/30/C-学习笔记第十七章-标准库特殊设施/" data-id="cjlhgk0s1000hg8v71tx47g5w" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/08/27/C-学习笔记第三部分C-标准库，13-16章总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第三部分C++标准库，13-16章总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>36</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>19</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>20</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
