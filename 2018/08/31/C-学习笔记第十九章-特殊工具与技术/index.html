@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第十九章_特殊工具与技术 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述C++的一些特殊性质。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第十九章_特殊工具与技术">
+<meta property="og:url" content="http://banyibu.com/2018/08/31/C-学习笔记第十九章-特殊工具与技术/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述C++的一些特殊性质。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-22T08:47:29.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第十九章_特殊工具与技术">
+<meta name="twitter:description" content="概述C++的一些特殊性质。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>42</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>22</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第十九章-特殊工具与技术" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/31/C-学习笔记第十九章-特殊工具与技术/" class="article-date">
+  <time class="post-time" datetime="2018-08-31T15:08:44.000Z" itemprop="datePublished">
+    <span class="post-month">8月</span><br/>
+    <span class="post-day">31</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第十九章_特殊工具与技术
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>C++的一些特殊性质。<br><a id="more"></a></p>
+<h3 id="控制内存分配"><a href="#控制内存分配" class="headerlink" title="控制内存分配"></a>控制内存分配</h3><p><strong>重载new和delete</strong><br>当定义了全局的operator new函数和operator delete函数后，我们就负担起了控制动态内存分配的职责。<br>operator new接口和operator delete接口：<br>    可能抛出异常的版本：<br>       <code>void *operator new(size_t); //分配一个对象</code><br>       <code>void *operator new[](size_t); //分配一个数组</code><br>       <code>void *operator delete(void *) noexcept; //释放一个对象</code><br>       <code>void *operator delete[](void *) noexcept; //释放一个数组</code><br>    不抛出异常的版本：<br>       <code>void *operator new(size_t, nothrow_t&amp;) noexcept;</code><br>       <code>void *operator new[](size_t, nothrow_t&amp;) noexcept;</code><br>       <code>void *operator delete(void *, nothrow_t&amp;) noexcept;</code><br>       <code>void *operator delete[](void *, nothrow_t&amp;) noexcept;</code><br>应用程序自定义的上述版本中的任意一个必须位于全局作用域或类作用域中。当其被定义为成员时，他们时隐式静态类型。<br>用户不能重载<code>void *operator new(size_t, void*);</code>版本的new运算符。<br>malloc函数与free函数，定义在cstdlib头文件中。<br>operator new和operator delete的一种简单方式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">void *operator new(size_t size)&#123;</span><br><span class="line">	if(void *mem = malloc(size))</span><br><span class="line">	   return mem;</span><br><span class="line">	else</span><br><span class="line">	   throw bad_alloc();</span><br><span class="line">&#125;</span><br><span class="line">void operator delete(void *mem) noexcept &#123;free(mem);&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>定位new表达式</strong><br>new的定位new形式：<br><code>new (place_address) type</code><br><code>new (place_address) type (initializers)</code><br><code>new (place_address) type [size]</code><br><code>new (place_address) type [size] {braced initializer list}</code><br>定位new允许我们在一个特定的、预先分配的地址上构造对象。<br>当传入一个指针类型的实参时，定位new表达式构造对象但不分配内存。<br>显示的析构函数的调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string *sp= new string(&quot;a value&quot;); //分配并初始化一个string对象</span><br><span class="line">sp-&gt;~string();</span><br></pre></td></tr></table></figure></p>
+<p>调用析构函数会销毁对象，但是不会释放内存。</p>
+<h3 id="运行时类型识别"><a href="#运行时类型识别" class="headerlink" title="运行时类型识别"></a>运行时类型识别</h3><p>运行时类型识别的功能由两个运算符实现：</p>
+<ol>
+<li>typeid运算符，用于返回表达式的类型；</li>
+<li>dynamic_cast运算符，用于将基类的指针或引用安全的转换成派生类的指针或引用。<br><strong>dynamic_cast运算符</strong><br>使用形式：<br><code>dynamic_cast&lt;type*&gt;(e)</code><br><code>dynamic_cast&lt;type&amp;&gt;(e)</code><br><code>dynamic_cast&lt;type&amp;&amp;&gt;(e)</code><br>e的类型必须符合：e的类型是模板type的派生类、e的类型是目标type的公有基类、e的类型就是模板type的类型。<br>如果符合，则转换成功，否则转换目标是指针类型，则结果为0。若转换目标是引用而失败，则抛出bad_cast。<br>可以对一个空指针执行dynamic_cast，结果是所需类型的空指针。<br><strong>typeid运算符</strong><br>typeid用于提问从那时的类型名字。会忽略其顶层const。返回一个type_info类型的对象。<br>typeid对数组或指针不会执行标准转换。<br>当运算对象不属于类类型或者是一个不包含任何虚函数的类时，typeid运算符指示的是运算对象的静态类型。而当运算对象是一个至少定义了一个虚函数的类的左值时，typeid的结果知道运行时才会获得。<br>typeid应该作用于对象，当其作用于指针时，返回的结果是该指针的静态类型。<br>typeid作用于指针解引用的对象，若指针所指对象不含有虚函数，则p可以使一个无效指针。如果p是一个空指针，则typeid(*p)将抛出一个名为vad_typeid的异常。<br><strong>使用RTTI</strong><br><strong>type_info类</strong><br>type_info类定义在typeinfo头文件中。</li>
+</ol>
+<p>|type_info操作|解释|<br>|t1==t2|如果type_info对象t1和t2表示同一种类型，返回true；否则返回false|<br>|t1!=t2|……|<br>|t.name()|返回一个C风格字符串，表示类型名字的可打印形式。类型名字发生成方式因系统而异|<br>|t1.before(t2)|返回一个bool值，表示t1是否位于t2之前。before所采用的顺序关系依赖于编译器|<br>type_info一般是作为一个基类出现的。<br>创建type_info对象的唯一途径是使用typeid运算符。</p>
+<h3 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h3><p>枚举属于字面值常量类型。C++包含两种枚举类型：限定作用域和不限定作用域的。<br>限定作用域枚举类型：<code>enum class open_modes{input,output,append};</code><br>不限定作用域的枚举类型：<code>enum color {red, yellow, green};</code><br>如果枚举类型未命名，则我们只能在定义枚举类型时定义其对象。<br>枚举成员是const，因此在初始化枚举成员时提供的初始值必须是常量表达式。<br>一个不限定作用域的枚举类型的对象或枚举成员可以自动地转换成整数。<br>指定enum的大小：尽管enum都定义了唯一的类型，但实际上enum是由某种整数类型表示的。我们可以指定enum中使用的类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">enum intValuse:unsinged long long&#123;</span><br><span class="line">	charTyp=255, shortTyp=65535, intType=65535, longType=4294967295UL, long_longType=18844674403709551615ULL</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>指定类型便于不同环境中生成的代码一致。<br>枚举类型的前置申明：不限定作用域的必须指定成员类型。且枚举类型的申明和定义必须必须一致。<br>要想初始化一个enum对象，必须使用该enum类型的另一个对象或者它的一个枚举成员。即使某个整型值恰好与枚举成员相等，它也不能作为函数的enum实参使用。<br>我们不能直接将整型值传递给enum形参，但是可以将一个不限定作用域的枚举类型的对象或枚举成员传递给整型形参。</p>
+<h3 id="成员指针"><a href="#成员指针" class="headerlink" title="成员指针"></a>成员指针</h3><p>可以指向类的非静态成员从指针。<br><strong>数据成员指针</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//pdata可以指向一个常量（非常量）Screen对象的string成员</span><br><span class="line">const string Screen::*pdata;</span><br><span class="line">//初始化</span><br><span class="line">pdata=&amp;Screen::contents;</span><br><span class="line"></span><br><span class="line">auto pdata=&amp;Screen::contents;</span><br></pre></td></tr></table></figure></p>
+<p>数据成员指针的使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Screen myScreen, *pScreen = &amp;myScreen;</span><br><span class="line">//.*解引用pdata以获得myScreen对象的contents成员</span><br><span class="line">auto s=myScreen.*pdata;</span><br><span class="line">//-&gt;*解引用</span><br><span class="line">s=pScreen-&gt;*pdata;</span><br></pre></td></tr></table></figure></p>
+<p>常规的访问控制规则同样对成员指针有效。要想让成员指针绑定到类的成员，成员指针初始化时必须有访问相应成员的权限。<br><strong>成员函数指针</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">char (Screen::*pmf2)(Screen::pos, Screen::pos)const;</span><br><span class="line">pmf2=&amp;Screen::get;</span><br><span class="line">//使用</span><br><span class="line">char c2=(myScreen.*pmf2)(0,0);</span><br></pre></td></tr></table></figure></p>
+<p>在成员函数和指向该成员的指针之间不存在自动转换规则。<br>因为函数调用运算符的优先级高，所以在声明指向成员函数的指针并使用这样的指针进行函数调用时，括号必不可少：(C::*p)(parms)和(obj.*p)(args)<br>使用类型别名：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">using Action=char (Screen::*)(Screen::pos, Screen::pos) const;</span><br><span class="line">Action get=&amp;Screen::get; //get指向Screen的get成员</span><br><span class="line">Screen&amp; action(Screen&amp;, Action=&amp;Screen::get);</span><br><span class="line">Screen myScreen;</span><br><span class="line">action(myScreen); //使用默认实参</span><br><span class="line">action(myScreen,get); //使用我们之前定义的变量get</span><br><span class="line">action(myScreen, &amp;Screen::get); //显示的传入地址</span><br></pre></td></tr></table></figure></p>
+<p>通过使用类型别名，可以令含有成员指针的代码更易读写。<br>成员函数表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class Screen&#123;</span><br><span class="line">	public:</span><br><span class="line">	  Screen&amp; home();</span><br><span class="line">	  Screen&amp; forward();</span><br><span class="line">	  Screen&amp; back();</span><br><span class="line">	  Screen&amp; up();</span><br><span class="line">	  Screen&amp; down();</span><br><span class="line">	//Action是一个指针，可以用任意一个光标移动函数对其赋值</span><br><span class="line">	using Action =Screen&amp; (Screen::*)();</span><br><span class="line">	//指定具体要移动的方向</span><br><span class="line">	enum Directions&#123;HOME, FORWARD, BACK, UP, DOWN&#125;;</span><br><span class="line">	Screen&amp; move(Directions);</span><br><span class="line">	private:</span><br><span class="line">	  static Action Menu[];</span><br><span class="line">&#125;;</span><br><span class="line">Screen&amp; Screen::move(Directions cm)&#123;</span><br><span class="line">	return (this-&gt;*Menu[cm])(); //Menu[cm]指向一个成员函数</span><br><span class="line">&#125;</span><br><span class="line">//调用时</span><br><span class="line">Screen myScreen;</span><br><span class="line">myScreen.move(Screen::HOME); //调用myScreen.home</span><br><span class="line"></span><br><span class="line">//定义并初始化函数表本身：</span><br><span class="line">Screen::Action Screen::Menu[]=&#123;</span><br><span class="line">	&amp;Screen::home,</span><br><span class="line">	&amp;Screen::forward,</span><br><span class="line">	&amp;Screen::back,</span><br><span class="line">	&amp;Screen::up,</span><br><span class="line">	&amp;Screen::down</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>将成员函数用作可调用对象</strong><br>成员函数的指针不能直接当可调用对象。可以使用function生成一个可调用对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function&lt;bool (const string&amp;)&gt; fcn = &amp;string::empty;</span><br><span class="line">find_if(svec.begin(),svec.end(), fcn);</span><br><span class="line"></span><br><span class="line">vector&lt;string*&gt; pvec;</span><br><span class="line">function&lt;bool (const string*)&gt; fp = &amp;string::empty;</span><br><span class="line">find_if(pvec.begin(),pvec.end(),fp);</span><br></pre></td></tr></table></figure></p>
+<p>使用mem_fn生成一个可调用对象<br>使用标准库功能mem_fn来让编译器负责推断成员的类型。其也定义在functional头文件中。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find_if(svec.begin(),svec.end(), mem_fn(&amp;string::empty));</span><br></pre></td></tr></table></figure></p>
+<p>mem_fn生成的可调用对象可以通过对象调用，也可以通过指针调用。<br>使用bind生成一个可调用对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto it=find_if(svec.begin(),svec.end(),bind(&amp;string::empty,_1));</span><br></pre></td></tr></table></figure></p>
+<h3 id="嵌套类"><a href="#嵌套类" class="headerlink" title="嵌套类"></a>嵌套类</h3><p>嵌套类常用于定义作为实现部分的类。嵌套类是一个独立的类，与外层类基本没有什么关系。嵌套类的对象和外层了的对象是相互独立的。<br>声明一个嵌套类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">class TextQuery&#123;</span><br><span class="line">	public:</span><br><span class="line">	   class QueryResult; //嵌套类稍后定义</span><br><span class="line">&#125;；</span><br></pre></td></tr></table></figure></p>
+<p>嵌套类必须声明在类的内部，但是可以定义在类的内部或外部。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class TextQuery::QueryResult&#123;</span><br><span class="line">	QueryResult(……);</span><br><span class="line">	……;</span><br><span class="line">&#125;;</span><br><span class="line">//定义嵌套类的成员：</span><br><span class="line">TextQuery::QueryResult::QueryResult(……)&#123;</span><br><span class="line">	……;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在嵌套类在其外层类之外完成真正的定义之前，它都是一个不完全类型。<br>定义嵌套类的成员</p>
+<h3 id="union：一种节省空间的类"><a href="#union：一种节省空间的类" class="headerlink" title="union：一种节省空间的类"></a>union：一种节省空间的类</h3><p>联合是一种特殊的类，一个union可以有多个数据成员，但是任意时刻只有一个数据成员可以有值。<br>union数据类型可以使除引用之外的任何类型，其中类类型必须含有构造和析构函数。<br>union可以定义包括构造函数和析构函数在内的成员函数，但是其不能继承自其他类，也不能做为基类。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">union Token&#123;</span><br><span class="line">	char cval;</span><br><span class="line">	int ival;</span><br><span class="line">	double dval;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>为union的一个数据成员赋值会令其他数据成员变成未定义的状态。<br>匿名union:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">union&#123;</span><br><span class="line">	char cval;</span><br><span class="line">	int ivalj;</span><br><span class="line">&#125;;</span><br><span class="line">cval=&apos;c&apos;; //匿名union不能包含受保护的成员和私有成员，也不能定义成员函数</span><br></pre></td></tr></table></figure></p>
+<p>含有类类型成员的union。<br>使用类管理union成员：通常吧含有类类型的成员的union内嵌到一个类中。判别式，辨认存储的值。</p>
+<h3 id="局部类"><a href="#局部类" class="headerlink" title="局部类"></a>局部类</h3><p>类可以定义在某个函数的内部，我们称这样的类为局部类。局部类定义的类型只能在定义它的作用域内可见。<br>局部类的所有成员都必须完整定义在类的内部。<br>在局部类中不允许声明静态数据成员。<br>局部类不能使用函数作用域中的变量。只可以使用其外层作用域定义的类型名、静态变量以及枚举成员。<br>嵌套的局部类：嵌套类的定义可以出现在局部类之外。不过，嵌套类必须定义在与局部类相同的作用域中。<br>局部类的嵌套类也是一个局部类，必须遵循局部类的各种规定。嵌套类的所有成员都必须定义在嵌套类内部。</p>
+<h3 id="固有的不可移植的特性"><a href="#固有的不可移植的特性" class="headerlink" title="固有的不可移植的特性"></a>固有的不可移植的特性</h3><p>因机器而异的特性，包括：位域、volatile限定符、链接指示。<br><strong>位域</strong><br>类可以将其数据成员定义成位域，在一个位域中含有一定数量的二进制位。当一个程序向其他程序或硬件传递二进制数据时，通常用到位域。<br>位域的类型必须是整型或枚举类型。通常情况下我们使用一个无符号类型保存一个位域：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">typedef unsinged int Bit;</span><br><span class="line">class File&#123;</span><br><span class="line">	Bit mode:2; //mod占两位</span><br><span class="line">	Bit modifiel:1;</span><br><span class="line">	Bit prot_owner:3</span><br><span class="line">	Bit prot_group:3; //prot_group占三位</span><br><span class="line">	Bit prot_world:3;</span><br><span class="line">	public:</span><br><span class="line">	  enum modes&#123;READ=01, WRITE=02, EXECUTE=03&#125;;</span><br><span class="line">	  File &amp;open(modes);</span><br><span class="line">	  void close();</span><br><span class="line">	  bool isRead()const;</span><br><span class="line">	  void setWrite();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>取地址运算符不能作用于位域，因此任何指针都无法指向类的位域。<br>在通常情况下最好将位域设为无符号类型，存储在带符号类型中的位域的行为将因具体实现而定。<br>使用位域：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">void File::write()&#123;</span><br><span class="line">	modified = 1;</span><br><span class="line">	//...</span><br><span class="line">&#125;</span><br><span class="line">void File::close()&#123;</span><br><span class="line">	if(modifile)</span><br><span class="line">	//...保存内容</span><br><span class="line">&#125;</span><br><span class="line">//通常使用内置的位运算符操作超过1位的位域</span><br><span class="line">File &amp;File::open(File::modes m)&#123;</span><br><span class="line">	mode|=READ;</span><br><span class="line">	if(m &amp; WRITE)</span><br><span class="line">	//按照读写方式打开文件</span><br><span class="line">	return *this;</span><br><span class="line">&#125;</span><br><span class="line">//检验或设置位域的值：</span><br><span class="line">inline bool File::isRead()const &#123;return mode &amp; READ;&#125;</span><br><span class="line">inline void File::setWriter()&#123;mode|=WRITE;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>volatile限定符</strong><br>volatile的确切含义与机器有关，只能通过阅读编译器的文档来理解。<br>当对象的值可能在程序的控制或检测之外被改变时，应该将该对象声明为volatile。<br>volatile限定符的用法和const很相似，它起到对类型额外修饰的作用。<br>只有volatile的成员对象才能被volatile对象调用。<br>volatile修饰的指针，指向volatile对象的指针。<br>合成的拷贝对volatile对象无效：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">class Foo&#123;</span><br><span class="line">	public:</span><br><span class="line">	   Foo(const volatile Foo&amp;); //从一个volatile对象进行拷贝</span><br><span class="line">	   Foo&amp; operator=(volatile const Foo&amp;);//将一个volatile对象赋值给非volatile对象</span><br><span class="line">	   Foo&amp; operator=(volatile const Foo&amp;)volatile; //将一个volatile对象赋值给非volatile对象</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><strong>链接指示：extern“C”</strong><br>C++使用链接指示指出任意非C++函数所用的语言。<br>要想把C++代码和其他语言编写的代码放在一起使用，要求我们必须有权限访问该语言的编译器，并且这个编译器与当前的C++编译器是兼容的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">extern &quot;C&quot; size_t strlen(const char*); //单语句链接指示</span><br><span class="line">extern &quot;C&quot; &#123; //复合链接指示</span><br><span class="line">	int strcmp(const char*, const char*);</span><br><span class="line">	char *strcat(char*, const char*);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>链接指示不能出现在类定义或函数定义的内部。同样的链接指示必须在函数的每个声明中都出现。<br>连接指示用于整个头文件：<br><code>extern &quot;c&quot;{#include&lt;string.h&gt; //操作C风格字符串的C函数}</code><br>投文件中的所有普通函数声明被认为是由链接指示的语言编写的。链接指示可以嵌套。<br>指向extern “C”函数的指针：<code>extern &quot;C&quot; void (*pf)(int);</code><br>指向不同语言编写的感受到指针是不同的类型。<br>链接指示对整个声明都有效。<br><code>extern &quot;C&quot; void f1(void(*)(int));//形参是一个指向C函数的指针</code><br>因为链接指示同时作用于声明语句中的所有函数，所以如果我们希望传递给C++函数一个指向C函数的指针，则必须使用类型别名。<br><code>extern &quot;C&quot; typedef void FC(int);</code><br><code>void f2(FC*); //f2是一个C++函数，其参数是指向C类型函数的指针</code><br>导出C++函数到其他语言：通过使用链接指示对函数进行定义，可以令一个C++函数在其他语言编写的程序中可用</p>
+<p><code>extern &quot;C&quot; double calc(double dparm){……;} //calc函数可以在C程序调用</code><br>可以被多种语言共享的函数的返回类型或形参类型受很多限制。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#ifdef __cplusplus</span><br><span class="line">//我们正在编译C++程序</span><br><span class="line">extern &quot;C&quot;</span><br><span class="line">#endif</span><br><span class="line">int strcmp(const char*, const char*);</span><br></pre></td></tr></table></figure></p>
+<p>重载函数与链接指示：链接指示与重载函数的相互作用依赖于目标语言。如果目标语言支持重载函数，则该语言实现链接指示的编译器很可能也支持重载这些C++函数。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/08/31/C-学习笔记第十九章-特殊工具与技术/" data-id="cjoscurj80016lsv7lf7kb2c1" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          C++学习笔记第四部分高级主题，17-19章总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/31/C-学习笔记第十八章-用于大型程序的工具/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第十八章_用于大型程序的工具</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>42</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>22</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

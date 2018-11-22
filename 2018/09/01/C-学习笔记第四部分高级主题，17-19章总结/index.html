@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C++学习笔记第四部分高级主题，17-19章总结 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述标准库特殊设施、用于大型程序的工具、特殊工具与技术。">
+<meta name="keywords" content="计算机语言,C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++学习笔记第四部分高级主题，17-19章总结">
+<meta property="og:url" content="http://banyibu.com/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述标准库特殊设施、用于大型程序的工具、特殊工具与技术。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-09-05T11:29:20.547Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++学习笔记第四部分高级主题，17-19章总结">
+<meta name="twitter:description" content="概述标准库特殊设施、用于大型程序的工具、特殊工具与技术。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>42</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>22</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-C-学习笔记第四部分高级主题，17-19章总结" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/" class="article-date">
+  <time class="post-time" datetime="2018-09-01T14:36:57.000Z" itemprop="datePublished">
+    <span class="post-month">9月</span><br/>
+    <span class="post-day">01</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      C++学习笔记第四部分高级主题，17-19章总结
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>标准库特殊设施、用于大型程序的工具、特殊工具与技术。<br><a id="more"></a></p>
+<h3 id="第十七章：标准库特殊设施"><a href="#第十七章：标准库特殊设施" class="headerlink" title="第十七章：标准库特殊设施"></a>第十七章：标准库特殊设施</h3><p><strong>tuple类型</strong><br><code>tuple&lt;T1,T2,...,Tn&gt; t</code>t是一个tuple，其包含n被初始化的值，值的类型分别是T1…Tn。<br><code>make_tuple、get&lt;i&gt;(t)、tuple_size&lt;tupleType&gt;::value、tuple_element&lt;i, tupleType&gt;::type</code><br><strong>bitset类型</strong><br>定义在同名头文件中。<br><code>bitset&lt;n&gt; b、bitset&lt;n&gt; b(s, pos, m, zero, one)、bitset&lt;n&gt; b(cp, pos, m, zero, one)</code><br>bitset操作：any() b.all() b.none() b.count() b.size() b.test() b.set(pos,v) b.set() b.reset(pos) b.reset() b.flip(pos) b.flip() b[pos] b.to_ulong() b.to_ullong() b.to_string(zero, one) os&lt;&lt;\b is&gt;&gt;b<br><strong>正则表达式</strong><br>正则表达式库组件：regex regex_match regex_search regex_replace sregex_iterator smatch ssub_match<br>regex选项：r1=re r1.assign(re,f) f.mark_count() r.flags()<br>一个正则表达式语法是否正确是在运行时解析的。<br>regex_iterator迭代器是一种迭代器适配器。，可以用其获得所有匹配。<br>sregex_iterator it(b, e, r); sregex_iterator end;<br>smatch操作：ready(); m.size(); empty(); prefix(); suffix(); format(…); length(n); position(n); str(n); m[n]; begin(); end(); cbegin(); cend()<br>编号为0的子表达式是整个匹配序列。<br>\{d}{3}三个数字序列；[-. ]一个-或.或空格。?表示可选的。<br>子串匹配操作：matched; first; second; length(); str(); s=ssub;<br>regex_replace：接受一个输入字符序列和一个regex对象和一个描述我们想要输出的字符串。m.format(dest, fmt,mft); m.format(fmt,mft); regex_replace(dest, seq, r, fmt, mft); regex_replace(seq, r, fmt, mft);<br><code>string fmt=&quot;$2.$5.$7&quot;; // 将号码格式替换为ddd.ddd.ddd</code><br>匹配和格式标志的类型为match_flag_type。这些值都定义在名为regex_constants的命名空间中。<br><code>using std::regex_constants::format_no_copy;</code><br>匹配标志：match_default; match_not_bol; match_not_eol; match_not_bow; match_not_eow; match_any; match_not_null; match_continuous; match_prev_avail; format_default; format_default; format_sed; format_no_copy; format_first_only;<br><strong>随机数</strong><br>随机数引擎类和随机数分布类。<br>C++程序应该使用default_random_engine类和恰当的分布类对象。<br>随机数引擎操作：e; e(s); e.seed(s); e.main(); e.max(); Engine::result_type; e.discard(u);<br>分布类型和引擎：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uniform_int_distribution&lt;unsigned&gt; u(0,9);</span><br><span class="line">default_random_engine e;</span><br><span class="line">cout&lt;&lt;u(e);</span><br></pre></td></tr></table></figure></p>
+<p>一个给定的随机数发生器一直会生成相同的随机数序列。一个函数如果定义了局部的随机数发生器，应该将其定义为static的。否则，每次调用函数生成相同的序列。<br>其他随机分布：uniform_real_distribution&lt;\double&gt; u(0,1); normal_distribution&lt;&gt; n(4,1.5); bernoulli_distribution b;<br><strong>IO库再探</strong><br>操纵符修改流的格式。通常改变后的状态对所有后续IO都生效。<br>操纵符setprecision和其他接受参数的操纵符都定义在头文件iomanip中。<br>定义在iostream中的操纵符：boolalpha/noboolalpha showbase/showbase showpoint/noshowpoint showpos/noshowpos uppercase/nouppercase dec hex oct left right internal fixed scientific hexfloat defaultfloat unitbuf/nounitbuf skipws/noskipws flush ends endl<br>我们可以强制一个流使用科学计数法、定点十进制或是十六进制计数法。操纵符scientific和fixed<br>setw类似endl，不会改变输出流的内部状态。它只决定下一个输出的大小。<br>定义在iomanip中的操纵符：setfill(ch); setprecision(n); setw(w); setbase(b);<br>未格式化的输入/输出操作：is.get(ch); os.put(ch); is.get(); is.putback(ch); is.unget(); is.peek();<br>多字节底层IO操作：is.get(sink, size,delim); is.getline(sink, size, delim); is.read(sink,size); is.gcount(); os.write(source,size); is.ignore(size, delim);<br>seek和tell函数：tellg(); tellp(); seekg(pos); seekp(pos); seekp(off, from); seekg(off,from);<br>由于只有单一标记，因此只要我们再读写操作切换，就必须进行seek操作来重定位标记。</p>
+<h3 id="第十八章：用于大型程序的工具"><a href="#第十八章：用于大型程序的工具" class="headerlink" title="第十八章：用于大型程序的工具"></a>第十八章：用于大型程序的工具</h3><p><strong>异常处理</strong></p>
+<p><strong>命名空间</strong><br><strong>多重继承与虚继承</strong></p>
+<h3 id="第十九章：特殊工具与技术"><a href="#第十九章：特殊工具与技术" class="headerlink" title="第十九章：特殊工具与技术"></a>第十九章：特殊工具与技术</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/" data-id="cjoscurjj001olsv7gg1gqz8w" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/12/golang第二章：程序结构/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          golang之程序结构
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/08/31/C-学习笔记第十九章-特殊工具与技术/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第十九章_特殊工具与技术</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>42</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>22</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

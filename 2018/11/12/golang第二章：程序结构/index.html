@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>golang之程序结构 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="名称“驼峰式”风格，大小写区分 声明4个主要的声明：变量(var)、常量(const)、类型(type)和函数(func)，其中函数的声明包含一个名字、一个参数列表、一个可选的返回值列表和一个函数体。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang之程序结构">
+<meta property="og:url" content="http://banyibu.com/2018/11/12/golang第二章：程序结构/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="名称“驼峰式”风格，大小写区分 声明4个主要的声明：变量(var)、常量(const)、类型(type)和函数(func)，其中函数的声明包含一个名字、一个参数列表、一个可选的返回值列表和一个函数体。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-22T08:40:56.765Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang之程序结构">
+<meta name="twitter:description" content="名称“驼峰式”风格，大小写区分 声明4个主要的声明：变量(var)、常量(const)、类型(type)和函数(func)，其中函数的声明包含一个名字、一个参数列表、一个可选的返回值列表和一个函数体。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>42</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>22</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-golang第二章：程序结构" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/12/golang第二章：程序结构/" class="article-date">
+  <time class="post-time" datetime="2018-11-12T08:36:35.000Z" itemprop="datePublished">
+    <span class="post-month">11月</span><br/>
+    <span class="post-day">12</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang之程序结构
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/go程序设计语言/">go程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h3><p>“驼峰式”风格，大小写区分</p>
+<h3 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h3><p>4个主要的声明：变量(var)、常量(const)、类型(type)和函数(func)，其中函数的声明包含一个名字、一个参数列表、一个可选的返回值列表和一个函数体。<br><a id="more"></a></p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量声明的通用形式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var name type = expression</span><br><span class="line">//类型和表达式，其中一个可以省略</span><br></pre></td></tr></table></figure>
+<p>Go语言中不存在未出化的变量。<br>短变量声明：<code>i := 100</code><br>使用短变量声明时，其左边至少要有一个变量名字未被声明。<br>注意：指向局部变量的的指针，在函数返回后，其指向的变量仍然是存在的。<br>new函数，使用的形式<code>new(T)</code><br>变量是生命周期，编译器在选择在栈或堆上分配变量的内存空间，而这种分配方式和是否使用new函数无关。<br>每一次变量逃逸都需要一个额外的内存分配过程。</p>
+<h3 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h3><p>多重赋值<code>x, y = y, x</code><br>赋值类型必须精确匹配。类型的可比较性也一样。</p>
+<h3 id="类型声明"><a href="#类型声明" class="headerlink" title="类型声明"></a>类型声明</h3><p>type定义一个新的命名类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type name underlying-type</span><br></pre></td></tr></table></figure>
+<p>类型声明通常在包级别<br>类型转换不改变类型值的表达式，仅改变类型。</p>
+<h3 id="包和文件"><a href="#包和文件" class="headerlink" title="包和文件"></a>包和文件</h3><p>Go中包包的作用和其他语言中的库或模块作用类似，用于支持模块化、封装、编译隔离和重用。<br>包的文件存储目录<code>$GOPATH/……</code>，则导入包的时候需要使用“……”来导入。<br>注意，导入路径中最后一个为包名，相应的也必须有这样一个路径，该路径下保存了该包定义的所有<code>go</code>文件。</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>导入的包是文件级别的，所以可以在同一个文件内引用，但是不能在同一个包的其他文件中被引用。<br>词法块内部声明的名称覆盖外层名称。<br>在包级别，声明的顺序和它们的作用域没有关系。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/11/12/golang第二章：程序结构/" data-id="cjoscurjl001rlsv7bn01g8sl" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/14/天下纵横：鬼谷子的局读摘/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          天下纵横：鬼谷子的局读摘
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">C++学习笔记第四部分高级主题，17-19章总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>42</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>22</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>23</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
