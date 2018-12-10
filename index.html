@@ -38,9 +38,9 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>45</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>24</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>25</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>46</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>25</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
      
@@ -73,6 +73,70 @@
 </div>
 
         <section id="main">
+  
+    <article id="post-NoSQL一二章_概述" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/10/NoSQL一二章_概述/" class="article-date">
+  <time class="post-time" datetime="2018-12-10T01:16:43.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">10</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/12/10/NoSQL一二章_概述/">NoSQL数据库之概述</a>
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="NoSQL定义"><a href="#NoSQL定义" class="headerlink" title="NoSQL定义"></a>NoSQL定义</h3><p>NoSQL(Not only SQL)主体符合非关型、分布式、开放源码和具有横向扩展能力的下一代数据库。<br>NoSQL技术的主流应用场景在互联网、大数据，但其也适合中小规模的数据处理。<br><a href="http://nosql-database.org" target="_blank" rel="noopener">!NoSQL官网</a><br>
+        
+          <p class="article-more-link">
+            <a href="/2018/12/10/NoSQL一二章_概述/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/12/10/NoSQL一二章_概述/" data-id="cjphqar0o001t2sv7hon415ha" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-MySQL数据库基础" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -110,17 +174,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="MySQL安装文件解释"><a href="#MySQL安装文件解释" class="headerlink" title="MySQL安装文件解释"></a>MySQL安装文件解释</h3><p>bin文件夹：存放可执行文件<br>data文件夹：存放数据库数据<br>include文件夹：存在头文件<br>lib文件夹：存放库文件<br>share文件夹：存在字符集、语言等信息<br>my.ini文件：mysql正在使用的配置文件</p>
-<h3 id="MySQL的C-S模型"><a href="#MySQL的C-S模型" class="headerlink" title="MySQL的C/S模型"></a>MySQL的C/S模型</h3><p><img src="https://upload-images.jianshu.io/upload_images/12985001-b561c6a2ba2e8cc1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h3 id="数据库基本操作"><a href="#数据库基本操作" class="headerlink" title="数据库基本操作"></a>数据库基本操作</h3><p><strong>1. 命令行连接数据库:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h 访问主机 -p 访问端口 -u 用户 -p 密码;</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. MySQL默认包含的数据库:</strong><br>mysql：存储系统的用户权限信息（默认连接的数据库）<br>information_schema: 存储系统中一些数据库对象信息，如用户表、列、权限信息<br>performance_schema: 存储数据库服务器性能参数<br>test：测速数据库，任何用户都可以使用<br><strong>3. MySQL创建、选择和删除数据库:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">创建数据库：CREATE  DATABASE  database_name;</span><br><span class="line">选择数据库：USE  database_name;</span><br><span class="line">删除数据库：DROP  DATABASE  database_name;</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. MySQL用户管理:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1. 创建用户: CREATE  USER  &apos;root&apos;@&apos;localhost/%&apos;  [IDENTIFIED [WITH mysql_native_password] BY ‘password’];</span><br><span class="line">2. 删除用户：DROP  USER  ‘henry’@‘localhost’ ;</span><br><span class="line">3. 修改用户密码：①use mysql;</span><br><span class="line">				②alter user &apos;root&apos;@&apos;localhost&apos; identified [with mysql_native_password] by &apos;password&apos;;</span><br><span class="line">		方法二：	①use mysql;</span><br><span class="line">				②flush privileges；</span><br><span class="line">				③同上②；</span><br><span class="line">4. 用户授权：	GRANT  priv_type  ON  database.table</span><br><span class="line">                 TO  user  </span><br><span class="line">5. 查看用户权限：SHOW  GRANTS  FOR  user;</span><br><span class="line">6. 撤销用户权限：	REVOKE  priv_type  ON  database.table</span><br><span class="line">					FROM  user1, user2， …, usern;</span><br><span class="line">7. 撤销用户所有权限：REVOKE  ALL  on database.table</span><br><span class="line">                 FROM  user1, user2， …, usern;</span><br></pre></td></tr></table></figure></p>
-<p>注意：在用户名字段使用‘用户名’@‘主机地址’，若允许用户在任何主机登陆，则使用‘%’代替主机地址；</p>
-
+        <h3 id="MySQL安装文件解释"><a href="#MySQL安装文件解释" class="headerlink" title="MySQL安装文件解释"></a>MySQL安装文件解释</h3><p>bin文件夹：存放可执行文件<br>data文件夹：存放数据库数据<br>include文件夹：存在头文件<br>lib文件夹：存放库文件<br>share文件夹：存在字符集、语言等信息<br>my.ini文件：mysql正在使用的配置文件<br>
+        
+          <p class="article-more-link">
+            <a href="/2018/11/28/MySQL数据库基础/#more">Read More</a>
+          </p>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/28/MySQL数据库基础/" data-id="cjp22knos001ruov7bwabq2uj" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/28/MySQL数据库基础/" data-id="cjphqar0o001r2sv7ausl9o58" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
@@ -175,7 +238,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/27/golang第四章：复合数据类型/" data-id="cjp22knoy0022uov7l2ecucih" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/27/golang第四章：复合数据类型/" data-id="cjphqar0o00282sv7z09y76hv" class="article-share-link">分享</a>
       
       
     </footer>
@@ -237,7 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/22/golang第三章：基本数据/" data-id="cjp22knov001xuov7mifya6ko" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/22/golang第三章：基本数据/" data-id="cjphqar0o001z2sv725e8r918" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -297,7 +360,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/14/如何阅读一本书读摘/" data-id="cjp22knpt003juov7vwnpv33u" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/14/如何阅读一本书读摘/" data-id="cjphqar1j003m2sv70a10zw6d" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技能工具/">技能工具</a></li></ul>
@@ -357,7 +420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/14/天下纵横：鬼谷子的局读摘/" data-id="cjp22knpw003ruov7g7v2b7aq" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/14/天下纵横：鬼谷子的局读摘/" data-id="cjphqar14003j2sv7ixl9s0cc" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/历史哲学小说/">历史哲学小说</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/哲学/">哲学</a></li></ul>
@@ -422,7 +485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/12/golang第二章：程序结构/" data-id="cjp22know001zuov7gf2dxv9k" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/12/golang第二章：程序结构/" data-id="cjphqar0o00222sv7jhryp8kp" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -486,7 +549,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/" data-id="cjp22knop001muov7vljfhn3d" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/09/01/C-学习笔记第四部分高级主题，17-19章总结/" data-id="cjphqar0o001o2sv7iv0js3uq" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -550,7 +613,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/31/C-学习笔记第十九章-特殊工具与技术/" data-id="cjp22knod0012uov7rercayqg" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/31/C-学习笔记第十九章-特殊工具与技术/" data-id="cjphqar0900122sv7wbltn465" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -618,71 +681,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/31/C-学习笔记第十八章-用于大型程序的工具/" data-id="cjp22knoh0018uov7e2epiadz" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-C-学习笔记第十七章-标准库特殊设施" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/08/30/C-学习笔记第十七章-标准库特殊设施/" class="article-date">
-  <time class="post-time" datetime="2018-08-30T01:52:42.000Z" itemprop="datePublished">
-    <span class="post-month">8月</span><br/>
-    <span class="post-day">30</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/30/C-学习笔记第十七章-标准库特殊设施/">C++学习笔记第十七章_标准库特殊设施</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/C-Primer/">C++ Primer</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>tuple、bitset、正则表达式、随机数、附加的IO库功能<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/08/30/C-学习笔记第十七章-标准库特殊设施/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/08/30/C-学习笔记第十七章-标准库特殊设施/" data-id="cjp22knoa000wuov7fgb44x3b" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/08/31/C-学习笔记第十八章-用于大型程序的工具/" data-id="cjphqar09001c2sv7a5esp4ps" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -753,9 +752,9 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>45</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>24</strong><br>分类</div></a>
-      <a href="/tags"><div><strong>25</strong><br>标签</div></a>
+      <a href="/archives"><div><strong>46</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>25</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
     </div>
 
 
