@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NoSQL三章_NoSQL数据存储模式 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述NoSQL数据库存储模式主要涉及数据库建立的存储数据的逻辑结构，基本的数据读、写、改、删等操作，数据处理对象，及分布式状态下的一些数据处理方式。这里主要介绍键值(Key-Value)、文档(Document)、列族(Column Families)、图(Graph)四种NoSQL数据库存储模式。">
+<meta name="keywords" content="数据库,NoSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL三章_NoSQL数据存储模式">
+<meta property="og:url" content="http://banyibu.com/2018/12/10/NoSQL第三章-NoSQL数据存储模式/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述NoSQL数据库存储模式主要涉及数据库建立的存储数据的逻辑结构，基本的数据读、写、改、删等操作，数据处理对象，及分布式状态下的一些数据处理方式。这里主要介绍键值(Key-Value)、文档(Document)、列族(Column Families)、图(Graph)四种NoSQL数据库存储模式。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-10T13:01:15.977Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL三章_NoSQL数据存储模式">
+<meta name="twitter:description" content="概述NoSQL数据库存储模式主要涉及数据库建立的存储数据的逻辑结构，基本的数据读、写、改、删等操作，数据处理对象，及分布式状态下的一些数据处理方式。这里主要介绍键值(Key-Value)、文档(Document)、列族(Column Families)、图(Graph)四种NoSQL数据库存储模式。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>52</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>25</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-NoSQL第三章-NoSQL数据存储模式" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/10/NoSQL第三章-NoSQL数据存储模式/" class="article-date">
+  <time class="post-time" datetime="2018-12-10T03:01:09.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">10</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NoSQL三章_NoSQL数据存储模式
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>NoSQL数据库存储模式主要涉及数据库建立的存储数据的逻辑结构，基本的数据读、写、改、删等操作，数据处理对象，及分布式状态下的一些数据处理方式。<br>这里主要介绍键值(Key-Value)、文档(Document)、列族(Column Families)、图(Graph)四种NoSQL数据库存储模式。<br><a id="more"></a></p>
+<h3 id="键值数据库存储模式"><a href="#键值数据库存储模式" class="headerlink" title="键值数据库存储模式"></a>键值数据库存储模式</h3><p>键值数据库(Key-Value Database)是一类轻量级结合内存处理为主的NoSQL数据库。<br>键值对数据库的设计原则是以提高数据处理速度为第一目标。<br>目前，键值数据库主要运行在内存，实现定期向硬盘等写数据的策略。<br>在同一类数据集合里，键命名规则最好统一。<br>键值数据库的值由二进制大对象(BLOB, Binary Large Object)进行存储。注意在值存储的大小上，不同数据库或同一数据库中不同数据集对象有不同的大小约束。<br>NoSQL中对数据操作的实现是通过Put、Get和Delete实现的。<br><strong>键值存储优点:</strong>简单、快速、高效、分布式处理。<br><strong>键值存储缺点:</strong>对值进行多值查找功能很弱、缺少约束，意味着更容易出错、不容易建立复杂关系</p>
+<h3 id="文档数据存储模式"><a href="#文档数据存储模式" class="headerlink" title="文档数据存储模式"></a>文档数据存储模式</h3><p>文档数据库存储结构的基本形式为键值对形式，具体分数据和格式组成。数据分键和值两部分，格式根据数据种类的不同有所区别。<br>其键值对可以分为：基本键值对、带结构键值对、多形结构键值对。<br>文档数据库的操作方式：写(Insert)命令、读(Select)命令：文档数据库允许对值的范围查询、改(Updata)命令、删(Remove)命令。<br><strong>文档存储的优点:</strong> 简单、相对高效、文档格式处理、查询功能强大、分布式处理。<br><strong>文档存储的缺点:</strong> 缺少约束、数据出现冗余、相对低效(相对于Redis等键值对存储而言)。</p>
+<h3 id="列族数据存储模式"><a href="#列族数据存储模式" class="headerlink" title="列族数据存储模式"></a>列族数据存储模式</h3><p>目前排名靠前的列族数据库都是Hadoop生态体系下的NoSQL数据库。<br>使用文档<a href="https://hbase.apache.org/book.html" target="_blank" rel="noopener">!Hbase</a><br>使用文档<a href="https://cassandra.apache.org/doc/latest" target="_blank" rel="noopener">!Cassandra</a><br>列族数据库擅长密集写入操作，读取操作则相对差些。</p>
+<h3 id="图数据存储模式"><a href="#图数据存储模式" class="headerlink" title="图数据存储模式"></a>图数据存储模式</h3><p>特定于图论的应用。节点和边都可以附加属性。<br>节点、边、属性构成了计算机里面图存储的三要素。<br>图偏重于查找、统计、分析应用。<br>图存储数据库<a href="https://neo4j.com/" target="_blank" rel="noopener">!Neo4j官网</a></p>
+<h3 id="其他数据存储模式"><a href="#其他数据存储模式" class="headerlink" title="其他数据存储模式"></a>其他数据存储模式</h3><p>多模式数据库提供多种数据存储模型。<br>对象数据库，是用来处理面向对象编程数据结构的数据库管理系统。<br>网格和云数据库是基于网格计算或云计算的数据库。<br>XML数据库，一种支持对XML格式文档进行存储和查询等操作的数据库管理系统。<br>多维数据库，是一种对大量数据进行交互分析，并以提供决策为目的的数据库系统。<br>多值数据库，在传统关系型数据库数据结构之上，把字段值存储方式进行改造，使之可以嵌套存放新的表结构的一种数据库系统。<br>事件驱动数据库，能存储事件和函数并进行相关事件流操作的数据库。这里的函数类似过程编程语言中的函数。<br>时间序列/流数据库；可信、专业数据库；</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/12/10/NoSQL第三章-NoSQL数据存储模式/" data-id="cjq7hqvqz00212cv7e6j0il0i" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/10/NoSQL第四章-文档数据库MongoDB入门/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          NoSQL四章_文档数据库MongoDB入门
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/10/NoSQL第一章&第二章_概述/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NoSQL数据库之概述</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>52</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>25</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

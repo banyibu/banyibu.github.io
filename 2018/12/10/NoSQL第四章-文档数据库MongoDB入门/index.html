@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NoSQL四章_文档数据库MongoDB入门 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MongoDB概述MongoDB是一种文档数据存储模式的数据，被用来提高数据访问的处理速度和大数据存储问题。">
+<meta name="keywords" content="数据库,NoSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL四章_文档数据库MongoDB入门">
+<meta property="og:url" content="http://banyibu.com/2018/12/10/NoSQL第四章-文档数据库MongoDB入门/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="MongoDB概述MongoDB是一种文档数据存储模式的数据，被用来提高数据访问的处理速度和大数据存储问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-12-24T03:24:53.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL四章_文档数据库MongoDB入门">
+<meta name="twitter:description" content="MongoDB概述MongoDB是一种文档数据存储模式的数据，被用来提高数据访问的处理速度和大数据存储问题。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>52</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>25</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-NoSQL第四章-文档数据库MongoDB入门" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/10/NoSQL第四章-文档数据库MongoDB入门/" class="article-date">
+  <time class="post-time" datetime="2018-12-10T13:01:51.000Z" itemprop="datePublished">
+    <span class="post-month">12月</span><br/>
+    <span class="post-day">10</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NoSQL四章_文档数据库MongoDB入门
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="MongoDB概述"><a href="#MongoDB概述" class="headerlink" title="MongoDB概述"></a>MongoDB概述</h3><p>MongoDB是一种文档数据存储模式的数据，被用来提高数据访问的处理速度和大数据存储问题。<br><a id="more"></a></p>
+<h3 id="MongoDB使用准备"><a href="#MongoDB使用准备" class="headerlink" title="MongoDB使用准备"></a>MongoDB使用准备</h3><p>MongoDB的主要特征：高性能、丰富的语言查询、高可用性、水平扩展能力、多个存储引擎的支持。<br>MongoDB提供多个存储引擎，WiredTiger(3.2版本后的默认引擎)、MMAPvl、In-Memory，前两种基于硬盘读写的存储引擎，后一个基于内存的存储引擎。<br>文档要避免不同集合的关联关系，而以行为基础的TRDB强调关联关系。文档里的值可以嵌入更复杂的数据结构。<br>安装方式：单机学习安装、单机伪分布式安装、生产环境部署安装。<br>官方安装文档：<a href="https://docs.mongodb.com/manual/installation/" target="_blank" rel="noopener">点击</a>，安装过程中可以选择是否将其安装为系统服务。<br>在安装目录下的bin文件夹下，其可执行程序在ReadMe文件中有所解释。<br>还可以根据需要安装MongoDB compass，MongoDB的GUI。<br><a href="https://www.mongodb.com/download-center/compass?jmp=hero" target="_blank" rel="noopener">MongoDBcompass下载</a><br>文档数据库值类型由程序员通过代码进行控制，本身不进行类型检查和出错提醒。</p>
+<h4 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h4><p>MongoDB数据库建立相关命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">&gt; show dbs		//查看数据库</span><br><span class="line">admin   0.000GB</span><br><span class="line">config  0.000GB</span><br><span class="line">local   0.000GB</span><br><span class="line"></span><br><span class="line">&gt; use my_db		//创建数据库或切换数据库</span><br><span class="line">switched to db my_db</span><br><span class="line"></span><br><span class="line">&gt; db.stats()	//统计当前使用数据库的信息</span><br><span class="line">&#123;</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;collections&quot; : 0,</span><br><span class="line">        &quot;views&quot; : 0,</span><br><span class="line">        &quot;objects&quot; : 0,</span><br><span class="line">        &quot;avgObjSize&quot; : 0,</span><br><span class="line">        &quot;dataSize&quot; : 0,</span><br><span class="line">        &quot;storageSize&quot; : 0,</span><br><span class="line">        &quot;numExtents&quot; : 0,</span><br><span class="line">        &quot;indexes&quot; : 0,</span><br><span class="line">        &quot;indexSize&quot; : 0,</span><br><span class="line">        &quot;fileSize&quot; : 0,</span><br><span class="line">        &quot;fsUsedSize&quot; : 0,</span><br><span class="line">        &quot;fsTotalSize&quot; : 0,</span><br><span class="line">        &quot;ok&quot; : 1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; db.dropDatabase()	//删除当前数据库</span><br><span class="line">&#123; &quot;dropped&quot; : &quot;my_db&quot;, &quot;ok&quot; : 1 &#125;</span><br><span class="line"></span><br><span class="line">&gt; db.getCollectionNames()	//查看当前数据库下的集合名称</span><br><span class="line">[ &quot;my_dbinf&quot; ]</span><br><span class="line"></span><br><span class="line">&gt; show roles				//查看当前数据库角色权限及用户名称、密码等信息</span><br><span class="line">&#123;</span><br><span class="line">        &quot;role&quot; : &quot;dbAdmin&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;isBuiltin&quot; : true,</span><br><span class="line">        &quot;roles&quot; : [ ],</span><br><span class="line">        &quot;inheritedRoles&quot; : [ ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;role&quot; : &quot;dbOwner&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;isBuiltin&quot; : true,</span><br><span class="line">        &quot;roles&quot; : [ ],</span><br><span class="line">        &quot;inheritedRoles&quot; : [ ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;role&quot; : &quot;enableSharding&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;isBuiltin&quot; : true,</span><br><span class="line">        &quot;roles&quot; : [ ],</span><br><span class="line">        &quot;inheritedRoles&quot; : [ ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;role&quot; : &quot;read&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;isBuiltin&quot; : true,</span><br><span class="line">        &quot;roles&quot; : [ ],</span><br><span class="line">        &quot;inheritedRoles&quot; : [ ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;role&quot; : &quot;readWrite&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;isBuiltin&quot; : true,</span><br><span class="line">        &quot;roles&quot; : [ ],</span><br><span class="line">        &quot;inheritedRoles&quot; : [ ]</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;role&quot; : &quot;userAdmin&quot;,</span><br><span class="line">        &quot;db&quot; : &quot;my_db&quot;,</span><br><span class="line">        &quot;isBuiltin&quot; : true,</span><br><span class="line">        &quot;roles&quot; : [ ],</span><br><span class="line">        &quot;inheritedRoles&quot; : [ ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="MongoDB基本操作"><a href="#MongoDB基本操作" class="headerlink" title="MongoDB基本操作"></a>MongoDB基本操作</h4><p>具体操作包括：插入、更新、删除、查询、索引、聚合、复制、分片等。<br><strong><a href="https://docs.mongodb.com/manual/" target="_blank" rel="noopener">!官方文档</a></strong><br><strong>1.插入语法</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">db.collection.insert</span><br><span class="line">(&lt;document or array of documents&gt;, //必填字段</span><br><span class="line">&#123; //可选字段</span><br><span class="line">	writeConcern: &lt;document&gt;, //自定义写出错确认级别，是一种出错捕捉机制</span><br><span class="line">	ordered: &lt;boolean&gt;		//当值为false时，忽略文档错误，继续执行数组中文档的无序插入，为true时，执行文档中的有序插入，发生错误将返回，不再处理。</span><br><span class="line">&#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">//例如：</span><br><span class="line">&gt; db.my_dbinf.insert( &#123;name:&quot;&lt;C编程语言&gt;&quot;, price: 32&#125; ) //若my_dbinf集合第一次出现，则会创建相应的集合。其中save可以用来代替insert关键字。</span><br><span class="line">WriteResult(&#123; &quot;nInserted&quot; : 1 &#125;) //插入成功，若插入失败，返回结果将包含WriteResult.writeConcernError对象内容。</span><br><span class="line"></span><br><span class="line">//插入多条文档</span><br><span class="line">&gt; db.my_dbinf.insert(</span><br><span class="line">... [</span><br><span class="line">... &#123;</span><br><span class="line">... _id:10,item:&quot;小学生教材&quot;, name:&quot;《小学一年级语文(上册)》&quot;,price:12</span><br><span class="line">... &#125;,</span><br><span class="line">... &#123;</span><br><span class="line">... _id:11,item:&quot;初中生教材&quot;, name:&quot;《初中一年级语文(上册)》&quot;,price:15</span><br><span class="line">... &#125;</span><br><span class="line">... ],</span><br><span class="line">... &#123;ordered:true&#125; //有序插入，若插入出错，一条都不插入。若改为false，插入出错时，其他记录继续插入。</span><br><span class="line">... )</span><br><span class="line"></span><br><span class="line">//自定义出错确认级别</span><br><span class="line">&#123;</span><br><span class="line">	writeConcern: &#123;w:&quot;majority&quot;, wtimeout:5000&#125;</span><br><span class="line">&#125;</span><br><span class="line">则当插入超过5s未完成时，返回出错对象如下：</span><br><span class="line">WriteResult(&#123;</span><br><span class="line">	&quot;nInserted&quot;:1,</span><br><span class="line">	&quot;writeConcernError&quot;:&#123;</span><br><span class="line">		&quot;code&quot;:64,</span><br><span class="line">		&quot;errmsg&quot;:&quot;waiting for replication timed out at shard-a&quot;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>简化的操作命令：db.collection.insertOne(),db.collection.insertMany();<br><strong>2. 查询文档</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">db.collection_name.find(</span><br><span class="line">	query, //查询条件设置</span><br><span class="line">	projection	//可选，指定需要返回的字段：忽略该选项返回所有字段。</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">//例如</span><br><span class="line">&gt; db.my_dbinf.find().pretty()</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;5c0f74cacb2200cf7a7ef084&quot;),</span><br><span class="line">        &quot;name&quot; : &quot;&lt;C编程语言&gt;&quot;,</span><br><span class="line">        &quot;price&quot; : 32</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;5c0f7bf0cb2200cf7a7ef085&quot;),</span><br><span class="line">        &quot;name&quot; : &quot;《C语言》&quot;,</span><br><span class="line">        &quot;bookprice&quot; : 33.2,</span><br><span class="line">        &quot;adddate&quot; : 2006,</span><br><span class="line">……</span><br><span class="line"></span><br><span class="line">&gt; db.my_dbinf.find(&#123; name:&quot;《C语言编程》&quot; &#125;).pretty()	//等价条件查询</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;5c0f7dcccb2200cf7a7ef088&quot;),</span><br><span class="line">        &quot;name&quot; : &quot;《C语言编程》&quot;,</span><br><span class="line">        &quot;price&quot; : 33</span><br><span class="line">&#125;</span><br><span class="line">&gt; db.my_dbinf.find(&#123; name:&quot;《C语言编程》&quot; &#125;,&#123;name:1, price:1,_id:0&#125;).pretty()	//只显示指定字段，1和true显示，0和false不显示</span><br><span class="line">&#123; &quot;name&quot; : &quot;《C语言编程》&quot;, &quot;price&quot; : 33 &#125;</span><br><span class="line">&gt; db.my_dbinf.find( &#123;&quot;baseinf.press&quot;:&quot;清华大学出版社&quot; &#125; ).pretty()	//嵌套文档查询</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;5c0f7bf0cb2200cf7a7ef085&quot;),</span><br><span class="line">        &quot;name&quot; : &quot;《C语言》&quot;,</span><br><span class="line">        &quot;bookprice&quot; : 33.2,</span><br><span class="line">        &quot;adddate&quot; : 2006,</span><br><span class="line">        &quot;allow&quot; : true,</span><br><span class="line">        &quot;baseinf&quot; : &#123;</span><br><span class="line">                &quot;ISBN&quot; : 12234435344,</span><br><span class="line">                &quot;press&quot; : &quot;清华大学出版社&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;tags&quot; : [</span><br><span class="line">                &quot;goog&quot;,</span><br><span class="line">                &quot;book&quot;,</span><br><span class="line">                &quot;it&quot;,</span><br><span class="line">                &quot;Program&quot;</span><br><span class="line">        ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt; db.my_dbinf.find( &#123; tags:[&quot;goog&quot;,&quot;book&quot;,&quot;it&quot;,&quot;Program&quot;]&#125; )	//等价查询某一数组</span><br><span class="line">&gt; db.my_dbinf.find( &#123; tags:&quot;goog&quot;&#125; )	//查询数组中的某一个值</span><br><span class="line">&gt; db.my_dbinf.find( &#123; tags:&#123;$size:4&#125;&#125; )	//查询有四个元素的数组</span><br><span class="line">&gt; db.my_dbinf.find(&#123;_id:1112,toy:&#123;$exists:false&#125;&#125;)	//查找的toy值不存在</span><br><span class="line">&#123; &quot;_id&quot; : 1112 &#125;</span><br><span class="line">&gt; db.my_dbinf.find(&#123;_id:2222,toy:null&#125;)		//查找null值字段</span><br><span class="line">&#123; &quot;_id&quot; : 2222, &quot;toy&quot; : null &#125;</span><br><span class="line"></span><br><span class="line">//查找返回值游标操作</span><br><span class="line">&gt; var showCursor = db.my_dbinf.find()</span><br><span class="line">&gt; showCursor.forEach(printjson)	//打印显示游标获取的集合</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;5c0f74cacb2200cf7a7ef084&quot;),</span><br><span class="line">        &quot;name&quot; : &quot;&lt;C编程语言&gt;&quot;,</span><br><span class="line">        &quot;price&quot; : 32</span><br><span class="line">&#125;</span><br><span class="line">&#123;</span><br><span class="line">        &quot;_id&quot; : ObjectId(&quot;5c0f7bf0cb2200cf7a7ef085&quot;),</span><br><span class="line">        &quot;name&quot; : &quot;《C语言》&quot;,</span><br><span class="line">        &quot;bookprice&quot; : 33.2,</span><br><span class="line">……</span><br><span class="line"></span><br><span class="line">//limit与skip方法查询</span><br><span class="line">&gt; db.my_dbinf.find().limit(1) //返回第一条文档</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c0f74cacb2200cf7a7ef084&quot;), &quot;name&quot; : &quot;&lt;C编程语言&gt;&quot;, &quot;price&quot; : 32 &#125;</span><br><span class="line">&gt; db.my_dbinf.find().skip(2)	//显示第3条开始的文档记录</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c0f7d33cb2200cf7a7ef086&quot;), &quot;item&quot; : &quot;小学生教材&quot;, &quot;name&quot; : &quot;《小学一年级语文(上册)》&quot;, &quot;price&quot; : 12 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c0f7d33cb2200cf7a7ef087&quot;), &quot;item&quot; : &quot;初中生教材&quot;, &quot;name&quot; : &quot;《初中一年级语文(上册)》&quot;, &quot;price&quot; : 15 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c0f7dcccb2200cf7a7ef088&quot;), &quot;name&quot; : &quot;《C语言编程》&quot;, &quot;price&quot; : 33 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : 10, &quot;item&quot; : &quot;小学生教材&quot;, &quot;name&quot; : &quot;《小学一年级语文(上册)》&quot;, &quot;price&quot; : 12 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : 11, &quot;item&quot; : &quot;初中生教材&quot;, &quot;name&quot; : &quot;《初中一年级语文(上册)》&quot;, &quot;price&quot; : 15 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : 2222, &quot;toy&quot; : null &#125;</span><br><span class="line">&#123; &quot;_id&quot; : ObjectId(&quot;5c0f9c3ecb2200cf7a7ef089&quot;), &quot;_ie&quot; : 1112 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : 1112 &#125;</span><br></pre></td></tr></table></figure></p>
+<p>公共查询条件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&lt;key&gt;:&#123;&lt;operator1&gt;:&lt;value1&gt;&#125;,……&#125;</span><br></pre></td></tr></table></figure></p>
+<p>小于：$lt、小于等于：$lte、大于：$gt、大于等于：$gte、不等于：$ne<br>与：{key1:value,key2:value2,……}<br>或：{$or:[{key1:value1},{key2:value2},……]}<br>正则表达式：<code>&lt;key&gt;:{$regex:/pattern/&lt;options&gt;}</code>或<code>&lt;key&gt;:{$regex:&#39;pattern&#39;&lt;options&gt;}</code><br>pattern选项：/查询值的固定后一部分$/; /^查询值的固定前一部分/; /查询值的任意一部分/<br>option选项：i：不区分大小写；m：文档值中包含\n或$时，以记录为单位匹配符合的文档记录。若不包含\n或$，则不起作用；s: 在多字符串记录的情况下，使用s可以做到pattern带“.*”情况下的多字符串匹配。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.my_dbinf.find(</span><br><span class="line">... &#123;</span><br><span class="line">... price:&#123;$gt:3,$lt:33&#125;</span><br><span class="line">... &#125;</span><br><span class="line">... )</span><br><span class="line"></span><br><span class="line">&gt; db.my_dbinf.find(&#123;name:&#123;$regex:/^.*C/,$options:&quot;si&quot;&#125;&#125;)</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 更新文档</strong><br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.collection.update(</span><br><span class="line">	&lt;query&gt;,	//update的查询条件</span><br><span class="line">	&lt;update&gt;,	//更新对象文档，含操作符功能使用。</span><br><span class="line">	//可选参数</span><br><span class="line">	&#123;upsert:&lt;boolean&gt;,	//若不存在更新的记录，是否添加新的记录，默认false不添加。</span><br><span class="line">	multi:&lt;boolean&gt;,	//MongoDB默认是false，只更新找到的第一条记录，否则，逐条更新</span><br><span class="line">		writeConcern:&lt;document&gt;,	//可选，自定义写出错确认级别</span><br><span class="line">	collation:&lt;document&gt;	//指定特定国家语言的更新归类规则。</span><br><span class="line">	&#125;</span><br><span class="line">	)</span><br></pre></td></tr></table></figure></p>
+<p>更新的操作，可以包括修改某一值$set、多加法操作$inc、乘法操作$mul、修改字段的键名$rename、删除一个字段$unset、将文档字段值与给定值比较，设置最小值为新的文档字段值$min、同前一条相反$max<br>修改文档中的数组和嵌套文档：通过Key.SubKey的组合实现对指定子文档的修改，Key.Number也可以实现对数组中指定下标元素的修改。<br>多文档修改：使用multi选项。<br>增加文档字段：update对文档中不存在要修改的字段时，若upsert设置为true，则增加新的字段。<br>collation文件包含的语法：<a href="https://docs.mongodb.com/manual/reference/collation/index.html" target="_blank" rel="noopener">详细解释见官方文档</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   locale: &lt;string&gt;,</span><br><span class="line">   caseLevel: &lt;boolean&gt;,</span><br><span class="line">   caseFirst: &lt;string&gt;,</span><br><span class="line">   strength: &lt;int&gt;,</span><br><span class="line">   numericOrdering: &lt;boolean&gt;,</span><br><span class="line">   alternate: &lt;string&gt;,</span><br><span class="line">   maxVariable: &lt;string&gt;,</span><br><span class="line">   backwards: &lt;boolean&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>4. 删除文档</strong><br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.collection.remove(</span><br><span class="line">	&lt;query&gt;, //删除文档的条件</span><br><span class="line">	&#123;</span><br><span class="line">		justOne:&lt;boolean&gt;,	//默认为false，删除符合条件的所有文档</span><br><span class="line">		writeConcern:&lt;document&gt;,	</span><br><span class="line">		collation:&lt;document&gt;</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure></p>
+<p><strong>5. 索引</strong><br>MongoDB是基于集合建立索引的，其索引实现的数据结构是B-tree及对应算法。<br>同样的，默认情况下，MongoDB数据库会自动为集合_id建立唯一索引，可以避免插入同一_id值的文档记录。<br>①单一字段索引：<br><code>db.collection_name.createIndex({&lt;key&gt;:&lt;n&gt;})</code>    其中，key为键名，n为1时升序，n为-1时降序。<br>②字段值唯一索引：<br><code>db.collection_name.createIndex({&lt;key&gt;:&lt;n&gt;,&lt;key&gt;:&lt;n&gt;,...}, {unique:true})</code>    同一个键上不能重复建立单一索引。多字段唯一索引，需要多个字段的组合唯一即可。<br>③多字段索引：<br><code>db.collection_name.createIndex({&lt;key&gt;:&lt;n&gt;,&lt;key&gt;:&lt;n&gt;,...})</code><br>④文本索引：<br><code>db.collection_name.createIndex({&lt;key1&gt;:&quot;text&quot;,&lt;key2&gt;:&quot;text&quot;,...})</code>    为文本字段内容的文档建立文本索引。<br><a href="https://docs.mongodb.com/manual/core/index-text/" target="_blank" rel="noopener">文本索引</a><br>⑤哈希索引：<br><code>db.collection_name.createIndex({&lt;key&gt;:&quot;hashed&quot;})</code>    hashed索引不支持多字段和唯一索引。<br>⑥其他索引函数：<br><code>移除指定的索引功能dropIndex(index);    返回集合的所有索引getIndexes();    删除指定集合的所有索引dropIndexes(); 删除并重新构建指定集合上的索引reIndex(); 提供指定集合索引大小的报告totalIndexSize()</code></p>
+<h4 id="聚合"><a href="#聚合" class="headerlink" title="聚合"></a>聚合</h4><p>聚合为集合文档数据提供各种处理数据的方法，并返回计算结果。<br>MongoDB提供了3种方式类执行聚合命令：聚合管道方法、map-reduce方法和单一目标聚合方法。<br><strong>1.聚合管道方法：</strong><br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">db.collection_name.aggregate(</span><br><span class="line">	[&#123;$match:&#123;&lt;field&gt;&#125;&#125;,	//统计查找条件</span><br><span class="line">		&#123;$group:&#123;&lt;field1&gt;,&lt;field2&gt;&#125;&#125;</span><br><span class="line">	]</span><br><span class="line">	//其中field1为分类字段；field2位为含各种统计操作符的数值型字段，如$sum $avg $min $max $push $addToSet $first $last</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">//例子：</span><br><span class="line">&gt; db.Sale_detail.aggregate( [ &#123; </span><br><span class="line">	&gt; $match:&#123;ok:false&#125; &#125;, </span><br><span class="line">	&gt; &#123; $group:&#123; _id:&quot;$goodsid&quot;,total:&#123;$sum:&quot;$amount&quot;&#125; &#125; </span><br><span class="line">	&gt; &#125; ] )</span><br><span class="line">	//结果</span><br><span class="line">	&gt; &#123; &quot;_id&quot; : &quot;1002&quot;, &quot;total&quot; : 10 &#125;</span><br><span class="line">	&gt; &#123; &quot;_id&quot; : &quot;1001&quot;, &quot;total&quot; : 5 &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. map-reduce方法</strong><br>语法：<a href="https://docs.mongodb.com/manual/reference/command/mapReduce/index.html" target="_blank" rel="noopener">mapReduce文档</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.collection_name.mapreduce(</span><br><span class="line">	function()&#123;emit(&lt;this.field1&gt;,&lt;this.field2&gt;)&#125;,	//把集合对应的字段&lt;field1&gt;&lt;field2&gt;进行map操作。</span><br><span class="line">	function(key,values)&#123;return array.sum(values)&#125;,	//对map过来的field1、field2进行reduce操作，求得sum值。</span><br><span class="line">	&#123;query:&#123;&lt;field&gt;&#125;,out:&lt;&quot;resultname&quot;&gt;&#125;			//在集合中查找符合&lt;field&gt;条件的文档。把field1值和求得值联通out:&lt;&quot;resultname&quot;&gt;一起返回。</span><br><span class="line">		)</span><br></pre></td></tr></table></figure></p>
+<p>该方式进行聚合运算，效率较聚合管道的方式要低，使用复杂。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&gt; var mrr = db.Sale_detail.mapReduce(</span><br><span class="line">... function()&#123;</span><br><span class="line">... emit(this.goodsid,this.amount)</span><br><span class="line">... &#125;,</span><br><span class="line">... function(key,values)&#123;</span><br><span class="line">... return Array.sum(values)</span><br><span class="line">... &#125;,</span><br><span class="line">... &#123;</span><br><span class="line">... query:&#123;ok:false&#125;,out:&#123;replace:&quot;result&quot;&#125;&#125;</span><br><span class="line">... )</span><br><span class="line">&gt; db[mrr.result].find()</span><br><span class="line">&#123; &quot;_id&quot; : &quot;1001&quot;, &quot;value&quot; : 5 &#125;</span><br><span class="line">&#123; &quot;_id&quot; : &quot;1002&quot;, &quot;value&quot; : 10 &#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 单一目标聚合方法</strong><br>语法：<a href="https://docs.mongodb.com/manual/reference/method/db.collection.count/index.html" target="_blank" rel="noopener">文档连接count</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.collection_name.count(query,options)	//统计符合条件的文档数量，query为查询条件，option详情见链接</span><br><span class="line">&gt; db.Sale_detail.count(&#123;ok:false&#125;)</span><br><span class="line">3</span><br><span class="line">&gt; db.Sale_detail.count(&#123;ok:false&#125;,&#123;skip:1&#125;)</span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">db.collection_name.distinct(&lt;key&gt;,query,option)	//统计集合中指定键的不同值，并返回结果。</span><br><span class="line">	//&lt;key&gt;指定一个键名，query为集合查找条件，option只提供collations选项</span><br><span class="line">&gt; db.Sale_detail.distinct(&quot;goodsid&quot;)</span><br><span class="line">[ &quot;1001&quot;, &quot;1002&quot; ]</span><br></pre></td></tr></table></figure></p>
+<p>单一目标聚合方法可以在find()后加点使用。<br><a href="https://docs.mongodb.com/manual/reference/collation/index.html" target="_blank" rel="noopener">详细解释见官方文档</a></p>
+<h4 id="复制"><a href="#复制" class="headerlink" title="复制"></a>复制</h4><p>为了解决单点故障，复制操作很必要。<br>复制（Replication，在MongoDB数据库里又称“副本集”）<br>副本集管理之部署过程：</p>
+<ol>
+<li>安装主节点MongoDB安装包；</li>
+<li>用replset命令选项指定副本集名称；<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MongoDB安装路径\bin&gt; mongod -port 27017 -dbpath "数据库存放路径" -logpath "日志存放路径" -replSet rs0</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="分片"><a href="#分片" class="headerlink" title="分片"></a>分片</h4><p>分片是指将数据拆分，将其分散的存储在不同的服务器上的过程。<br>MongoDB分片实现原理：分片集群组件构成、分片算法和分片管理等。</p>
+<h4 id="写出错机制"><a href="#写出错机制" class="headerlink" title="写出错机制"></a>写出错机制</h4><p>GetLastError可以获取MongoDB写操作是否成功的信息。大多数编程语言驱动包中，这个命令是被包装成WriteConcern类，被客户端程序使用。<br>在插入、更新、删除命令中，WriteConcern参数格式为：<code>Writeconcern:{w:&lt;value&gt;,j:&lt;boolean&gt;,wtimeout:&lt;number&gt;}</code></p>
+<p>其中，<code>w:0</code>写操作不返回确认错误信息，对于通信socket或网络错误，可能返回错误信息；<code>w:0; j:true</code>时，则优先返回其他独立Mongod或副本集的主节点写操作错误信息。<br>当<code>w:大于1</code>时的参数仅对副本集有效，以指定确认出错成员的数量。<code>w:&quot;majority&quot;</code>写入磁盘日志，前提要启动磁盘日志。当写操作返回结果对象里包括<code>w:majority</code>时，客户端可以readConcern读取该写的结果。</p>
+<p>当<code>j:true</code>时，MongoDB返回磁盘日志的出错信息，包含副本集在内的任何成员。如果Mongod没有地宫日志记录，也进行关注。</p>
+<p><code>wtimeout</code>，写入关注的时间限制，该参数仅适用于大于1的w值时的设置。当返回时，MongoDB不会撤销时间范围内已经执行成功的数据。也即存在一部分写入成功，一部分写入失败的问题。</p>
+<h3 id="MongoDB常用配置参数"><a href="#MongoDB常用配置参数" class="headerlink" title="MongoDB常用配置参数"></a>MongoDB常用配置参数</h3><p>配置文件为YAML格式，包括网络连接配置、网络安全配置、存储配置三项。</p>
+<h3 id="一个简单的案例"><a href="#一个简单的案例" class="headerlink" title="一个简单的案例"></a>一个简单的案例</h3><h4 id="Java连接到MongoDB"><a href="#Java连接到MongoDB" class="headerlink" title="Java连接到MongoDB"></a>Java连接到MongoDB</h4><p>需要下载MongoDB Java版的驱动安装包。将该包放在服务器classpath下。<br>更具体的，需要bson.jar; mongodb-driver-core.jar; mongodb-driver-sync.jar;<br><a href="http://mongodb.github.io/mongo-java-driver/?jmp=docs" target="_blank" rel="noopener">下载网址</a><br><a href="http://mongodb.github.io/mongo-java-driver/3.9/driver-async/getting-started/installation/" target="_blank" rel="noopener">安装教程地址</a><br>连接实例代码：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> mongotest;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.mongodb.client.MongoClients;</span><br><span class="line"><span class="keyword">import</span> com.mongodb.client.MongoCollection;</span><br><span class="line"><span class="keyword">import</span> com.mongodb.client.MongoDatabase;</span><br><span class="line"><span class="keyword">import</span> org.bson.Document;</span><br><span class="line"><span class="keyword">import</span> com.mongodb.client.MongoClient;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">mongo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="comment">//创建mongdb连接</span></span><br><span class="line">			MongoClient mongoClient = MongoClients.create();</span><br><span class="line">			<span class="comment">// 选择连接的数据库</span></span><br><span class="line">			MongoDatabase mongoDatabase = mongoClient.getDatabase(<span class="string">"mydb"</span>);</span><br><span class="line">			<span class="comment">//选择连接到的collection</span></span><br><span class="line">			MongoCollection&lt;Document&gt; collection = mongoDatabase.getCollection(<span class="string">"test"</span>);</span><br><span class="line">			<span class="comment">//向该collection中插入一个文档</span></span><br><span class="line">			collection.insertOne(<span class="keyword">new</span> Document(<span class="string">"name"</span>,<span class="string">"《数据库基础》"</span>).append(<span class="string">"price"</span>, <span class="number">38.5</span>));</span><br><span class="line">			<span class="comment">//以上操作没有出错，则连接成功</span></span><br><span class="line">			System.out.println(<span class="string">"连接数据库成功"</span>);</span><br><span class="line">		&#125;<span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">			System.out.println(e.getClass().getName()+<span class="string">":"</span>+e.getMessage());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="生产级Java连接MongoDB公共架构"><a href="#生产级Java连接MongoDB公共架构" class="headerlink" title="生产级Java连接MongoDB公共架构"></a>生产级Java连接MongoDB公共架构</h4><p><a href="http://mongodb.github.io/mongo-java-driver/3.9/driver/tutorials/jndi/" target="_blank" rel="noopener">JDBI</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2018/12/10/NoSQL第四章-文档数据库MongoDB入门/" data-id="cjq7hqvr300272cv7t8ck3cic" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/18/NoSQL第四章-补充，MongoDB副本集/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          NoSQL第四章-补充，MongoDB副本集
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/10/NoSQL第三章-NoSQL数据存储模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NoSQL三章_NoSQL数据存储模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>52</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>25</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>26</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2017 - 2018 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
