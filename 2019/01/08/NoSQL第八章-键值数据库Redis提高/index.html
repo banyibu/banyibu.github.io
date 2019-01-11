@@ -5,14 +5,24 @@
   
   <title>NoSQL第八章-键值数据库Redis提高 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="概述本章包括的Redis内容有，管道技术、分布式集群技术、Lua脚本技术、可视化管理工具、基于集群的Java连接。">
+<meta name="keywords" content="数据库,NoSQL">
+<meta property="og:type" content="article">
 <meta property="og:title" content="NoSQL第八章-键值数据库Redis提高">
 <meta property="og:url" content="http://banyibu.com/2019/01/08/NoSQL第八章-键值数据库Redis提高/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述本章包括的Redis内容有，管道技术、分布式集群技术、Lua脚本技术、可视化管理工具、基于集群的Java连接。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-08T03:34:34.212Z">
+<meta property="og:image" content="http://redis.cn/topics/cluster-tutorial.html">
+<meta property="og:image" content="https://github.com/uglide/RedisDesktopManager">
+<meta property="og:image" content="https://github.com/caoxinyu/RedisClient">
+<meta property="og:image" content="https://github.com/cinience/RedisStudio">
+<meta property="og:image" content="https://github.com/Redsmin/proxy">
+<meta property="og:updated_time" content="2019-01-09T01:52:56.378Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NoSQL第八章-键值数据库Redis提高">
+<meta name="twitter:description" content="概述本章包括的Redis内容有，管道技术、分布式集群技术、Lua脚本技术、可视化管理工具、基于集群的Java连接。">
+<meta name="twitter:image" content="http://redis.cn/topics/cluster-tutorial.html">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -39,7 +49,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>55</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>57</strong><br>文章</div></a>
       <a href="/categories"><div><strong>27</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
@@ -96,6 +106,10 @@
 
         <div>
           
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
           
               
 
@@ -105,18 +119,37 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>本章包括的Redis内容有，管道技术、分布式集群技术、Lua脚本技术、可视化管理工具、基于集群的Java连接。<br><a id="more"></a></p>
+<h1 id="管道技术"><a href="#管道技术" class="headerlink" title="管道技术"></a>管道技术</h1><p>提高客户端与服务器端多命令的执行效率，引入了管道技术。</p>
+<h2 id="管道技术原理"><a href="#管道技术原理" class="headerlink" title="管道技术原理"></a>管道技术原理</h2><p>Redis服务器端和客户端通过TCP连接，客户端发送到服务器端的每条命令都需要一个RTT，命令过多延迟大。于是，Redis使用管道技术，客户端将多条命令都发送给服务器端，服务器端执行完成后返回多条命令执行结果。</p>
+<h2 id="基于Java的管道技术使用"><a href="#基于Java的管道技术使用" class="headerlink" title="基于Java的管道技术使用"></a>基于Java的管道技术使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">import org.junit.Before;</span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.After;</span><br><span class="line"></span><br><span class="line">import redis.clients.jedis.Jedis;</span><br><span class="line">import redis.clients.jedis.Pipeline;</span><br><span class="line"></span><br><span class="line">public class RedisTest &#123;</span><br><span class="line">	private Jedis jedis;</span><br><span class="line">	@Before</span><br><span class="line">	public void initJedis() throws IOException&#123;</span><br><span class="line">		conredis c = new conredis();</span><br><span class="line">		jedis = c.initPool().getResource(); 	//调用连接数据库功能</span><br><span class="line">	&#125;</span><br><span class="line">	@Test(timeout = 1000)</span><br><span class="line">	public void PilecommendTest() &#123;</span><br><span class="line">		jedis.flushDB();	//清空指定数据库服务器上的0号数据库</span><br><span class="line">		long t1 = System.currentTimeMillis();</span><br><span class="line">		noPipeline(jedis);</span><br><span class="line">		long t2 = System.currentTimeMillis();</span><br><span class="line">		System.out.printf(&quot;非管道方式使用的时间：%d毫秒&quot;, t2-t1);</span><br><span class="line">		jedis.flushDB();</span><br><span class="line">		t1 = System.currentTimeMillis();</span><br><span class="line">		usePipeline(jedis);</span><br><span class="line">		t2 = System.currentTimeMillis();</span><br><span class="line">		System.out.printf(&quot;管道方式用时：%d毫秒&quot;, t2-t1);</span><br><span class="line">	&#125;</span><br><span class="line">	@After</span><br><span class="line">	public void closeJedis() &#123;</span><br><span class="line">		jedis.close();</span><br><span class="line">	&#125;</span><br><span class="line">	private static void noPipeline(Jedis jedis) &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			for (int i=0;i&lt;10000;i++) &#123;</span><br><span class="line">				jedis.sadd(&quot;SAdd&quot;, String.valueOf(i));</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		catch (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	private static void usePipeline(Jedis jedis) &#123;</span><br><span class="line">		try &#123;</span><br><span class="line">			Pipeline pl=jedis.pipelined(); //启动管道</span><br><span class="line">			for (int i=0; i&lt;10000;i++) &#123;</span><br><span class="line">				pl.sadd(&quot;SAdd&quot;, String.valueOf(i));</span><br><span class="line">			&#125;</span><br><span class="line">			pl.sync(); //用管道方式提交10000个命令</span><br><span class="line">		&#125;</span><br><span class="line">		catch (Exception e) &#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="分布集群技术"><a href="#分布集群技术" class="headerlink" title="分布集群技术"></a>分布集群技术</h1><p>实现分布式集群环境的搭建和实际操作使用。<br><img src="http://redis.cn/topics/cluster-tutorial.html" alt="Redis集群教程"></p>
+<h2 id="集群安装"><a href="#集群安装" class="headerlink" title="集群安装"></a>集群安装</h2><p>Redis提供两种集群安装方式，一种是手工安装，另一种是采用集群安装工具安装(redis-trib)。</p>
+<h2 id="模拟节点故障"><a href="#模拟节点故障" class="headerlink" title="模拟节点故障"></a>模拟节点故障</h2><h2 id="加减节点"><a href="#加减节点" class="headerlink" title="加减节点"></a>加减节点</h2><h1 id="Lua脚本应用技术"><a href="#Lua脚本应用技术" class="headerlink" title="Lua脚本应用技术"></a>Lua脚本应用技术</h1><p>Lua脚本使用：减少网络开销、原子性操作、服务器端快速代码替换。<br>Redis数据库系统已经内嵌了Lua脚本运行环境，可以直接在客户端提交相关的Lua脚本命令。<br>Lua脚本可以在Redis-cli客户端执行，也可以在Java代码上调用。</p>
+<h1 id="可视化管理工具"><a href="#可视化管理工具" class="headerlink" title="可视化管理工具"></a>可视化管理工具</h1><p>这里介绍：<br>Redis Desktop <img src="https://github.com/uglide/RedisDesktopManager" alt="下载地址"><br>Redis Client <img src="https://github.com/caoxinyu/RedisClient" alt="下载地址"><br>RedisStudio <img src="https://github.com/cinience/RedisStudio" alt="下载地址"><br>Redsmin/proxy <img src="https://github.com/Redsmin/proxy" alt="下载地址"></p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/01/08/NoSQL第八章-键值数据库Redis提高/" data-id="cjqn7bsbg002spsv7ngluu3ih" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/01/08/NoSQL第八章-键值数据库Redis提高/" data-id="cjqrsbkb90026uov71zwy6nst" class="article-share-link">分享</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
     </footer>
   </div>
   
     
 <nav id="article-nav">
+  
+    <a href="/2019/01/09/NoSQL第十章-数据库速度优化问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          NoSQL第十章-数据库速度优化问题
+        
+      </div>
+    </a>
   
   
     <a href="/2018/12/27/Docker-数据管理与网络通信/" id="article-nav-older" class="article-nav-link-wrap">
@@ -207,7 +240,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>55</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>57</strong><br>文章</div></a>
       <a href="/categories"><div><strong>27</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>

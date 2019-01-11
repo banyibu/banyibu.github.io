@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NoSQL第十一章-数据存储问题 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述涉及到如何更好的保存数据，保证数据的安全性问题。主要包括MongoDB异常、异地备份及恢复；MongoDB存储平衡优化；Redis数据持久化实现问题；Redis数据备份异机、异地备份；">
+<meta name="keywords" content="数据库,NoSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL第十一章-数据存储问题">
+<meta property="og:url" content="http://banyibu.com/2019/01/11/NoSQL第十一章-数据存储问题/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述涉及到如何更好的保存数据，保证数据的安全性问题。主要包括MongoDB异常、异地备份及恢复；MongoDB存储平衡优化；Redis数据持久化实现问题；Redis数据备份异机、异地备份；">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-99133abb9950b683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-11T08:33:17.849Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL第十一章-数据存储问题">
+<meta name="twitter:description" content="概述涉及到如何更好的保存数据，保证数据的安全性问题。主要包括MongoDB异常、异地备份及恢复；MongoDB存储平衡优化；Redis数据持久化实现问题；Redis数据备份异机、异地备份；">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-99133abb9950b683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>57</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-NoSQL第十一章-数据存储问题" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/11/NoSQL第十一章-数据存储问题/" class="article-date">
+  <time class="post-time" datetime="2019-01-11T03:35:03.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">11</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NoSQL第十一章-数据存储问题
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>涉及到如何更好的保存数据，保证数据的安全性问题。<br>主要包括MongoDB异常、异地备份及恢复；MongoDB存储平衡优化；Redis数据持久化实现问题；Redis数据备份异机、异地备份；<br><a id="more"></a><br><img src="https://upload-images.jianshu.io/upload_images/12985001-99133abb9950b683.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="数据存储问题"></p>
+<h1 id="MongoDB数据存储问题"><a href="#MongoDB数据存储问题" class="headerlink" title="MongoDB数据存储问题"></a>MongoDB数据存储问题</h1><h2 id="数据备份及恢复"><a href="#数据备份及恢复" class="headerlink" title="数据备份及恢复"></a>数据备份及恢复</h2><p>可以复制主节点数据做异步备份；人工复制再恢复等；</p>
+<h3 id="快照复制"><a href="#快照复制" class="headerlink" title="快照复制"></a>快照复制</h3><p>快照依赖于基础的存储系统。<br>注意：MongoDB的系统日志，存放的磁盘位置与赋值目标节点的磁盘逻辑分区一致。<br>先禁用均衡器；<br>生产环境下，谨慎使用快照技术</p>
+<h3 id="使用Ops-Mangager工具来备份数据"><a href="#使用Ops-Mangager工具来备份数据" class="headerlink" title="使用Ops Mangager工具来备份数据"></a>使用Ops Mangager工具来备份数据</h3><h3 id="通过mongodump、mongoexport备份"><a href="#通过mongodump、mongoexport备份" class="headerlink" title="通过mongodump、mongoexport备份"></a>通过mongodump、mongoexport备份</h3><h4 id="整个数据库备份及恢复"><a href="#整个数据库备份及恢复" class="headerlink" title="整个数据库备份及恢复"></a>整个数据库备份及恢复</h4><ol>
+<li>检查需要备份的数据库情况及备份介质的容量；<code>show dbs</code></li>
+<li>实施备份；<code>mongodump -h dbhost -d dbname -o dbdirectory</code></li>
+<li>恢复备份；<code>mongorestore -h dbhost -d dbname -directoryperdb dbdirectory -drop</code><br>允许备份数据库和恢复数据库名称不一样。<h4 id="集合备份及恢复"><a href="#集合备份及恢复" class="headerlink" title="集合备份及恢复"></a>集合备份及恢复</h4>使用MongoDB自带的mongoexport和mongoimport<br><strong>导出：</strong><code>mongoexport -h dbhost -d dbname -c collectionname -f collectionKey -o dbdirectory</code>;导出的格式为JSON或CSV<br>或<code>mongoexport --db goodsdb --colleciton goodsbaseinf --out goodsbaseinf.json</code><br><strong>导入：</strong><code>mongoimport -d dbhost -c collectionname -type csv/json -headerline -file</code> 其中，-headerlin指明不导入第一行、-file，指明导入文件路径。<h2 id="存储平衡优化"><a href="#存储平衡优化" class="headerlink" title="存储平衡优化"></a>存储平衡优化</h2>MongoDB提供了自带的数据存储平衡器。该平衡器会自动平衡分片上的数据块。<br>平衡器被要求部署于配置服务器副本集的主节点上运行。<h3 id="块迁移过程"><a href="#块迁移过程" class="headerlink" title="块迁移过程"></a>块迁移过程</h3>Balancer进程依据迁移阈值，当发现不平衡时，就迁移数据块使分片集群达到平衡，并把平衡结果在Config Server里做记录。<h3 id="Balancer新的块迁移优化策略"><a href="#Balancer新的块迁移优化策略" class="headerlink" title="Balancer新的块迁移优化策略"></a>Balancer新的块迁移优化策略</h3></li>
+<li>在任何给定的时间，一个分片一次最多迁移一个分块。</li>
+<li>支持并行数据库迁移功能。</li>
+<li>采用迁移阈值。</li>
+<li>对Balancer限制其使用时间窗口，防止其产生过多的数据流量。<br>设置Balancer定期迁移的过程：<br>①在分片集群下，登陆MongoDB shell，该登陆会自动连接到一个mongos上。<br>②<code>use config</code>切换到配置数据库上；<br>③确保Balancer处于运行状态，用<code>sh.getBalancerState()</code>查看启动状态，用<code>sh.setBalancerState(true)</code>其中Balancer。<br>④修改Balancer运行时间窗口：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.settings.update(</span><br><span class="line">		&#123;_id:&quot;balancer&quot;&#125;,</span><br><span class="line">		&#123;$set:&#123;activeWindow:&#123;start:&quot;&lt;start-time&gt;&quot;,stop:&quot;&lt;stop-time&gt;&quot;&#125;&#125;&#125;,</span><br><span class="line">		&#123;upsert:true&#125;</span><br><span class="line">	)</span><br><span class="line">	//其起止时间格式为HH:MM</span><br><span class="line">	//注意：这里设置的时间一定要能把累计的不平衡块均衡完</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>⑤关闭定期迁移窗口设置：<code>use config</code>—–&gt;<code>db.settinigs.update({_id:&quot;balancer&quot;},{$unset:{activeWindow:true}})</code></p>
+<ol start="5">
+<li>可以彻底关闭Balancer，以进行技术维护；<code>sh.stopBalancer()</code>事后，使用<code>sh.setBalancerState(true)</code>重新启动Balancer <h3 id="特大块的处理"><a href="#特大块的处理" class="headerlink" title="特大块的处理"></a>特大块的处理</h3>插入统一数据库中的文档使用了相同的片键，导致MongoDB无法拆分数据块。<br>数据库默认大小值是64MB，若一个块超过2.5万条文档记录或1.3倍于默认值大小，则被认为是大块。<br>大块只能手动迁移处理，过程：</li>
+<li>查看：<code>sh.status()</code>发现特大块；在特大块的记录后存在jumbo标志；</li>
+<li>关闭Balancer：<code>sh.setBalancerState(false)</code></li>
+<li>增大数据库配置大小：<code>db.settings.save({&quot;_id&quot;:&quot;chunksize&quot;,&quot;value&quot;:&quot;1000&quot;})</code>//设置为1000MB；</li>
+<li>迁移特大块：<code>sh.moveChunk(&quot;test.foo&quot;,{shard-a{&quot;x&quot;:3}},&quot;shard-b&quot;)</code>这里将test中foo集合中的shard-a分片上的{x:3}特大数据块迁移到shard-b分片上。</li>
+<li>启动Balancer：<code>sh.setBalancerState(true)</code></li>
+<li>刷新mongos配置缓冲，强制mongos从Config Server同步配置信息：<code>use admin</code>—-&gt;<code>db.adminCommand({flushRouterConfig:1})</code><br>上述方法增大了数据库的大小值，也可以手动拆分特大块：</li>
+<li>mongo终端连接任意mongos；</li>
+<li>发现特大块：<code>sh.status(true)</code>;</li>
+<li>用<code>sh.splitAt()</code>或<code>sh.splitFind()</code>命令分割特大块；例如：<code>sh.splitAt(&quot;test.foo&quot;,{x:3})</code><br>若上述方法成功，将看到jumbo标志消失；<h1 id="Redis数据存储技术"><a href="#Redis数据存储技术" class="headerlink" title="Redis数据存储技术"></a>Redis数据存储技术</h1>目前Redis数据库存储方式分为：缓存、AOF持久、RDB持久三种。<h2 id="持久化问题"><a href="#持久化问题" class="headerlink" title="持久化问题"></a>持久化问题</h2>Redis在默认情况下是使用RDB方式持久化的。<h3 id="RDB持久化"><a href="#RDB持久化" class="headerlink" title="RDB持久化"></a>RDB持久化</h3>RDB持久化又叫快照持久化，通过fork命令建立一个子进程，以一定的第一件间隔对内存数据进行快照操作，临时保存在磁盘dump.rdb二进制文件中。最后通过rename命令将临时文件重命名为RDB正式文件。<br>RDB持久化可以通过配置文件参数或命令控制两种方式实现。<h4 id="参数设置实现"><a href="#参数设置实现" class="headerlink" title="参数设置实现"></a>参数设置实现</h4>其核心参数时save：<code>save 900 1</code>,900秒内至少有一个key被改变，则把数据持久化到磁盘上。<h4 id="命令控制实现"><a href="#命令控制实现" class="headerlink" title="命令控制实现"></a>命令控制实现</h4>业务系统程序员可以在客户端代码上附加bgsave或save触发一个持久化动作。<br>客户端执行ShutDown、FlushAll命令，也会触发save命令。<h3 id="AOF持久化"><a href="#AOF持久化" class="headerlink" title="AOF持久化"></a>AOF持久化</h3>AOF更接近于实时备份，它通过fsync策略，每秒王AOF文件写入内存操作数据。也就是意外发生，它最多丢失一秒数据。<br>该方式是以追加的方式持久化数据的。<br>AOF配置主要参数时appendonly yes<h3 id="AOF文件修复"><a href="#AOF文件修复" class="headerlink" title="AOF文件修复"></a>AOF文件修复</h3></li>
+<li>将现有的AOF文件，额外复制一份备份；</li>
+<li>使用Redis附带的redis-check-aof程序，对原来的AOF文件进行修复；</li>
+<li>用修复后的AOF文件重新启动Redis服务器。<br>在AOF和RDB持久化同时存在时，Redis启动时，优先选择AOF。<br>RDB恢复数据卷的速度比AOF快。<br>持久化操作过程，最多要使用原先内存2倍空间。<h2 id="数据备份问题"><a href="#数据备份问题" class="headerlink" title="数据备份问题"></a>数据备份问题</h2><h3 id="实时备份"><a href="#实时备份" class="headerlink" title="实时备份"></a>实时备份</h3>Redis主从赋值，具备不同物理设备的备份。通过网络将服务器放到异地就可以实现异地备份。<h3 id="定期备份数据文件"><a href="#定期备份数据文件" class="headerlink" title="定期备份数据文件"></a>定期备份数据文件</h3>不具备异地备份条件的。<br>最简单的利用Linux的SCP命令(SSH组件)，实现本地RDB和AOF文件的异地备份。具体：<br><code>scp /home/rdb/dump.rdb root@202.11.2.1:/home/root</code> //202.11.2.1为远程服务器。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十一章-数据存储问题/" data-id="cjqrsbkbb0029uov7uzsdvwho" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/09/NoSQL第十章-数据库速度优化问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NoSQL第十章-数据库速度优化问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>57</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

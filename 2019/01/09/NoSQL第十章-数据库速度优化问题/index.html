@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NoSQL第十章-数据库速度优化问题 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述NoSQL数据库实战中，主要关注数据库速度优化、数据存储相关问题、实际部署NoSQL技术选择问题、NoSQL实用辅助工具实用问题。">
+<meta name="keywords" content="数据库,NoSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL第十章-数据库速度优化问题">
+<meta property="og:url" content="http://banyibu.com/2019/01/09/NoSQL第十章-数据库速度优化问题/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述NoSQL数据库实战中，主要关注数据库速度优化、数据存储相关问题、实际部署NoSQL技术选择问题、NoSQL实用辅助工具实用问题。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-60a8ef1edada994e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-7ab7a425a4e98693.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-11T03:30:59.504Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL第十章-数据库速度优化问题">
+<meta name="twitter:description" content="概述NoSQL数据库实战中，主要关注数据库速度优化、数据存储相关问题、实际部署NoSQL技术选择问题、NoSQL实用辅助工具实用问题。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-60a8ef1edada994e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>57</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-NoSQL第十章-数据库速度优化问题" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/09/NoSQL第十章-数据库速度优化问题/" class="article-date">
+  <time class="post-time" datetime="2019-01-09T02:07:59.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">09</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NoSQL第十章-数据库速度优化问题
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>NoSQL数据库实战中，主要关注数据库速度优化、数据存储相关问题、实际部署NoSQL技术选择问题、NoSQL实用辅助工具实用问题。<br><a id="more"></a></p>
+<h1 id="MongoDB操作速度优化"><a href="#MongoDB操作速度优化" class="headerlink" title="MongoDB操作速度优化"></a>MongoDB操作速度优化</h1><p>常见的方式包括对单机各种命令执行优化、数据本身的优化、分布式读写优化。<br><img src="https://upload-images.jianshu.io/upload_images/12985001-60a8ef1edada994e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="MongoDB速度优化思维导图"></p>
+<h2 id="常用优化方法"><a href="#常用优化方法" class="headerlink" title="常用优化方法"></a>常用优化方法</h2><ol>
+<li>开启MongoDB慢命令检测功能；<br>MongoDB提供了自动检查哪些命令执行太慢的方法：开启<code>db.setProfilingLevel</code>功能自动记录有问题命令的清单，并通过<code>db.system.profile.find</code>命令来性暗示有问题命令清单。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">db.setProfilingLevel(level, showms)</span><br><span class="line">	//level指定命令分析等级：0位不执行该命令；1为记录慢命令</span><br><span class="line">	//超过指定时间限制（默认是100毫秒）的命令将被记录到system.profile中</span><br><span class="line">	//2为记录所有执行命令的情况。</span><br><span class="line">	//showms为可选参数，指定时间限制范围，超过该范围都被认为是慢命令</span><br><span class="line">db.system.profile.find(millis:&#123;$gt:100&#125;)</span><br><span class="line">	//查询慢命令记录中，超过100ms的命令</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>注意：该命令对系统运行有一定的影响，测试完成后，应该及时设置<code>db.setProfilingLevel(0)</code></p>
+<ol start="2">
+<li>使用explain命令分析问题语句<br>通过explain命令进一步分析慢命令的详细执行情况。</li>
+<li>Mtools工具分析日志<br>这是用于MongoDB数据库健康检查的官方工具，通过图形化展示监控运行情况。</li>
+<li>Mongoreplaly监控工具<br>这是一款功能强大的流量捕获和重播工具，可以用于检测和记录发送MongoDB数据库的命令。</li>
+<li>MongoStat监控工具</li>
+<li>db.serverStatus命令<br>是一种了解MongoDB数据库运行状态的一种选择，提供磁盘使用状态、内存使用状态、连接、日志、可用的索引等信息。该命令迅速响应不会影响MongoDB的运行性能。</li>
+<li>db.stats命令<br>查看一个数据库实例的运行状态，其分析粒度比db.serverStatus更详细。<h2 id="索引查询及优化"><a href="#索引查询及优化" class="headerlink" title="索引查询及优化"></a>索引查询及优化</h2>索引可以提高数据库的检索速度，也可以延迟数据库的响应性能。</li>
+<li>注意索引数据对象<br>索引查询速度的快慢，与建立索引字段值的颗粒数精密相关。在索引字段值中，每个数据的重复数量称为颗粒，也叫索引的基数。<br>一般索引基数超过30%，查询性能会明显下降。</li>
+<li>用Explain做对比测试<br>对某一字段是否能够建立索引，最好采用explain进行测试。未建立索引时测试一下，建立后测试一下，对比一下。</li>
+<li>慎用索引功能<br>建立索引后，引起性能下降的原因：索引基数过大、数据规模超过建立索引的最佳范围、对修改频繁的字段建立索引。<br>在满足操作要求的情况下，一个集合里的索引数量越少越好。</li>
+<li>查询只返回需要的字段</li>
+<li>使用$inc函数实现服务器端字段值的增减操作<br>能使用$inc的就不要使用$set。</li>
+<li>$or和$and使用要点<br>$or把匹配最多的放在最左边，匹配第二的放在第二个位置，以此类推。<br>$and把匹配最少的放在最左边，以此类推。<h2 id="数据设计及优化"><a href="#数据设计及优化" class="headerlink" title="数据设计及优化"></a>数据设计及优化</h2>常见的数据优化设计方案：</li>
+<li>数据量评估及解决<br>评估可以决定是否采用分布式部署、读写分离设计，甚至索引设置。</li>
+<li>数据结构优化设计</li>
+<li>使用封顶集合快速读写<br><code>db.createCollection(&lt;name&gt;,{capped:true, size:&lt;number&gt;,max&lt;number&gt;});</code><br>其中size以字节为单位，max以文档为单位。插入时，取两者最小。<br>可以用<code>db.Collection.validate()</code>来查看已存储的文档数据的存储大小。</li>
+<li>把尽可能多的数据操作放在业务系统代码端进行<h2 id="MongoDB读写分离"><a href="#MongoDB读写分离" class="headerlink" title="MongoDB读写分离"></a>MongoDB读写分离</h2>默认情况下，MongoDB集群主节点负责读写。可以通过设置，使得主节点专注于写操作，由从节点负责读操作。</li>
+<li>MongoDB所支持的读优化模式：<br>Primary：从主节点读取数据；<br>PrimaryPreferred：先从主节点读，若主节点不正常，从从节点读取数据。<br>Secondary：从从节点读；<br>SecondaryPreferred：优先从从节点读取数据；<br>Nearest：从网络延迟最小的副本集成员节点读取数据</li>
+<li>MongoDB读写分离操作<br>读写分离的控制主要从应用程序端的代码编写进行灵活控制。包括：建立数据库连接时控制、只指定对一个数据库文件读写、只指定一个读写命令。<br><strong>Shell平台，</strong>为了能从从节点读取信息，可以执行<code>db.getMongo().setSlaveOk()</code>或<code>rs.slave()</code>命令。<br>若要长期保持一个从服务器被查询命令读取数据，则需要在从服务器节点上配置mongorc.js，在其上增加一行<code>res.slaveOK()</code><br>另外，也可以在find后面跟<code>readPref(&#39;mode&#39;,tagset)</code>mode是1中所描述的五中模式，tagset是一种存放访问路径的集合，查询特定内容的从节点。<br>可以通过<code>rs.conf()</code>查看节点的配置信息，从而找到其Tags标记。<br><strong>实现Java代码读</strong>，可以在从节点配置文件中增加<code>mongo options slave-ok=&quot;true&quot;</code><br>Java代码中调用的语句为：<code>mongoClient.setReadPrence(ReadPreference.secondary());</code><br>对一个集合的查询提供从节点支持：<code>coll.findOne(query, null, ReadPreference.nearest());</code></li>
+<li>异步复制带来的问题<br>数据不一致问题。<br>从节点Oplog复制跟不上，可以在建立Oplog集合时，就指定合适大小的空间。<br><code>/bin/mongod --fork --dbpath /data/rs1 --logpath log/rs1/rs1.log --rest --replset --oplogSize 5012 --port 37018</code>其中参数为5012M<br>在MongoDB生产过程中从新设置Oplog的大小：先对从节点进行Oplog大小升级，再对主节点进行升级。步骤如下：<br>①关闭当前节点进程，以单机节点(去掉–replSet启动参数，更换端口号)的形式重新启动该节点：<code>db.shutdownServer()</code>—-&gt;修改配置文件，将端口改为其他端口—-&gt;重启服务<br>②单机状态下，备份从节点现有的Oplog日志数据：<code>mongodump -db local -collection &#39;oplog.rs&#39; -port 37018</code><br>③把备份的Oplog文件数据复制到temp表：<code>db.temp.save(db.oplogs.rs.find({},{ts:1, h:1}).sort({$natural:-1}).limit(1).next())</code><br>④确认temp中的数据是否已经赋值：<code>db.temp.find()</code><br>⑤在当前节点建立合适大小的Oplog：<code>db.runCommand({create:&quot;oplog.rs&quot;,capped:true, size:(5*1024*1024*1024)})</code><br>⑥恢备份数据到新的Oplog日志上：<code>db.oplog.rs.save(db.temp.findOne())</code><br>⑦关闭该节点进程，将配置发文件恢复为副本集下的状态，在配置文件里设置oplogSize=5012，再启动MongoDB进程。<br>更换主节点后，可能存在新的主节点丢失老的主节点中未同步的数据：可以在客户端使用write concern规则保证成功、也可以在主节点的配置文件中设置，要求所有的插入操作要么能复制到大多数节点，要么返回插入失败。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rsconfig=rs.conf()</span><br><span class="line">rsconfig.settrings.getLastErrorDefaults = &#123;w:&quot;majority&quot;, wtimeout:5000&#125;</span><br><span class="line">rs.reconfig(rsconfig)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>旧Primary将回滚的数据写到单独的rollback目录下，可以根据需要使用mongorestore进行恢复。<br>生产环境下扩充从节点导致性能下降：可以先人工赋值主节点的数据到新节点中：包括<code>db.fsyncLock()</code>对数据库加锁，避免写入—–&gt;<code>cp -R /data/db/* /backup</code>—–&gt;<code>db.fsyncUnlock()</code><br>利用时间差，晚上添加并同步新节点。</p>
+<ol start="4">
+<li>读写分离应用场景<br>对数据一致性要求不高时，可以使用读写分离技术：一致性不敏感的数据、后台统计分析数据、写入不频繁，读取高负荷<h1 id="Redis操作速度优化"><a href="#Redis操作速度优化" class="headerlink" title="Redis操作速度优化"></a>Redis操作速度优化</h1>和MongoDB类似，也考虑横向扩展和纵向扩展两种方式。<br><img src="https://upload-images.jianshu.io/upload_images/12985001-7ab7a425a4e98693.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Redis操作速度优化"><h2 id="Redis读写分离"><a href="#Redis读写分离" class="headerlink" title="Redis读写分离"></a>Redis读写分离</h2>单机优化不能解决系统反应迟缓的问题，则考虑读写分离。<h3 id="1-主节点设置"><a href="#1-主节点设置" class="headerlink" title="1. 主节点设置"></a>1. 主节点设置</h3>默认读写，改为只读：配置文件设置：<code>min-slaves-to-write 1</code>和<code>min-slaves-max-lag 10</code>，表示在一个从节点连接并且延迟大于10s的情况下，主节点不再接受外部写操作，等待从节点同步。<br>注意：可以通过在主节点关闭RDB和AOF持久化，在从节点持久化来提高主节点的性能。 <h3 id="2-从节点设置"><a href="#2-从节点设置" class="headerlink" title="2. 从节点设置"></a>2. 从节点设置</h3>从节点默认提供只读操作，并在配置文件开启持久化参数。<h3 id="3-业务系统访问处理"><a href="#3-业务系统访问处理" class="headerlink" title="3. 业务系统访问处理"></a>3. 业务系统访问处理</h3>业务均衡分布，访问IP自动切换。<h2 id="内存配置优化"><a href="#内存配置优化" class="headerlink" title="内存配置优化"></a>内存配置优化</h2><h3 id="压缩存储"><a href="#压缩存储" class="headerlink" title="压缩存储"></a>压缩存储</h3>Redis的列表由双列表表示、有序集合用散列表+跳跃表表示、散列表由散列表表示，这些数据结构都需要额外存储空间。Redis对这些存储结构提供了一种叫压缩包(ZipList)的紧凑存储方式来优化内存使用空间。压缩至原来的1/5。<h4 id="ZipList的两个约束条件"><a href="#ZipList的两个约束条件" class="headerlink" title="ZipList的两个约束条件"></a>ZipList的两个约束条件</h4>仅适用于限制范围(限制存储数据数量和数据大小)的数据进行操作；<br>仅适用于列表、散列、有序集合和整数值集合；<h4 id="通过redis-conf配置文件设置ZipList存储"><a href="#通过redis-conf配置文件设置ZipList存储" class="headerlink" title="通过redis.conf配置文件设置ZipList存储"></a>通过redis.conf配置文件设置ZipList存储</h4>Redis.conf中高级配置部分：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">list-max-ziplist-entries 512</span><br><span class="line">list-max-ziplist-value 64</span><br><span class="line">	//列表参数</span><br><span class="line">	//列表中元素数量512，单个元素的大小为64，包括额外数据结构空间。</span><br><span class="line">hash-max-ziplist-entries 512</span><br><span class="line">hash-max-ziplist-value 64</span><br><span class="line">	//散列表参数</span><br><span class="line">zset-max-ziplist-entries 512</span><br><span class="line">zset-max-ziplist-value 64</span><br><span class="line">	//有序集合参数</span><br><span class="line">set-max-intset-entries 512</span><br><span class="line">	//该参数适用于集合中只存放可以被解释为十进制的有符号整数范围。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>对上述设置，若数据元素超过限制，则压缩方式失效。</p>
+<h4 id="ZipList方式对性能的影响"><a href="#ZipList方式对性能的影响" class="headerlink" title="ZipList方式对性能的影响"></a>ZipList方式对性能的影响</h4><p>注意大小限制；<br>只适用于短小且被频繁访问的热点数据。</p>
+<h3 id="合理选择存储结构"><a href="#合理选择存储结构" class="headerlink" title="合理选择存储结构"></a>合理选择存储结构</h3><p>在采用ZipList技术的列表、集合、散列表存储方式中，散列表占存储空间最小。<br><a href="https://carlosfu.iteye.com/blog/2254572" target="_blank" rel="noopener">美团在Redis上踩的一些坑</a><br><a href="https://blog.csdn.net/liubenlong007/article/details/53816561" target="_blank" rel="noopener">Redis利用Hash存储节约内存</a></p>
+<h3 id="分片结构"><a href="#分片结构" class="headerlink" title="分片结构"></a>分片结构</h3><p>可以在存储的时候，建立多个ZipList散列表或列表，在业务逻辑层，根据数据ID等信息将其分配到不同的散列表或列表中。</p>
+<h3 id="字符串优化"><a href="#字符串优化" class="headerlink" title="字符串优化"></a>字符串优化</h3><p>可以利用GetRange、SetRange、GetBit、SetBit四个命令配合字符串紧凑格式，实现对数据的高效存储和利用。<br>字符串紧凑格式可以分为自编码紧凑格式和二进制格式。</p>
+<h4 id="自编码紧凑格式"><a href="#自编码紧凑格式" class="headerlink" title="自编码紧凑格式"></a>自编码紧凑格式</h4><h4 id="二进制格式"><a href="#二进制格式" class="headerlink" title="二进制格式"></a>二进制格式</h4><p>利用GetBit和SetBit来实现。</p>
+<h3 id="内存使用管理"><a href="#内存使用管理" class="headerlink" title="内存使用管理"></a>内存使用管理</h3><ol>
+<li>建议Redis在生产环境下，部署到linux上；</li>
+<li>设置Linux下的<code>overcommit_memory=1</code>，可以通过Linux命令<code>sysctl vm.overcommit_memory=1</code>，以便立即生效，该参数保存在/etc/sysctl.conf文件中；<br>其中，其值为0表示，如果有足够内存，允许进程申请内存；为1表示允许内核分配所有的物理内存；为2表示允许分配超过物理内存和交换空间总和的内存。</li>
+<li>禁用Linux内核特性<code>transparent huge pages</code>，该特性对内存使用和延迟有非常大的影响。</li>
+<li>设置足够大的SWAP：<br>linux下可以使用：<code>swapon -s</code>或<code>free</code>查看硬盘交换区使用情况；<br><a href="http://blog.itpub.net/17203031/viewspace-774174" target="_blank" rel="noopener">Linux下SWAP设置方法</a><h2 id="配套硬件优化"><a href="#配套硬件优化" class="headerlink" title="配套硬件优化"></a>配套硬件优化</h2><h4 id="采用SSD"><a href="#采用SSD" class="headerlink" title="采用SSD"></a>采用SSD</h4>注意SSD的报废问题，需要进行控制读写次数。<h4 id="服务器性能一致"><a href="#服务器性能一致" class="headerlink" title="服务器性能一致"></a>服务器性能一致</h4>服务器硬件性能指标尽量设置一致。<h4 id="采用光纤局域网"><a href="#采用光纤局域网" class="headerlink" title="采用光纤局域网"></a>采用光纤局域网</h4>五类双绞线：标准100MB/s，最高1000/s；光纤传输：10GB/s；<h4 id="采用时钟同步"><a href="#采用时钟同步" class="headerlink" title="采用时钟同步"></a>采用时钟同步</h4>在大规模服务器集群的情况下，会设置专门的时间同步服务器。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/01/09/NoSQL第十章-数据库速度优化问题/" data-id="cjqrsbkbd002cuov7hb2afd90" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/11/NoSQL第十一章-数据存储问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          NoSQL第十一章-数据存储问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/08/NoSQL第八章-键值数据库Redis提高/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NoSQL第八章-键值数据库Redis提高</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>57</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
