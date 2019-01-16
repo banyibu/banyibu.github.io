@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NoSQL第十二章-NoSQL选择及部署 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述NoSQL产品选择中，主要是了解流行和可靠的产品，对比测试各种NoSQL产品的优缺点；高可用性NoSQL部署从业务角度出发，提出一些建议。">
+<meta name="keywords" content="数据库,NoSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL第十二章-NoSQL选择及部署">
+<meta property="og:url" content="http://banyibu.com/2019/01/11/NoSQL第十二章-NoSQL选择及部署/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述NoSQL产品选择中，主要是了解流行和可靠的产品，对比测试各种NoSQL产品的优缺点；高可用性NoSQL部署从业务角度出发，提出一些建议。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/12985001-086c905b7d5f612a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-11T12:05:46.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL第十二章-NoSQL选择及部署">
+<meta name="twitter:description" content="概述NoSQL产品选择中，主要是了解流行和可靠的产品，对比测试各种NoSQL产品的优缺点；高可用性NoSQL部署从业务角度出发，提出一些建议。">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/12985001-086c905b7d5f612a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>59</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-NoSQL第十二章-NoSQL选择及部署" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/11/NoSQL第十二章-NoSQL选择及部署/" class="article-date">
+  <time class="post-time" datetime="2019-01-11T08:37:02.000Z" itemprop="datePublished">
+    <span class="post-month">1月</span><br/>
+    <span class="post-day">11</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NoSQL第十二章-NoSQL选择及部署
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/">数据库</a>,<a class="article-category-link" href="/categories/计算机基础/数据库/NoSQL/">NoSQL</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>NoSQL产品选择中，主要是了解流行和可靠的产品，对比测试各种NoSQL产品的优缺点；高可用性NoSQL部署从业务角度出发，提出一些建议。<br><a id="more"></a></p>
+<h1 id="NoSQL产品选择"><a href="#NoSQL产品选择" class="headerlink" title="NoSQL产品选择"></a>NoSQL产品选择</h1><p>擅长非结构化大数据的Hbase；擅长文档结构的数据库MongoDB；擅长内存处理的Redis；<br>NewSQL，PostgreSQL；</p>
+<h3 id="学好关键的两三种数据库产品"><a href="#学好关键的两三种数据库产品" class="headerlink" title="学好关键的两三种数据库产品"></a>学好关键的两三种数据库产品</h3><p>MySQL、MongoDB、Redis；</p>
+<h3 id="选择数据库学习"><a href="#选择数据库学习" class="headerlink" title="选择数据库学习"></a>选择数据库学习</h3><p><a href="https://db-engines.com/en/ranking" target="_blank" rel="noopener">数据库排行网站</a></p>
+<h3 id="测试对比"><a href="#测试对比" class="headerlink" title="测试对比"></a>测试对比</h3><p>利用YCSB测试：<a href="http://www.cnblogs.com/datazhang/p/5920800.html" target="_blank" rel="noopener">参考博客</a></p>
+<h3 id="TRDB与NoSQL选择的主要区别建议"><a href="#TRDB与NoSQL选择的主要区别建议" class="headerlink" title="TRDB与NoSQL选择的主要区别建议"></a>TRDB与NoSQL选择的主要区别建议</h3><ol>
+<li>TRDB更擅长关系结构数据处理，设计资金、重要商品数量等信息，以及多表操作。</li>
+<li>NoSQL更擅长相对不重要非结构数据的快速读写处理，海量数据的存储及计算。</li>
+<li>NoSQL产品都存在数据不一致性问题、也存在数据丢失问题。<h1 id="复杂部署案例分析"><a href="#复杂部署案例分析" class="headerlink" title="复杂部署案例分析"></a>复杂部署案例分析</h1><h2 id="高可用性NoSQL部署"><a href="#高可用性NoSQL部署" class="headerlink" title="高可用性NoSQL部署"></a>高可用性NoSQL部署</h2>这里的高可用性从使用者的角度，可分为业务访问高可用性和系统运维高可用性。<h3 id="业务访问高可用性"><a href="#业务访问高可用性" class="headerlink" title="业务访问高可用性"></a>业务访问高可用性</h3><h4 id="分布式应用"><a href="#分布式应用" class="headerlink" title="分布式应用"></a>分布式应用</h4><h4 id="数据库访问负载均衡代理"><a href="#数据库访问负载均衡代理" class="headerlink" title="数据库访问负载均衡代理"></a>数据库访问负载均衡代理</h4>问题1：数据库服务器出现故障，保证自动切换IP访问地址，保证业务平滑而不受影响；<br>问题2：高并发情况下，集群负载均衡的问题。<br>负载均衡技术有，软件、硬件两种：<br>硬件：采用F5负载均衡器；<br>软件：HAProxy、LVS、Twemproxy、OneCach、NIginx<h4 id="负载均衡部署"><a href="#负载均衡部署" class="headerlink" title="负载均衡部署"></a>负载均衡部署</h4><img src="https://upload-images.jianshu.io/upload_images/12985001-086c905b7d5f612a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="带负载均衡的数据库集群部署"><h3 id="系统运维高可用性"><a href="#系统运维高可用性" class="headerlink" title="系统运维高可用性"></a>系统运维高可用性</h3>使用专业的监控工具；考虑升级、 迁移冗余量、异地备份。<h2 id="TRDB-NoSQL综合部署"><a href="#TRDB-NoSQL综合部署" class="headerlink" title="TRDB+NoSQL综合部署"></a>TRDB+NoSQL综合部署</h2>互联网实际应用中，一般需要TRDB+NoSQL综合部署。<h3 id="MySQL-MongoDB-Redis产品性能比较"><a href="#MySQL-MongoDB-Redis产品性能比较" class="headerlink" title="MySQL+MongoDB+Redis产品性能比较"></a>MySQL+MongoDB+Redis产品性能比较</h3><h3 id="构建小规模写入、小规模存储，高并发读取的在线服务系统"><a href="#构建小规模写入、小规模存储，高并发读取的在线服务系统" class="headerlink" title="构建小规模写入、小规模存储，高并发读取的在线服务系统"></a>构建小规模写入、小规模存储，高并发读取的在线服务系统</h3><h4 id="数据种类及规模"><a href="#数据种类及规模" class="headerlink" title="数据种类及规模"></a>数据种类及规模</h4>基本信息分析、预估存储量时要考虑存储结构索引等开销。<h4 id="部署设计"><a href="#部署设计" class="headerlink" title="部署设计"></a>部署设计</h4><h3 id="构建大规模写入、大规模存储，高并发读取的在线服务系统"><a href="#构建大规模写入、大规模存储，高并发读取的在线服务系统" class="headerlink" title="构建大规模写入、大规模存储，高并发读取的在线服务系统"></a>构建大规模写入、大规模存储，高并发读取的在线服务系统</h3>MySQL默认最大连接数是100。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十二章-NoSQL选择及部署/" data-id="cjqs0vffu002xncv74d5pqc72" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/11/NoSQL第十三章-NoSQL的实用辅助工具/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">上一篇</strong>
+      <div class="article-nav-title">
+        
+          NoSQL第十三章-NoSQL的实用辅助工具
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/11/NoSQL第十一章-数据存储问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NoSQL第十一章-数据存储问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>59</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
