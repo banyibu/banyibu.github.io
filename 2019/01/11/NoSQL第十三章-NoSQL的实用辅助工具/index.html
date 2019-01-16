@@ -13,13 +13,10 @@
 <meta property="og:site_name" content="致良知，事上练">
 <meta property="og:description" content="概述通过测试发现性能特定及通过监控发现潜在的运行问题非常重要。这里以MongoDB、Redis数据库系统为基础，介绍一些测试工具和监控工具。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.51cto.com/yucanghai/1705155">
-<meta property="og:image" content="https://redis.io/topics/sentinel">
-<meta property="og:updated_time" content="2019-01-16T08:51:55.434Z">
+<meta property="og:updated_time" content="2019-01-16T09:01:02.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NoSQL第十三章-NoSQL的实用辅助工具">
 <meta name="twitter:description" content="概述通过测试发现性能特定及通过监控发现潜在的运行问题非常重要。这里以MongoDB、Redis数据库系统为基础，介绍一些测试工具和监控工具。">
-<meta name="twitter:image" content="http://blog.51cto.com/yucanghai/1705155">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -142,7 +139,7 @@
 <h4 id="检查连接问题"><a href="#检查连接问题" class="headerlink" title="检查连接问题"></a>检查连接问题</h4><p>检查客户端连接过多，可以使用Mongostat、Ops Manager、Mtools等。</p>
 <h2 id="Mongostat"><a href="#Mongostat" class="headerlink" title="Mongostat"></a>Mongostat</h2><p>Mongostat是官方免费提供的监控工具，在安装MongoDB时附带安装。</p>
 <h3 id="Mongostat工具使用参数"><a href="#Mongostat工具使用参数" class="headerlink" title="Mongostat工具使用参数"></a>Mongostat工具使用参数</h3><p>–help、–verbose(-v)增加标准输出或日志文件中返回的内部报告的详细程度，-vvvv比-v详细；<br><code>--host &lt;hostname&gt;&lt;:port&gt; (-h &lt;hostname&gt;&lt;:port&gt;)</code>、–ssl、<code>--sslCAFile &lt;filename&gt;</code>指定TLS/SSL协议根证书链的.pem文件名；<br><code>--username &lt;username&gt; (-u &lt;username&gt;)</code>、<code>--password &lt;password&gt; (-p &lt;password&gt;)</code><br><code>--authenticationDatabase &lt;dbname&gt;</code>、<code>--authenticationMechanism &lt;name&gt;</code>,对安全认证机制的支持，包括SCRAM-SHA-1(默认值)、MONGODB-CR、MONGODB-X509、GSSAPI、PLAIN。<br><code>--humanReadable boolean</code>对工具统计结果输出结果进行格式化，方便阅读，True为默认值；<br><code>-o &lt;field list&gt;</code>,指定需要输出的字段、–noheaders，输出统计结果时，不显示列名(或字段)；<br><code>--rowcount &lt;number&gt;(-n &lt;number&gt;)</code>,控制输出的行数；<code>discover</code>对副本集或分片集群的所有成员进行运行状态统计；–all返回所有字段；<br>–json，以JSON格式返回该命令的输出；<br><code>&lt;sleeptime&gt;</code>该参数时Mongostat的最后一个参数，设置等待呼叫之间的时间长度，单位秒；？？？？</p>
-<h3 id="Mongostat工具返回字段"><a href="#Mongostat工具返回字段" class="headerlink" title="Mongostat工具返回字段"></a>Mongostat工具返回字段</h3><p>返回的各个字段解释：<br><img src="http://blog.51cto.com/yucanghai/1705155" alt="返回字段值"></p>
+<h3 id="Mongostat工具返回字段"><a href="#Mongostat工具返回字段" class="headerlink" title="Mongostat工具返回字段"></a>Mongostat工具返回字段</h3><p>返回的各个字段解释：<br><a href="http://blog.51cto.com/yucanghai/1705155" target="_blank" rel="noopener">返回字段值</a></p>
 <h3 id="Mongostat工具使用实例"><a href="#Mongostat工具使用实例" class="headerlink" title="Mongostat工具使用实例"></a>Mongostat工具使用实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongostat -n 20 1</span><br><span class="line">	//以每秒20行的速度统计并显示结果</span><br></pre></td></tr></table></figure>
 <h2 id="Mongotop"><a href="#Mongotop" class="headerlink" title="Mongotop"></a>Mongotop</h2><p>Mongotop工具也是MongoDB安装包里免费提供的一款数据库监控工具，提供对MongoDB数据库和集合的读写操作的统计信息，默认情况下每秒返回一次统计值。</p>
 <h3 id="Mongotop参数"><a href="#Mongotop参数" class="headerlink" title="Mongotop参数"></a>Mongotop参数</h3><p>–help、–verbose、–quiet，以后台模式运行Mongotop，尝试限制输出量，限制内容包括从数据库命令输出、复制活动、客户端接受连接关闭连接；<br><code>--username &lt;username&gt;(-u &lt;username&gt;)</code>、<code>--password &lt;password&gt;(-p &lt;password&gt;)</code>、<code>--authenticationDatabase &lt;dbname&gt;</code>;<br><code>--locks</code>切换MOngotop的模式以报告每个数据库所的实用情况，这些数据可用于测量并发操作和锁定百分比；<br><code>--rowcount int (-n int)</code>、<code>--json</code>以JSON格式返回Mongotop统计结果的输出；<code>&lt;sleeptime&gt;</code>;</p>
@@ -167,7 +164,7 @@
 <h3 id="工具使用"><a href="#工具使用" class="headerlink" title="工具使用"></a>工具使用</h3><p>在实际生成中慎重使用Redis Live的Monitor。<br>Redis-stat工具，抛弃了Monitor命令，只用info命令来实现监控信息采集。<br>Redis-monitor是国内改造开发的代替Redis Live工具，去掉了对Google在线访问的限制要求。</p>
 <h2 id="Sentinel"><a href="#Sentinel" class="headerlink" title="Sentinel"></a>Sentinel</h2><p>Redis分布式部署下，可以使用自带的复制监控工具Sentinel来实现对主节点和从节点的运行监控。当Sentinel发现主节点故障，则启动故障转移功能，用一个从节点蒂安提出现故障的主节点；同时通过API向管理员或其他应用程序发送通知。</p>
 <h3 id="使用Sentinel"><a href="#使用Sentinel" class="headerlink" title="使用Sentinel"></a>使用Sentinel</h3><p>①首先需要配置sentinel.conf文件；<br>②用redis-sentinel可执行程序启动监控:<code>redis-sentinel /path/to/sentinel.conf</code><br>③也可以通过重新启动带sentinel参数的Redis数据库服务来气筒监控：<code>redis-server /path/to/sentinel.conf --sentinel</code></p>
-<h3 id="Sentinel使用建议"><a href="#Sentinel使用建议" class="headerlink" title="Sentinel使用建议"></a>Sentinel使用建议</h3><p><img src="https://redis.io/topics/sentinel" alt="Sentinel详细使用原理"><br>在实际生成环境下使用时，必须考虑使用它所带来的额外流量开销。</p>
+<h3 id="Sentinel使用建议"><a href="#Sentinel使用建议" class="headerlink" title="Sentinel使用建议"></a>Sentinel使用建议</h3><p><a href="https://redis.io/topics/sentinel" target="_blank" rel="noopener">Sentinel详细使用原理</a><br>在实际生成环境下使用时，必须考虑使用它所带来的额外流量开销。</p>
 
       
     </div>
