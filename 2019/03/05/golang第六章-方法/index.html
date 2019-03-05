@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>golang第六章-方法 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述go语言没有统一的面向对象的编程方法，对于go来说对象就是一个值或者变量，并且拥有其方法，而方法是某种特定类型的函数。这一章主要讲述如何通过面形对象的编程思想，更有效的定义和使用方法。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang第六章-方法">
+<meta property="og:url" content="http://banyibu.com/2019/03/05/golang第六章-方法/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述go语言没有统一的面向对象的编程方法，对于go来说对象就是一个值或者变量，并且拥有其方法，而方法是某种特定类型的函数。这一章主要讲述如何通过面形对象的编程思想，更有效的定义和使用方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-05T13:30:25.126Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang第六章-方法">
+<meta name="twitter:description" content="概述go语言没有统一的面向对象的编程方法，对于go来说对象就是一个值或者变量，并且拥有其方法，而方法是某种特定类型的函数。这一章主要讲述如何通过面形对象的编程思想，更有效的定义和使用方法。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>61</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-golang第六章-方法" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/05/golang第六章-方法/" class="article-date">
+  <time class="post-time" datetime="2019-03-05T03:23:24.000Z" itemprop="datePublished">
+    <span class="post-month">3月</span><br/>
+    <span class="post-day">05</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang第六章-方法
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/go程序设计语言/">go程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>go语言没有统一的面向对象的编程方法，对于go来说对象就是一个值或者变量，并且拥有其方法，而方法是某种特定类型的函数。这一章主要讲述如何通过面形对象的编程思想，更有效的定义和使用方法。<br><a id="more"></a></p>
+<h1 id="方法声明"><a href="#方法声明" class="headerlink" title="方法声明"></a>方法声明</h1><p>方法声明示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import &quot;math&quot;</span><br><span class="line">type Point struct&#123;X, Y float64&#125;</span><br><span class="line">//普通函数</span><br><span class="line">func Distance(p,q Point) float64&#123;</span><br><span class="line">  return math.Hypot(q.X-p.X, q.Y-p.Y)</span><br><span class="line">&#125;</span><br><span class="line">//Point类型的方法</span><br><span class="line">func (p Point) Distance(q Point) float64&#123;</span><br><span class="line">  return math.Hypot(q.X-p.X,q.Y-p.Y)</span><br><span class="line">&#125;</span><br><span class="line">//其中附加的参数p叫做方法的接收者。</span><br></pre></td></tr></table></figure></p>
+<p>上面方法的调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">p := Point&#123;1,2&#125;</span><br><span class="line">q := Point&#123;4,6&#125;</span><br><span class="line">fmt.Println(Distance(p,q))</span><br><span class="line">fmt.Println(p.Distance(q))</span><br><span class="line">//上述两个同名的函数和方法是不会冲突的。</span><br></pre></td></tr></table></figure></p>
+<p>只要包内数据类型不是指针类型也不是接口类型，就可以声明方法。<br>在方法的调用中，编译器会通过方法名和接收者的类型来决定调用哪一个函数。</p>
+<h1 id="接收者的方法"><a href="#接收者的方法" class="headerlink" title="接收者的方法"></a>接收者的方法</h1><p>将方法绑定到指针上，可以更新接收者的值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func (p *Point) ScaleBy(factor float64)&#123;</span><br><span class="line">  p.X *= factor</span><br><span class="line">  p.Y *= factor</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意： 该方法名称是(*Point).ScaleBy,圆括号是必须的，不可省略。<br>习惯上，对于一个类型的方法，若有一个需要指针接受，则其他方法都定义为指针接受。<br>可以直接用相应类型的变量来接受相应类型指针的方法，编译器会默认对这个变量进行取地址操作。相应的，对于一个指针调用一个指针指向对象类型的方法时，也可以省略解引用的过程，由编译器自动解引用。</p>
+<h2 id="nil是一个合法的接收者"><a href="#nil是一个合法的接收者" class="headerlink" title="nil是一个合法的接收者"></a>nil是一个合法的接收者</h2><p>方法定义中，若nil是一个合法的接收者，应该增加注释说明。</p>
+<h1 id="通过结构体内嵌组成类型"><a href="#通过结构体内嵌组成类型" class="headerlink" title="通过结构体内嵌组成类型"></a>通过结构体内嵌组成类型</h1><p>内嵌允许构成复杂的类型，该类型由许多字段构成，每个字段提供一些方法。<br>嵌套的匿名字段类型可以是个指向命名类型的指针，这个时候字段和方法间接的来自于其所指的对象。</p>
+<h1 id="方法变量与表达式"><a href="#方法变量与表达式" class="headerlink" title="方法变量与表达式"></a>方法变量与表达式</h1><p>将方法赋值给一个变量，赋值时，提供该方法的一个接受者。后面调用的时候只需要提供方法的实参。<br>与方法变量相关的是方法表达式。方法表达式写成T.f或(*T).f的形式，其中T和*T都是类型，此时其相当于一个常规的函数，第一个参数是其原来的接收者。</p>
+<h1 id="位向量"><a href="#位向量" class="headerlink" title="位向量"></a>位向量</h1><p>位向量使用一个无符号整型值的slice，每一位代表集合中的一个元素。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">type IntSet struct&#123;</span><br><span class="line">  words []uint64</span><br><span class="line">&#125;</span><br><span class="line">func (s *IntSet) Has(x int) bool&#123;</span><br><span class="line">  word, bit := x/64, uint(x%64)</span><br><span class="line">  return word &lt; len(s.word) &amp;&amp; s.words[word]&amp;(1&lt;&lt;bit) != 0</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h1><p>如果对象或者方法是不能通过对象访问到的，这称作封装的变量或方法。<br>Go中定义的名称首字母大写，则可以从包中导出，若小写则不能导出。同样的机制也适用于结构体，所以要封装必须使用结构体。<br>Go语言中封装的类型是包而不是类型。<br>封装有时候并不必要，要注意封装时考虑其后期可能的变化和维护的难易程度。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/03/05/golang第六章-方法/" data-id="cjsvt9rkr001fl4o3eflqmhua" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/02/18/golang第五章-函数/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">golang第五章 函数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>61</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
