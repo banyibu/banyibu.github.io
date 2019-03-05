@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>golang第五章 函数 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述了解Go语言的递归、匿名函数、错误处理方法等。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang第五章 函数">
+<meta property="og:url" content="http://banyibu.com/2019/02/18/golang第五章-函数/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述了解Go语言的递归、匿名函数、错误处理方法等。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-05T03:19:19.619Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang第五章 函数">
+<meta name="twitter:description" content="概述了解Go语言的递归、匿名函数、错误处理方法等。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>60</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-golang第五章-函数" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/18/golang第五章-函数/" class="article-date">
+  <time class="post-time" datetime="2019-02-18T12:28:20.000Z" itemprop="datePublished">
+    <span class="post-month">2月</span><br/>
+    <span class="post-day">18</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang第五章 函数
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/go程序设计语言/">go程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>了解Go语言的递归、匿名函数、错误处理方法等。<br><a id="more"></a></p>
+<h1 id="函数声明"><a href="#函数声明" class="headerlink" title="函数声明"></a>函数声明</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func name(parameter-list)(result-list)&#123;</span><br><span class="line">  body</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函数的类型称作函数签名。</p>
+<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>许多编程语言使用固定长度的函数调用栈，大小在24k到2M之间。递归的深度受限于固定长度的栈大小，所以要注意栈溢出的问题。<br>Go语言使用的可变长的栈，其最大可达1G左右的上线。</p>
+<h1 id="多返回值"><a href="#多返回值" class="headerlink" title="多返回值"></a>多返回值</h1><p>Go语言的垃圾回收机制可以将未使用的内存回收，但是不会回收操作系统和网络资源，所以对于操作系统和网络等资源需要主动释放，即使是在发生错误的情况下，也要保证其正确释放。<br>多返回值的使用：<br><code>links, err := findLinks(url)</code><br><code>links, _ := findLinks(url)</code><br>裸返回：函数如果有命名的返回值，则可以胜利return语句的操作数。<br>裸返回可以消除重复代码，但是却使代码不易于理解，应该保守使用。</p>
+<h1 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h1><p>对函数返回错误值，若只有一种错误，则这个错误值通常设置为bool类型，若有多种错误产生，则这个值类型往往是error。<br>error是内置对借口类型。在错误不为空对时候，其他对返回结果是为定义对，应该忽略，但是对于读取文档数据等函数，错误不为空时，其其他返回结果部分可用。</p>
+<h2 id="错误处理策略"><a href="#错误处理策略" class="headerlink" title="错误处理策略"></a>错误处理策略</h2><ol>
+<li><p>最常见等是将错误传递下去；在原始错误消息上，增添必要等上下午信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if err!=nil&#123;</span><br><span class="line">  return nil, fmt.Errorf(&quot;parsing %s HTML: %v&quot;, url, err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对不固定或不可预测的错误，在短暂的间隔后对操作进行重试是合理的，超出一定的重试次数和限定的时间后再做报告；</p>
+</li>
+<li>若错误不能解决，则在输出错误后终止程序；一个更加方便的方法是使用log.Fatalf：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if err := WaitForServer(url); err != nil&#123;</span><br><span class="line">  log.Fatalf(&quot;Site is down: %v\n&quot;,err)</span><br><span class="line">  //这里，log.Fatal会吧时间和日期添加到错误消息前面</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>也可以自己修改log包的前缀。</p>
+<ol start="4">
+<li>在一些情况下，只记录下错误信息，程序继续运行；</li>
+<li>在某些罕见的情况下我们可以直接忽略掉整个日志。<br>GO语言函数有一种通常的形式，就是在开头有一连串的检查用来返回错误，之后跟着实际的函数体一直到最后。<h2 id="文件结束标志"><a href="#文件结束标志" class="headerlink" title="文件结束标志"></a>文件结束标志</h2>对文件读取发生的错误，必须把读取到文件尾的情况区别于其他错误的操作。<br>io包保证任何由文件结束引起的读写错误，始终都会得到一个与众不同的错误——io.EOF。其定义如下：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">package io</span><br><span class="line">import &quot;errors&quot;</span><br><span class="line">var EOF = errors.New(&quot;EOF&quot;)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="函数变量"><a href="#函数变量" class="headerlink" title="函数变量"></a>函数变量</h1><p>函数变量也有类型，而且他们也可以赋给变量或者传递或者从其他函数中返回。<br>函数变量也可以像其他函数一样调用。<br>函数类型的零值是nil，调用一个空的函数变量将导致宕机。</p>
+<h1 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h1><p>命名函数只在包级别的作用域声明，但是我们能够使用函数字面量在任何表达式内指定函数变量。<br>通常函数变量被成为闭包。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func squares() func() int&#123;</span><br><span class="line">  var x int</span><br><span class="line">  return func() int&#123;</span><br><span class="line">    x++</span><br><span class="line">    return x*x</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main()&#123;</span><br><span class="line">  f := squares()</span><br><span class="line">  fmt.Println(f()) //&quot;1&quot;</span><br><span class="line">  fmt.Println(f()) //&quot;4&quot;</span><br><span class="line">  fmt.Println(f()) //&quot;9&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>windows下输入EOF：<code>Ctrl + Z</code><br>MaxOS下输入EOF：<code>control + D</code></p>
+<h2 id="捕获迭代量"><a href="#捕获迭代量" class="headerlink" title="捕获迭代量"></a>捕获迭代量</h2><h1 id="变长函数"><a href="#变长函数" class="headerlink" title="变长函数"></a>变长函数</h1><p>变长函数被调用时可以有可变的参数个数。<br>在参数列表最后的类型名称前使用省略号“…”表示声明一个变长函数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func sum(vals ... int) int &#123;</span><br><span class="line">&#125;</span><br><span class="line">sum(1,2,3,4)</span><br><span class="line">values := []int&#123;1,2,3,4&#125;</span><br><span class="line">sum(values...)</span><br></pre></td></tr></table></figure></p>
+<p>上面两个函数的类型不同。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func errorf(linenum int, format string, args ... interface&#123;&#125;)&#123;</span><br><span class="line">  fmt.Fprintf(os.Stderr, &quot;Line %d&quot;, linenum)</span><br><span class="line">  fmt.Fprintf(os.Stderr, format, args...)</span><br><span class="line">  fmt.Fprintln(os.Stderr)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>interface{}类型意味着这个函数的最后一个参数可以接受任何值。</p>
+<h1 id="延迟函数调用"><a href="#延迟函数调用" class="headerlink" title="延迟函数调用"></a>延迟函数调用</h1><p>在语法上，defer语句就是一个普通的函数或方法调用，在调用之前加上关键字defer。<br>defer语句经常适用于成对的操作，比如打开和关闭，连接和断开等，即便是再负责的控制流，资源在任何情况下都能正确释放。<br>defer语句用在解互斥锁上：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var mu sync.Mutex</span><br><span class="line">var m = make(map[string]int)</span><br><span class="line">func lookup(key string) int&#123;</span><br><span class="line">  mu.Lock()</span><br><span class="line">  defer mu.Unlock()</span><br><span class="line">  return m[key]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>defer也可以用来调试一个复杂的函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">func bigSloeOperation()&#123;</span><br><span class="line">  defer trace(&quot;bigSloeOperation&quot;)</span><br><span class="line">  //....一些操作</span><br><span class="line">  time.Sleep(10*time.Second) //仿真慢操作</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func trace(msg string)&#123;</span><br><span class="line">  start := time.Now()</span><br><span class="line">  log.Printf(&quot;enter % s&quot;, msg)</span><br><span class="line">  return func()&#123;log.Printf(&quot;exit %s (%s)&quot;, msg, time.Since(start))&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>延迟函数在return语句后面执行，并且可以更新函数的结果变量。因为命名函数可以得到其外层函数作用域内的变量（包括命名的结果）。<br>因为延迟函数不到最后一刻是不会执行的，需要注意for循环中的defer语句。</p>
+<h1 id="宕机"><a href="#宕机" class="headerlink" title="宕机"></a>宕机</h1><p>Go语言的类型系统会捕获许多编译时的错误，但是一些其他错误（比如数组越界访问或解引用空指针）都需要在运行时才进行检查。当GO检查到这类错误时，就会发生宕机。<br>每一个goroutine都会在宕机的时候显示一个函数调用的栈跟踪消息。通常可以借助改条消息来诊断问题的原因。<br>宕机也可以通过主动调用宕机函数来实现。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">switch s := suit(drawCard()); s&#123;</span><br><span class="line">  case &quot;Spades&quot;: //...</span><br><span class="line">  case &quot;Hearts&quot;: //...</span><br><span class="line">  case &quot;Diamonds&quot;: //...</span><br><span class="line">  case &quot;Clubs&quot;: //...</span><br><span class="line">  default:</span><br><span class="line">    panic(fmt.Sprintf(&quot;invalid suit %q&quot;, s)) //主动调用宕机函数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当宕机发生时，所有的延迟函数以倒序执行。Go语言会让延迟执行的函数在调用栈被清理之前执行。</p>
+<h1 id="恢复"><a href="#恢复" class="headerlink" title="恢复"></a>恢复</h1><p>退出程序是正常处理宕机的方式，但是有时候其是可以恢复的，至少在程序退出前要清理混乱的情况。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func Parse(input string)(s *Syntax, err error)&#123;</span><br><span class="line">  defer func()&#123;</span><br><span class="line">    if p:=recover(); p != nil&#123;</span><br><span class="line">      err = fmt.Errorf(&quot;internal error: %v&quot;, p) //也可以将runtime。Stack的内容包含在错误消息里面</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;()</span><br><span class="line">  //...解析器执行的动作</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>要选择性的使用recover函数，以免造成其他未知的问题。<br>recover使用示例：<br><code>`</code><br>func soleTitle(doc <em>html.Node)(title string, err error){<br>  type bailout struct{}<br>  defer func(){<br>    switch p := recover(); p{<br>      case nil:<br>        //没有宕机<br>      case bailout{}:<br>        //预期的宕机错误<br>      default:<br>        panic(p) //未预期的宕机错误，继续宕机过程<br>    }<br>  }()<br>  forEachNode(doc, func(n </em>html.Node){<br>    if n.Type == html.ElementNode &amp;&amp; n.Data == “title” &amp;&amp; n.FirstChild != nil{<br>      if title != “”{<br>        panic(bailout{}) //多个标题元素<br>      }<br>      title = n.FirstChild.Data<br>    }<br>    }, nil)<br>    if title == “”{<br>      return “”, fmt.Errorf(“no title element”)<br>    }<br>    return title, nil<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/02/18/golang第五章-函数/" data-id="cjsabl9pv001dmeo3f34aeh0p" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/01/11/NoSQL第十三章-NoSQL的实用辅助工具/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">NoSQL第十三章-NoSQL的实用辅助工具</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>60</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

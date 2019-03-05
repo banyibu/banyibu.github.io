@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="致良知，事上练">
 <meta property="og:description" content="概述复合数据类型，主要包括四个：数组、slice、map和结构体。数组和结构体的长度都是固定的，slice和map都是动态数据结构。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-18T03:58:34.677Z">
+<meta property="og:updated_time" content="2019-02-18T11:02:08.125Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang第四章：复合数据类型">
 <meta name="twitter:description" content="概述复合数据类型，主要包括四个：数组、slice、map和结构体。数组和结构体的长度都是固定的，slice和map都是动态数据结构。">
@@ -43,7 +43,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>59</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>60</strong><br>文章</div></a>
       <a href="/categories"><div><strong>27</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
@@ -123,13 +123,22 @@
 <p>可以使用delete来从字典中删除元素。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete(ages, &quot;alice&quot;)</span><br></pre></td></tr></table></figure></p>
 <p>map中元素的顺序是不固定的。<br>按顺序处理map中的元素需要先对map的键进行排序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import &quot;sort&quot;</span><br><span class="line"></span><br><span class="line">var names []string</span><br><span class="line">for name := range ages&#123;</span><br><span class="line">	names = append(names,name)</span><br><span class="line">&#125;</span><br><span class="line">sort.Strings(names)</span><br><span class="line">for _, name := range names&#123;</span><br><span class="line">	fmt.printf(&quot;%s\t%d\n&quot;,name, ages[name])</span><br><span class="line">&#125;</span><br><span class="line">//其中，也可以一开始设置一个固定的slice names的长度，这样会更高效</span><br><span class="line">names := make([]string,0,len(ages))</span><br></pre></td></tr></table></figure></p>
 <p>map类型的零值是nil。<br>向零值map中设置元素会导致错误，设置元素前，必须先初始化map。<br>判断一个元素是否在map中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if age, ok := ages[&quot;bob&quot;]; !ok&#123;/*.......*/&#125;</span><br></pre></td></tr></table></figure></p>
-<p>与slice一样，map不可比较，唯一合法的比较是和nil。<br>Go没有提供集合类型，但是可以用map实现该类型。<br>map的值类型本身可以使复合数据类型。</p>
+<p>与slice一样，map不可比较，唯一合法的比较是和nil。所以要判断两个map是否相等，需要逐个元素比较。<br>Go没有提供集合类型，但是可以用map实现该类型。<br>map的值类型本身可以使复合数据类型。<br>需要用==不能比较的类型做键值时，我们可以借助一个帮助函数将该不可比较类型转化成字符串类型或其他可用==比较的类型。</p>
 <h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><p>可以获取结构体成员的地址，然后用指针访问它。<br>点号也可以直接用在结构体指针上。<br>如果一个成员变量名称是首字母大写的，那么这个变量是可导出的。<br>结构体类型成员可以包含该结构体自身的指针，但不能包含对应的变量。</p>
+<h2 id="结构体字面量"><a href="#结构体字面量" class="headerlink" title="结构体字面量"></a>结构体字面量</h2><p>使用结构体字面量来设置结构体的值的方式有两种：<br>按顺序全部设置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">type Point struct&#123; X, Y int&#125;</span><br><span class="line">p := Point&#123;1,2&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第二种，设置全部或部分：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t := Point&#123;X:1&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意：无论是哪种方式，都不能绕过可导出/不可导出包的成员的限制条件。<br>当结构体类型的值作为函数参数时，出于修改结构体数据问题和程序存储效率考虑，通常传递指针的方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pp := &amp;Point&#123;1,2&#125;</span><br><span class="line">等价于：</span><br><span class="line">pp := new(Point)</span><br><span class="line">*pp = Point&#123;1,2&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="结构体比较"><a href="#结构体比较" class="headerlink" title="结构体比较"></a>结构体比较</h2><p>如果结构体的所有成员都是可比较的，那么改结构体也是可比较的。</p>
+<h2 id="结构体嵌套和匿名成员"><a href="#结构体嵌套和匿名成员" class="headerlink" title="结构体嵌套和匿名成员"></a>结构体嵌套和匿名成员</h2><p>对于一个结构体，可以将内部嵌套的结构体定义为匿名的，此时我们再访问的时候就不需要用.号指定一系列的中间名称了。<br>但是结构体字面量必须遵循结构体类型的定义。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">type Point struct &#123;</span><br><span class="line">	X, Y int</span><br><span class="line">&#125;</span><br><span class="line">type Circle struct&#123;</span><br><span class="line">	Point</span><br><span class="line">	Radius int</span><br><span class="line">&#125;</span><br><span class="line">type Wheel struct&#123;</span><br><span class="line">	Circle</span><br><span class="line">	Spokes int</span><br><span class="line">&#125;</span><br><span class="line">w = Wheel&#123;Circle&#123;Point&#123;8,8&#125;,5&#125;20&#125;</span><br><span class="line">或：</span><br><span class="line">w = Wheel&#123;</span><br><span class="line">	Circle: Circle&#123;</span><br><span class="line">		Point: Point&#123;X: 8, Y: 8&#125;,</span><br><span class="line">		Radius: 5,</span><br><span class="line">	&#125;,</span><br><span class="line">	Spokes: 20,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>匿名成员其实是有隐式的名字的，所以在同一个结构体中不能定义两个相同类型的匿名成员。</p>
+<h1 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h1><p>JavaScript对象表示法，是一种发送和接受格式化信息的标准。<br>也有其他表示方法：go库中有encoding/json、encoding.xml、encoding/asn1等<br>JSON是JavaScript值的Unicode编码。<br>可以使用json.Marshal()将一个Go的数据结构转换为JSON。这种方式将生成的结果折叠在一起不便阅读。可以使用MarshalIndent，输出带锁进换行的字符串。这个方法包含三个参数，第一个是GO结构实例，第二个是每行的前缀，第三个是锁进字符串。<br>注意：只有可导出的成员，才可以转化为JSON。<br>成员标签定义，是结构体成员在编译器间关联的一些元信息：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Year int `json:&quot;release&quot;`</span><br><span class="line">Color bool `json:&quot;color,omitempty&quot;`</span><br></pre></td></tr></table></figure></p>
+<p>Marshal的逆操作unmmarshal将JSON数据结构转化成GO中的结构体。可以通过定义Go的结构体来选择哪一部分JSON数据被解析到Go的结构体中。<br>unmarshal时，是不区分大小写的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var titles []struct&#123;Title string&#125;</span><br><span class="line">if err := json.Umarshal(data,&amp;titles);err!=nil&#123;</span><br><span class="line">	log.Fatalf(&quot;JSON unmarshaling failed: %s&quot;, err)</span><br><span class="line">&#125;</span><br><span class="line">fmt.Println(titles)</span><br></pre></td></tr></table></figure></p>
+<h1 id="文本和HTML模板"><a href="#文本和HTML模板" class="headerlink" title="文本和HTML模板"></a>文本和HTML模板</h1><p>text/template包和html/template包里面提供的方法可以将格式和代码彻底分离。<br>模板示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">const templ = `&#123;&#123;.TotalCount&#125;&#125; issues:</span><br><span class="line">&#123;&#123;range .Items&#125;&#125;--------------------------</span><br><span class="line">Number:	&#123;&#123;.Number&#125;&#125;</span><br><span class="line">User:	&#123;&#123;.User.Login&#125;&#125;</span><br><span class="line">Title: &#123;&#123;.Title | printf &quot;%.64&quot;&#125;&#125;</span><br><span class="line">Age:	&#123;&#123;.CreatedAt | daysAgo&#125;&#125; days</span><br><span class="line">&#123;&#123;end&#125;&#125;`</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/11/27/golang第四章：复合数据类型/" data-id="cjqs0vfgn0041ncv7y37vo48w" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/11/27/golang第四章：复合数据类型/" data-id="cjsabl9pr0013meo3sou8u5wg" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -238,7 +247,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>59</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>60</strong><br>文章</div></a>
       <a href="/categories"><div><strong>27</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
