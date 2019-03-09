@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>golang第七章-接口 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述接口类型是对其他类型行为对概括和抽象。通过使用接口我们可以写出更加灵活和通用的函数，这些函数不用绑定到一个特定的类型实现上。Go语言的接口的独特之处在于它是隐式实现的。这一章还包括类型断言和类型分支，以及它们如何实现另一种类型的通用化。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang第七章-接口">
+<meta property="og:url" content="http://banyibu.com/2019/03/05/golang第七章-接口/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述接口类型是对其他类型行为对概括和抽象。通过使用接口我们可以写出更加灵活和通用的函数，这些函数不用绑定到一个特定的类型实现上。Go语言的接口的独特之处在于它是隐式实现的。这一章还包括类型断言和类型分支，以及它们如何实现另一种类型的通用化。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-09T07:54:21.066Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang第七章-接口">
+<meta name="twitter:description" content="概述接口类型是对其他类型行为对概括和抽象。通过使用接口我们可以写出更加灵活和通用的函数，这些函数不用绑定到一个特定的类型实现上。Go语言的接口的独特之处在于它是隐式实现的。这一章还包括类型断言和类型分支，以及它们如何实现另一种类型的通用化。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>62</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-golang第七章-接口" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/05/golang第七章-接口/" class="article-date">
+  <time class="post-time" datetime="2019-03-05T13:33:32.000Z" itemprop="datePublished">
+    <span class="post-month">3月</span><br/>
+    <span class="post-day">05</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang第七章-接口
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/go程序设计语言/">go程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>接口类型是对其他类型行为对概括和抽象。通过使用接口我们可以写出更加灵活和通用的函数，这些函数不用绑定到一个特定的类型实现上。<br>Go语言的接口的独特之处在于它是隐式实现的。<br>这一章还包括类型断言和类型分支，以及它们如何实现另一种类型的通用化。<br><a id="more"></a></p>
+<h1 id="接口即约定"><a href="#接口即约定" class="headerlink" title="接口即约定"></a>接口即约定</h1><p>具体类型的特点是：只要你知道一个具体的类型的数据，那么你就精确的知道它是什么以及它能干什么。<br>接口类型的特点是：它是一种抽象的类型，它不会暴露所含数据的布局或者内部结构，当然也没有那些数据的基本操作，它所提供的仅仅是一些方法而已。<br>把一种类型替换为满足统一接口的另一种类型的特征成为可取代性(substitutability)。<br>使用广泛的接口类型包括：io.Writer和fmt.Stringer。</p>
+<h1 id="接口类型"><a href="#接口类型" class="headerlink" title="接口类型"></a>接口类型</h1><p>一个接口类型定义了一套方法，如果一个具体类型要实现该接口，那么必须实现接口类型中定义的所有方法。<br>io包包含的接口还包括Reader抽象了所有可以读取字节的类型，Closer所有可以关闭的类型。<br>也可以和定义结构类型一样，定义嵌入式接口。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">type Reader interface&#123;</span><br><span class="line">  Read(p []byte)(n int, err error)</span><br><span class="line">&#125;</span><br><span class="line">type Writer interface&#123;</span><br><span class="line">  Write(p []byte)(n int, error)</span><br><span class="line">&#125;</span><br><span class="line">type ReadWriter interface&#123;</span><br><span class="line">  Reader</span><br><span class="line">  Writer</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h1><p>如果一个类型实现了接口要求的所有方法，那么这个类型就实现了这个接口。<br>只有当一个表达式实现了一个接口时，这个表达式才可以赋给该接口。<br>一个拥有更多方法的接口，给我们它所指向数据的更多信息，相应的，实现这个接口也具有更高的门槛。<br>接口类型interface{}不包含任何方法，该空接口类型可以接受任何值的赋值。<br>非空的接口类型通常由一个指针类型来实现，其他类型，如go的引用类型，也可以用来实现接口。<br>从具体类型出发、提取其共性而得出的每一种分组方式都可以表示为一种接口类型。与基于类的语言不同的是，在go语言中我们可以在需要时才定义新的抽象和分组。</p>
+<h1 id="使用flag-Value来解析参数"><a href="#使用flag-Value来解析参数" class="headerlink" title="使用flag.Value来解析参数"></a>使用flag.Value来解析参数</h1><p>falg.Value接口的内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type Value interface&#123;</span><br><span class="line">  String() string</span><br><span class="line">  Set(string) error</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="接口值"><a href="#接口值" class="headerlink" title="接口值"></a>接口值</h1><p>一个接口类型的值其实有两个部分，一个具体类型和一个该类型的值。二者称为接口的动态类型和动态值。<br>接口值为nil时可以使用等于和不等来将其直接和nil比较，其他接口值也可以进行相等或不等的比较，若两个接口值的动态类型完全一致，且二者动态值相等，那么这两个接口值相等。注意，仅有两个动态值是可比较的时候，才可以完成比较。<br>一个具体类型向接口类型赋值时，就将这个具体类型隐式的转化为来接口类型。</p>
+<h1 id="注意：含有空指针的非空接口"><a href="#注意：含有空指针的非空接口" class="headerlink" title="注意：含有空指针的非空接口"></a>注意：含有空指针的非空接口</h1><p>空的接口值与仅仅动态值为nil的接口值是不一样的。</p>
+<h1 id="使用sort-Interface来排序"><a href="#使用sort-Interface来排序" class="headerlink" title="使用sort.Interface来排序"></a>使用sort.Interface来排序</h1><p>一个原地排序算法需要知道三个信息：序列的长度、比较两个元素的含义以及如何交换两个元素。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">package sort</span><br><span class="line">type Interface interface&#123;</span><br><span class="line">  Len() int</span><br><span class="line">  Less(i,j int) bool</span><br><span class="line">  Swap(i,j int) //其中i和j是元素的下标</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>一个类型实现来以上三个方法就可以直接用.sort排序了。<br>sort包也提供一个IsSort函数在哦o(n)内判断一个序列是否已经排好序了。</p>
+<h1 id="http-Handler接口"><a href="#http-Handler接口" class="headerlink" title="http.Handler接口"></a>http.Handler接口</h1><p>net/http包为了应对多种URL路径的请求，提供了一个<code>请求多工转发器ServeMux</code>用来简化处理程序之间的关联。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">  db := dtatbase&#123;&quot;shoes&quot;:50, &quot;socks&quot;:5&#125;</span><br><span class="line">  mux := http.NewServeMux()</span><br><span class="line">  mux.Handle(&quot;/list&quot;, http.Handlerfunc(db.list))</span><br><span class="line">  mux.Handle(&quot;/price&quot;,http.Handlerfunc(db.price))</span><br><span class="line">  log.Fatal(http.ListenAndServe(&quot;loacalhost&quot;,mux))</span><br><span class="line">&#125;</span><br><span class="line">type database map[string]dollars</span><br><span class="line">func (db database)list(w http.ResponseWriter, req *http.Request)&#123;</span><br><span class="line">  .......//</span><br><span class="line">&#125;</span><br><span class="line">func (db database)price(w http.ResponseWriter, req *http.Request)&#123;</span><br><span class="line">  .....///</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>为了简便起见，net/http包提供了一个全局的ServeMux实例DefaultServeMux，以及包级别的注册函数http.Handle和heep.HandleFunc。此时，传递给ListenAndServe的服务器主处理程序可为nil。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func main()&#123;</span><br><span class="line">  db := database&#123;&quot;shoes&quot;:50,&quot;socks&quot;:5&#125;</span><br><span class="line">  http.HandleFunc(&quot;/list&quot;,db.list)</span><br><span class="line">  http.HandleFunc(&quot;/price&quot;,db.price)</span><br><span class="line">  log.Fatal(http.ListenAndServe(&quot;loacalhost:8000&quot;,nil))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是，web服务器每次都用一个新的goroutine来调用处理程序，需要注意并发问题。</p>
+<h1 id="error接口"><a href="#error接口" class="headerlink" title="error接口"></a>error接口</h1><p>error类型实际上是一个接口类型。</p>
+<h1 id="示例：表达式求值器"><a href="#示例：表达式求值器" class="headerlink" title="示例：表达式求值器"></a>示例：表达式求值器</h1><h1 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h1><p>类型断言是作用在接口值上的操作，类似于<code>x.(T)</code>，其中x是一个接口类型的表达式，T是一个类型。<br>类型断言会检查作为操作数的动态类型是否满足指定的断言类型。<br>类型断言包含两种可能：</p>
+<ol>
+<li>如果断言类型T是一个具体类型，那么类型断言会检查x的动态类型是否是T。若是，断言的结果就是x的动态类型，也就是类型T；</li>
+<li>如果断言类型T是一个接口类型，那么类型断言检查x的动态类型是否满足T。如果检查成功，其断言结果是类型T。<br>如果断言有两个结果的赋值表达式，那么断言失败后，其不会崩溃，而只会返回一个为假的bool值，且断言返回类型为nil。<h1 id="使用类型断言来识别错误"><a href="#使用类型断言来识别错误" class="headerlink" title="使用类型断言来识别错误"></a>使用类型断言来识别错误</h1>I/O操作，失败的原因有很多，但对于文件已存储、文件没找到以及权限不足这三个原因需要单独处理。<br>而处理类似上述三种的一种可靠方法是用专门的类型来表示结构化的错误值。<br>错误识别通常要在失败操作发生后马上处理，而不是等到错误消息返回给调用者。<h1 id="通过接口类型断言查询特性"><a href="#通过接口类型断言查询特性" class="headerlink" title="通过接口类型断言查询特性"></a>通过接口类型断言查询特性</h1>很多实现来io.Write的重要类也有WriteString方法。<br>给一个特定类型多定义一个方法，就隐式地接受了一个特性约定。<br>使用类型断言来判断一个更更普适接口类型的值是否满足一个更专用的接口类型，若满足，则可以使用后者所定义的方法。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">package fmt</span><br><span class="line">func formatOneValue(x interface&#123;&#125;) string&#123;</span><br><span class="line">  if err, ok := x.(error); ok&#123;</span><br><span class="line">    return err.Error()</span><br><span class="line">  &#125;</span><br><span class="line">  if str, ok := x.(Stringer); ok&#123;</span><br><span class="line">    return str.String()</span><br><span class="line">  &#125;</span><br><span class="line">  //.....</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="类型分支"><a href="#类型分支" class="headerlink" title="类型分支"></a>类型分支</h1><p>接口有两种不同的类型：<br>一种是如io.Reader、io.Writer、fmt.Stringer、sort.Interface、http.Handler和error，接口上的的各种方法突出满足这个接口的具体类型之间的相似性，但隐藏了各个具体类型的布局和各自特有的功能。这种风格强调方法而不是具体类型。<br>第二种风格则充分利用了接口值能够容纳各种具体类型的能力，它把接口作为这些类型的联合来使用。类型断言用来在运行时区分这些类型并处理。“可识别联合”<br>类型分支语句：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">switch x.(type)&#123;</span><br><span class="line">  case nil: //...</span><br><span class="line">  case int, uint: //...</span><br><span class="line">  case bool: //...</span><br><span class="line">  case string: //...</span><br><span class="line">  default: //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>可识别联合，就是满足一个接口类型的各类具体类型的集合，而一般使用时，会对这些类型中的一部分进行重新断言，分别使用。</p>
+<h1 id="示例：基于标记的XML解析"><a href="#示例：基于标记的XML解析" class="headerlink" title="示例：基于标记的XML解析"></a>示例：基于标记的XML解析</h1><h1 id="一些建议"><a href="#一些建议" class="headerlink" title="一些建议"></a>一些建议</h1><p>go编程时，仅在两个或多个具体类型需要按照统一方式处理时才需要接口，否则，只需要应用包的可倒出性机制来限制哪些方法可以被包外调用。<br>也有特例：例如接口和类型实现由于依赖不能放在同一个包里面，那么一个接口只有一个具体类型实现也是可以的。<br>接口设计时，仅要求你需要的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/03/05/golang第七章-接口/" data-id="cjt1728w20017jfo3miy9jken" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/05/golang第六章-方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">golang第六章-方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>62</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>27</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
