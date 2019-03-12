@@ -38,7 +38,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>62</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>63</strong><br>文章</div></a>
       <a href="/categories"><div><strong>27</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
@@ -73,6 +73,80 @@
 </div>
 
         <section id="main">
+  
+    <article id="post-golang第八章-goroutine和通道" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/09/golang第八章-goroutine和通道/" class="article-date">
+  <time class="post-time" datetime="2019-03-09T08:06:49.000Z" itemprop="datePublished">
+    <span class="post-month">3月</span><br/>
+    <span class="post-day">09</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/03/09/golang第八章-goroutine和通道/">golang第八章-goroutine和通道</a>
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/go程序设计语言/">go程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。</p>
+<h1 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h1><p>在go中，每一个并发执行的活动称为goroutine。<br>当一个程序启动时，只有一个goroutine来调用main函数，称他为主goroutine。新的goroutine通过go语句创建。<br>除了从main返回或者退出程序外，没有程序后的办法让一个goroutine来停止另一个，但是有办法和goroutine通信来要求它自己停止。</p>
+<h1 id="示例：并发时钟服务"><a href="#示例：并发时钟服务" class="headerlink" title="示例：并发时钟服务"></a>示例：并发时钟服务</h1><h1 id="示例：并发回声服务器"><a href="#示例：并发回声服务器" class="headerlink" title="示例：并发回声服务器"></a>示例：并发回声服务器</h1><p>注意并发的安全性问题。</p>
+<h1 id="通道"><a href="#通道" class="headerlink" title="通道"></a>通道</h1><p>如果说goroutine时Go程序并发的执行体，通道就是他们之间的连接。通道是可以让一个goroutine发送特定值到另一个goroutine的通信机制。每一个通道是一个具体类型的导管，叫做通道的元素类型。一个有int元素类型的通道写为chan int。<br>使用内置的make函数来创建一个通道：<code>ch := make(chan int)</code><br>与map一样，通道是一个使用make创建的数据结构的引用。其零值是nil<br>通道可以使用==来比较。<br>通道主要有两个操作：发送和接收。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ch := make(chan int)</span><br><span class="line">ch &lt;- x //发送语句</span><br><span class="line">x = &lt;- ch //赋值语句中的接收表达式</span><br><span class="line">&lt;-ch //接收语句，丢弃结果</span><br></pre></td></tr></table></figure></p>
+<p>通道第三个操作：关闭<code>close(ch)</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ch = make(chan int)</span><br><span class="line">ch = make(chan int, 0)</span><br><span class="line">ch = make(chan int, 3) //容量为3的缓冲通道</span><br></pre></td></tr></table></figure></p>
+<h2 id="无缓冲通道"><a href="#无缓冲通道" class="headerlink" title="无缓冲通道"></a>无缓冲通道</h2><p>无缓冲通道上的发送操作会阻塞，知道另一个goroutine在通道上执行来接收操作，这是值传送完成，两个goroutine都可以继续执行。因此，无缓冲通道也称为同步通道。<br>我们说两个程序并发时，并不是说其同时发生，而是我们不能假设他们的顺序。</p>
+<h2 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h2><p>发送方可以通过close()来关闭管道，但是接收方在接收完剩余数据后，七天后的接收操作也会顺畅进行，只是获取到的是零值而已。<br>接收的一个变种：<code>x, ok := &lt;-naturals</code>可以通过ok来判断管道是否已经关闭。<br>也可以在管道上使用range循环语法，该语法在接收完最后一个值后结束循环。<br>结束时，关闭每一个通道不是必须的。只有在通知接收方goroutine所有的数据都发送完毕的时候才需要关闭通道。<br>垃圾回收器会根据通道是否可以访问来决定回收它。<br>试图关闭一个已经关闭的通道会导致宕机，就像关闭一个空通道一样。</p>
+<h2 id="单向通道类型"><a href="#单向通道类型" class="headerlink" title="单向通道类型"></a>单向通道类型</h2><p>类型<code>chan&lt;- int</code>是一个只能发送的通道，<code>&lt;-chan int</code>是一个只能接收的通道。<br>close操作仅仅在发送方可以使用，所以关闭一个仅接收通道会导致编译错误。<br>任何赋值操作中，将双向通道赋值给单向通道都是允许的，但是反过来不行。</p>
+<h2 id="缓冲通道"><a href="#缓冲通道" class="headerlink" title="缓冲通道"></a>缓冲通道</h2><p>缓冲通道有一个元素队列，队列的最大长度在创建的时候通过make的容量参数来设置。<br><code>ch = make(chan string, 3) //创建一个可以容纳三个字符串的缓冲通道。</code><br>缓冲通道的的发送操作在队未插入一个元素，接收操作在队头移除一个元素。<br>若通道满了，发送goroutine会阻塞，若通道空了，接收goroutine会阻塞。<br>内置的cap函数获得缓冲区的容量：<code>fmt.PrintlnJ(cap(ch))</code><br>内置的len可以获得当前缓冲区中元素的数量。<br>如果只是需要一个队列，不要用缓冲通道，应该用slice来建立队列。</p>
+<h1 id="并行循环"><a href="#并行循环" class="headerlink" title="并行循环"></a>并行循环</h1><h1 id="示例：并发的web爬虫"><a href="#示例：并发的web爬虫" class="headerlink" title="示例：并发的web爬虫"></a>示例：并发的web爬虫</h1><h1 id="使用select多路复用"><a href="#使用select多路复用" class="headerlink" title="使用select多路复用"></a>使用select多路复用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">select &#123;</span><br><span class="line">  case &lt;-ch1:</span><br><span class="line">    //...</span><br><span class="line">  case x := &lt;-ch2:</span><br><span class="line">    //...</span><br><span class="line">  case ch3 &lt;- y:</span><br><span class="line">    //...</span><br><span class="line">  default:</span><br><span class="line">    //...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>若有多个case语句同时满足，则select随机选一个执行，每一个通道都有相同被选中的概率。<br>goroutine泄漏。<br>有时候我们试图从一个通道上发送或者接收，但是不想在通道没有准备好的情况下被阻塞——非阻塞通信。可以使用select语句来实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">select &#123;</span><br><span class="line">  case &lt;- abort:</span><br><span class="line">    fmt.Println(&quot;Launch aborted!&quot;)</span><br><span class="line">    return</span><br><span class="line">  default:</span><br><span class="line">    //啥也不干</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在nil通道上发送或接收将永远阻塞。</p>
+<h1 id="示例：并发目录遍历"><a href="#示例：并发目录遍历" class="headerlink" title="示例：并发目录遍历"></a>示例：并发目录遍历</h1><p>构建一个程序，更具命令行指定的输入，报告一个或多个目录的磁盘使用情况，类似于UNIX du命令。</p>
+<h1 id="取消"><a href="#取消" class="headerlink" title="取消"></a>取消</h1><p>有时候，我们需要让一个goroutine停止它当前的任务。一个goroutine无法直接终止另一个。<br>通常，在任何时刻都很难知道有多少goroutine在工作。<br>关闭多个goroutine都时候，情况比较复杂。我可以利用通道关闭都特性创建一个广播机制：不在通道上发送值，而是关闭它。</p>
+<h1 id="示例：聊天服务器"><a href="#示例：聊天服务器" class="headerlink" title="示例：聊天服务器"></a>示例：聊天服务器</h1><p>关于限制/并发安全和跨goroutine的变量共享也是需要注意的内容。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/03/09/golang第八章-goroutine和通道/" data-id="cjt5tw4w50019czo39dndksug" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-golang第七章-接口" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -119,7 +193,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/03/05/golang第七章-接口/" data-id="cjt1728w20017jfo3miy9jken" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/03/05/golang第七章-接口/" data-id="cjt5tw4w7001dczo3q623z266" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -183,7 +257,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/03/05/golang第六章-方法/" data-id="cjt1728wa001rjfo3qoafm45w" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/03/05/golang第六章-方法/" data-id="cjt5tw4w9001jczo38xaw9kn8" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -247,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/02/18/golang第五章-函数/" data-id="cjt1728wb001ujfo37hom0mwz" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/02/18/golang第五章-函数/" data-id="cjt5tw4wd001rczo31yosvlmo" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
@@ -311,7 +385,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十三章-NoSQL的实用辅助工具/" data-id="cjt1728zq00dyjfo3yuu3bmdn" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十三章-NoSQL的实用辅助工具/" data-id="cjt5tw4zs00e3czo3eym9kwh8" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
@@ -375,7 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十二章-NoSQL选择及部署/" data-id="cjt1728vy000xjfo3t4nmm3yg" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十二章-NoSQL选择及部署/" data-id="cjt5tw4vy000yczo31s40pjwi" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
@@ -439,7 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十一章-数据存储问题/" data-id="cjt1728vw000tjfo377na2w5r" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/01/11/NoSQL第十一章-数据存储问题/" data-id="cjt5tw4vx000xczo3uiezyof4" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
@@ -503,7 +577,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/01/09/NoSQL第十章-数据库速度优化问题/" data-id="cjt1728z900ccjfo3ebz7lshh" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/01/09/NoSQL第十章-数据库速度优化问题/" data-id="cjt5tw4zd00ckczo3bllezxg3" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
@@ -567,7 +641,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/01/08/NoSQL第八章-键值数据库Redis提高/" data-id="cjt1728vu000ojfo3jy4yt9cm" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/01/08/NoSQL第八章-键值数据库Redis提高/" data-id="cjt5tw4vu000rczo3b1nmxafe" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NoSQL/">NoSQL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/数据库/">数据库</a></li></ul>
@@ -631,71 +705,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/12/27/Docker-数据管理与网络通信/" data-id="cjt1728vo000cjfo310ondt7t" class="article-share-link">分享</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker-基本操作" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/12/26/Docker-基本操作/" class="article-date">
-  <time class="post-time" datetime="2018-12-26T02:49:31.000Z" itemprop="datePublished">
-    <span class="post-month">12月</span><br/>
-    <span class="post-day">26</span>
-  </time>
-</a>
-   
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/12/26/Docker-基本操作/">Docker-基本操作</a>
-    </h1>
-  
-
-        <div>
-          
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/计算机技术/">计算机技术</a>,<a class="article-category-link" href="/categories/计算机技术/Docker/">Docker</a>
-  </div>
-
-          
-              
-
-          
-        </div>
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Docker的操作，这里包括，镜像、容器、资源控制。几方面的操作。<br>
-        
-          <p class="article-more-link">
-            <a href="/2018/12/26/Docker-基本操作/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://banyibu.com/2018/12/26/Docker-基本操作/" data-id="cjt1728z800c9jfo319ngdqba" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2018/12/27/Docker-数据管理与网络通信/" data-id="cjt5tw4vh000cczo3xieec5cd" class="article-share-link">分享</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
@@ -766,7 +776,7 @@
     <h2 class="author">般一不</h2>
     <h3 class="description"></h3>
     <div class="count-box">
-      <a href="/archives"><div><strong>62</strong><br>文章</div></a>
+      <a href="/archives"><div><strong>63</strong><br>文章</div></a>
       <a href="/categories"><div><strong>27</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
