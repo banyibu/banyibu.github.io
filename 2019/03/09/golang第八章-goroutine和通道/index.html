@@ -5,18 +5,18 @@
   
   <title>golang第八章-goroutine和通道 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="概述Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。 goroutine在go中，每一个并发执行的活动称为goroutine。当一个程序启动时，只有一个gorouti">
+  <meta name="description" content="概述Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。">
 <meta name="keywords" content="计算机语言,go">
 <meta property="og:type" content="article">
 <meta property="og:title" content="golang第八章-goroutine和通道">
 <meta property="og:url" content="http://banyibu.com/2019/03/09/golang第八章-goroutine和通道/index.html">
 <meta property="og:site_name" content="致良知，事上练">
-<meta property="og:description" content="概述Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。 goroutine在go中，每一个并发执行的活动称为goroutine。当一个程序启动时，只有一个gorouti">
+<meta property="og:description" content="概述Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-12T13:45:21.257Z">
+<meta property="og:updated_time" content="2019-03-12T13:46:51.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang第八章-goroutine和通道">
-<meta name="twitter:description" content="概述Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。 goroutine在go中，每一个并发执行的活动称为goroutine。当一个程序启动时，只有一个gorouti">
+<meta name="twitter:description" content="概述Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -113,7 +113,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。</p>
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Go有两种并发编程的风格。这一章主要展示goroutine和通道，他们支持通信顺序进程（Communicating Sequential Process, CSP），CSP是一个并发模式，在不同执行体之间传递值，但是变量本身局限于单一的执行体。第九章将讲述共享内存多线程的传统模型。<br><a id="more"></a></p>
 <h1 id="goroutine"><a href="#goroutine" class="headerlink" title="goroutine"></a>goroutine</h1><p>在go中，每一个并发执行的活动称为goroutine。<br>当一个程序启动时，只有一个goroutine来调用main函数，称他为主goroutine。新的goroutine通过go语句创建。<br>除了从main返回或者退出程序外，没有程序后的办法让一个goroutine来停止另一个，但是有办法和goroutine通信来要求它自己停止。</p>
 <h1 id="示例：并发时钟服务"><a href="#示例：并发时钟服务" class="headerlink" title="示例：并发时钟服务"></a>示例：并发时钟服务</h1><h1 id="示例：并发回声服务器"><a href="#示例：并发回声服务器" class="headerlink" title="示例：并发回声服务器"></a>示例：并发回声服务器</h1><p>注意并发的安全性问题。</p>
 <h1 id="通道"><a href="#通道" class="headerlink" title="通道"></a>通道</h1><p>如果说goroutine时Go程序并发的执行体，通道就是他们之间的连接。通道是可以让一个goroutine发送特定值到另一个goroutine的通信机制。每一个通道是一个具体类型的导管，叫做通道的元素类型。一个有int元素类型的通道写为chan int。<br>使用内置的make函数来创建一个通道：<code>ch := make(chan int)</code><br>与map一样，通道是一个使用make创建的数据结构的引用。其零值是nil<br>通道可以使用==来比较。<br>通道主要有两个操作：发送和接收。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ch := make(chan int)</span><br><span class="line">ch &lt;- x //发送语句</span><br><span class="line">x = &lt;- ch //赋值语句中的接收表达式</span><br><span class="line">&lt;-ch //接收语句，丢弃结果</span><br></pre></td></tr></table></figure></p>
