@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>golang第九章-使用共享变量实现并发 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述深入到并发机制内部，特别是与多个goroutine共享变量相关到问题，以及识别这些问题到分析技术、解决这些问题到模式。最后将解释一下goroutine和操作系统线程到差异。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang第九章-使用共享变量实现并发">
+<meta property="og:url" content="http://banyibu.com/2019/03/12/golang第九章-使用共享变量实现并发/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述深入到并发机制内部，特别是与多个goroutine共享变量相关到问题，以及识别这些问题到分析技术、解决这些问题到模式。最后将解释一下goroutine和操作系统线程到差异。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-14T03:51:18.442Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang第九章-使用共享变量实现并发">
+<meta name="twitter:description" content="概述深入到并发机制内部，特别是与多个goroutine共享变量相关到问题，以及识别这些问题到分析技术、解决这些问题到模式。最后将解释一下goroutine和操作系统线程到差异。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>64</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>28</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-golang第九章-使用共享变量实现并发" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/12/golang第九章-使用共享变量实现并发/" class="article-date">
+  <time class="post-time" datetime="2019-03-12T13:48:47.000Z" itemprop="datePublished">
+    <span class="post-month">3月</span><br/>
+    <span class="post-day">12</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang第九章-使用共享变量实现并发
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/golang程序设计语言/">golang程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>深入到并发机制内部，特别是与多个goroutine共享变量相关到问题，以及识别这些问题到分析技术、解决这些问题到模式。最后将解释一下goroutine和操作系统线程到差异。<br><a id="more"></a></p>
+<h1 id="竞态"><a href="#竞态" class="headerlink" title="竞态"></a>竞态</h1><p>在一个程序中，如果我们无法确定一个事件和另一个事件的先后顺序，则这两件事是并发的。<br>一个能在串行函数中正确工作的函数，如果在并发调用时，仍能正确工作，那么这个函数就是并发安全的，这里的鬓发调用是指在没有其他额外同步机制的情况下，从两个或多个goroutine同时调用该函数。相应的，作用于类型上的方法或操作的并发性，则称为并发安全类型。<br>并发安全的类型其实是特例而不是普遍存在的，如果要避免并发访问，要么限制变量只存在于一个goroutine内，要么维护一个更高层的互斥变量。<br>导出的包级别的函数通常是被认为并发安全的。<br>函数并发调用时，不工作的原因：活锁、死锁、资源耗尽。<br>竞态是指，在多个goroutine按某些交错顺序执行时程序无法给出正确的结果。<br>数据竞态发生于两个goroutine并发读写同一个变量并且至少其中一个是写入时。<br>三种方法来避免数据竞态：</p>
+<ol>
+<li>不要修改变量；</li>
+<li>避免从多个goroutine访问同一个变量；不要通过共享内存来通信，而应该通过通信来共享内存。使用一个通道请求来代理一个受限变量的搜有访问goroutine称为该变量的监控goroutine。<br>用一个叫teller的监控程序goroutine限制balance变量：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package bank</span><br><span class="line">var deposits = make(chan int) //发送存款金额</span><br><span class="line">var balances = make(chan int) //接收余额</span><br><span class="line">func Deposit(amount int)&#123;deposits &lt;- amount&#125;</span><br><span class="line">func Balance() int&#123;return &lt;-balances&#125;</span><br><span class="line"></span><br><span class="line">func teller() int&#123;</span><br><span class="line">  var balance int //balance被限制在teller goroutine中</span><br><span class="line">  for&#123;</span><br><span class="line">    select&#123;</span><br><span class="line">      case amount := &lt;-deposits:</span><br><span class="line">        balance+=amount</span><br><span class="line">      case balances &lt;- balance</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>串行受限</p>
+<ol start="3">
+<li>互斥机制：允许多个goroutine访问同一个变量，但是在同一时间只有一个goroutine可以访问。这种方法称为互斥机制。<h1 id="互斥锁：sync-Mutex"><a href="#互斥锁：sync-Mutex" class="headerlink" title="互斥锁：sync.Mutex"></a>互斥锁：sync.Mutex</h1>可以使用一个容量为1的通道来保证同一时间最多只有一个goroutine能访问共享变量。一个计数上限为1的信号量称为二进制信号量（binary semaphore）。<br>sync包有一个单独的类型Mutex来支持互斥锁模型。其方法Lock用于获取令牌，Unlock用于释放令牌。<br>按照惯例，被互斥量保护的共享变量应该紧跟在互斥量的声明之后。<br>在Lock和Unlock之间的代码可以自由的读取和修改共享变量，这一部分称为临界区。<br>函数、互斥锁、变量的组合方式称为监控模式。<br>对于临界区比较复杂的函数，可以使用defer来修饰Unlock，将临界区隐式的扩展到函数结尾。defer的执行成本比显示的调用Unlock大一些。<br>封装即通过在程序中减少对数据结构非预期的交互，来帮助我们保证数据结构中的不变量。因此，在使用互斥量时，需要确保互斥量本身以及被互斥量保护的变量都没有导出。<h1 id="读写互斥锁：sync-RWMutex"><a href="#读写互斥锁：sync-RWMutex" class="headerlink" title="读写互斥锁：sync.RWMutex"></a>读写互斥锁：sync.RWMutex</h1>多读单写锁，sync.RWMutex可以提供这种功能。<br>RLock和RUnlock申请和释放共享锁。<br>Lock和Unlock申请和释放写锁。<br>只有在大部分goroutine都在获取读锁，且竞争激烈的情况下，RWMutex才有优势，因为该锁需要更为复杂的内部薄记工作。<h1 id="内存同步"><a href="#内存同步" class="headerlink" title="内存同步"></a>内存同步</h1>通道通信和互斥锁操作这样的同步原语都会导致处理器把累积的写操作刷回内存并提交。<br>在缺乏显示同步的情况下，编译器和CPU可以在保证美国goroutine都满足串行一致性的基础上自由的重排访问内存的顺序。<h1 id="延迟初始化：sync-Once"><a href="#延迟初始化：sync-Once" class="headerlink" title="延迟初始化：sync.Once"></a>延迟初始化：sync.Once</h1>一次性初始化问题的解决方案：sync.Once，它只有一个Do方法，以初始化函数为参数。<h1 id="竞态检测器"><a href="#竞态检测器" class="headerlink" title="竞态检测器"></a>竞态检测器</h1>把-race命令行参数加到go build、go run、go test命令里面可以使用竞态检测器。它会为你的应用或测试构建一个修改后的版本，这个版本有额外的首发用于高效记录在执行时对共享变量的所有访问，包括go语句、通道操作、(*sync.Mutex).Lock调用、(*sync.WaitGroup).Wait调用等。<br>竞态检测器报告所有实际运行了的数据竞态。<h1 id="示例：并发非阻塞缓存"><a href="#示例：并发非阻塞缓存" class="headerlink" title="示例：并发非阻塞缓存"></a>示例：并发非阻塞缓存</h1>并发非阻塞缓存可以解决函数记忆的问题，即缓存函数的结果，达到多次调用但只须计算一次的效果。<br>重复抑制。<h1 id="goroutine与线程"><a href="#goroutine与线程" class="headerlink" title="goroutine与线程"></a>goroutine与线程</h1><h2 id="可增长的栈"><a href="#可增长的栈" class="headerlink" title="可增长的栈"></a>可增长的栈</h2>每个OS线程都有一个固定大小的栈内存（通常是2M），栈内存区域用于保存在其他函数调用期间正在执行或临时暂停的函数中的局部变量。这个栈的大小，太大也太小。<br>一个goroutine在生命周期开始只有一个很小的栈，典型情况下为2kb，其作用与OS的栈类似，但是其大小却是动态可变的。最大可达1G。<h2 id="goroutine调度"><a href="#goroutine调度" class="headerlink" title="goroutine调度"></a>goroutine调度</h2>OS线程由OS内核来调度。每隔几秒一个硬件时钟中断发到CPU，CPU调用一个叫调度器的内核函数。该函数暂停当前正在运行的线程，保存其上下文信息，从线程列表选一个线程，恢复其上下文信息，执行被选中的线程。<br>Go运行时，包含一个自己的调度器，这个调度器使用一个称作m:n调度技术（因为它可以复用/调度m个goroutine到n个OS线程）。GO调度器与内核调度器工作类似，但是前者只关心单个Go程序的goroutine调度问题。<br>与操作系统的线程调度器不同的是，Go调度器不是由硬件时钟来定期触发的，而是由特定的Go语言结构来触发的。<br>GO线程调度不需要切换内核语境，其调度成本更低。<h2 id="GOMAXPROCS"><a href="#GOMAXPROCS" class="headerlink" title="GOMAXPROCS"></a>GOMAXPROCS</h2>Go调度器使用GOMAXPROCS参数来确定使用多少个OS此案吃来同步执行GO代码，默认值是机器上的CPU数量。<br>GOMAXPROCS是m:n调度中的n。<br>正在休眠或正被阻塞的goroutine不需要占用线程。<br>阻塞在I/O和其他系统调用中，或调用非Go语言写的函数的goroutine需要一个独立的OS线程，但这个线程不计算在GOMAXPROCS内。<br>可以使用GOMAXPROCS环境变量或runtime.GOMAXPROCS函数来显示控制这个参数。<h2 id="goroutine没有标识"><a href="#goroutine没有标识" class="headerlink" title="goroutine没有标识"></a>goroutine没有标识</h2></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/03/12/golang第九章-使用共享变量实现并发/" data-id="cjt83joe500183oo3vc9hdjek" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/09/golang第八章-goroutine和通道/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">golang第八章-goroutine和通道</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>64</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>28</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
