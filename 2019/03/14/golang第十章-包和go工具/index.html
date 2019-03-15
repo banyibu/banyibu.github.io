@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>golang第十章-包和go工具 | 致良知，事上练</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="概述使用已有但包和创建新包。将项目分包，获取、编译、测试、归档、分享包，对包进行基准测试和性能分析。配套对go命令行工具，用来管理Go包对工作空间。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang第十章-包和go工具">
+<meta property="og:url" content="http://banyibu.com/2019/03/14/golang第十章-包和go工具/index.html">
+<meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述使用已有但包和创建新包。将项目分包，获取、编译、测试、归档、分享包，对包进行基准测试和性能分析。配套对go命令行工具，用来管理Go包对工作空间。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-03-15T07:49:56.953Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="golang第十章-包和go工具">
+<meta name="twitter:description" content="概述使用已有但包和创建新包。将项目分包，获取、编译、测试、归档、分享包，对包进行基准测试和性能分析。配套对go命令行工具，用来管理Go包对工作空间。">
+  
+    <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="images/1260.gif">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/plugin/bganimation/bg.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <div class="outer">
+        <div class="widget-wrap mobile-header">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>65</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>28</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+        <section id="main"><article id="post-golang第十章-包和go工具" class="wow slideInRight article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/03/14/golang第十章-包和go工具/" class="article-date">
+  <time class="post-time" datetime="2019-03-14T03:52:58.000Z" itemprop="datePublished">
+    <span class="post-month">3月</span><br/>
+    <span class="post-day">14</span>
+  </time>
+</a>
+   
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      golang第十章-包和go工具
+    </h1>
+  
+
+        <div>
+          
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机基础/">计算机基础</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机基础/计算机语言/go程序设计语言/">go程序设计语言</a>
+  </div>
+
+          
+              
+
+          
+        </div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>使用已有但包和创建新包。<br>将项目分包，获取、编译、测试、归档、分享包，对包进行基准测试和性能分析。<br>配套对go命令行工具，用来管理Go包对工作空间。<br><a id="more"></a></p>
+<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>模块化允许包在不同的项目中共享、复用，在组织中发布，或者在全世界范围内使用。<br>每个包定义不同的命名空间作为它的标识符。<br>包通过控制名字是否导出提供封装能力。<br>当我们修改一个文件时，我们必须重新编译文件所在的包和所有潜在依赖它的包。</p>
+<h1 id="导入路径"><a href="#导入路径" class="headerlink" title="导入路径"></a>导入路径</h1><p>每一个包都通过唯一的字符串进行识别，它称为导入路径。<br>对于准备共享或公开的包，其导入路径需要全局唯一。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import(</span><br><span class="line">  &quot;fmt&quot;</span><br><span class="line">  &quot;encoding/json&quot;</span><br><span class="line">  &quot;golang.org/x/net/html&quot;</span><br><span class="line">  &quot;github.com/go-sql-driver/mysql&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<h1 id="包的声明"><a href="#包的声明" class="headerlink" title="包的声明"></a>包的声明</h1><p>在每一个go源文件的开头都需要进行包的声明。主要目的是当该包被其他包引入时候作为其默认的标识符（称为包名）。<br>通常，包名是导入路径最后一段。其有三个例外分别是：</p>
+<ol>
+<li>不管包的导入路径是什么，如果该包定义一条命令（可执行的go程序），那么它总是使用名称main。这是告诉go build调用连接器生成可执行文件的信号。</li>
+<li>目录中可能有一些文件名字以_test.go结尾，包名中会以_test结尾。这样，一个目录中有两个包，一个普通的加上一个外部测试包。_test后缀告诉go test两个包都需要构建，并且指明文件属于哪个包。外部包测试用来避免测试所依赖的导入图中的循环依赖。</li>
+<li>有一些依赖管理工具会在包导入路径的尾部加上版本号后缀，如“gopkg.in/yaml.v2”。包名不包含后缀，因此其包名是yaml。</li>
+</ol>
+<h1 id="导入声明"><a href="#导入声明" class="headerlink" title="导入声明"></a>导入声明</h1><p>重命名导入，需要导入两个同名的包时，必须至少为其中一个指定一个代替名字来避免冲突。对于其他情况，如包名太长或避免和包内的一些变量冲突，也可以使用重命名导入。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import(</span><br><span class="line">  &quot;crypto/rand&quot;</span><br><span class="line">  mrand &quot;math/rand&quot;</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<p>每个导入声明从当前包向导入包建立一个依赖。如果这些依赖形成一个循环，go build工具会报错。</p>
+<h1 id="空导入"><a href="#空导入" class="headerlink" title="空导入"></a>空导入</h1><p>若导入的包未使用，编译器会报错。但是有时候我们就需要导入这个包（对包级别的变量执行初始化表达式求值，并执行它的Init函数）。这是候可以用重命名导入，使用“_”代替它的名字，这表示导入的内容为空白标识，通常情况下空白标识符不能被引用。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import _ &quot;image/png&quot; //注册PNG解码器</span><br></pre></td></tr></table></figure></p>
+<p>database/sql包使用类似的机制让用户按需要加入想要的数据库驱动程序。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import(</span><br><span class="line">  &quot;database/sql&quot;</span><br><span class="line">  _ &quot;github.com/lib/pq&quot; //添加Postgres支持</span><br><span class="line">  _ &quot;github.com/go-sql-driver/mysql&quot; //添加MySQL支持</span><br><span class="line">  )</span><br></pre></td></tr></table></figure></p>
+<h1 id="包及其命名"><a href="#包及其命名" class="headerlink" title="包及其命名"></a>包及其命名</h1><p>本节指出如果遵从Go的习惯给包和它的成员命名。<br>包名，可读性高，简短无歧义。<br>重要但成员使用简单但命名。</p>
+<h1 id="go工具"><a href="#go工具" class="headerlink" title="go工具"></a>go工具</h1><p>本节主要讨论go工具，它用来下载、查询、格式化、构建、测试以及按照Go代码包。<br>它是一个包管理工具，可以查询包的作者，计算他们的依赖关系，从远程版本控制系统下载他们。它是一个构建系统，可计算文件依赖，调用编译器、汇编器和连接器。</p>
+<h2 id="工作空间的组"><a href="#工作空间的组" class="headerlink" title="工作空间的组"></a>工作空间的组</h2><p>GOPATH变量的配置指定了工作空间的根。当需要切换到不同的工作空间时，更新GOPATH变量即可。<br>GOPATH下面有三个目录：src子目录包含源文件；pkg是构建工具存储编译后的包的位置；bin子目录放置可执行文件。<br>GOROOT指定发行版本的根目录，其中提供所有标准库的包。GOROOT下的目录结构和GOPATH类似。<br><code>go env</code>命令输出与工具链相关的已经设置有效值的环境变量及其所设置值，还会输出未设置有效的环境变量及其默认值。</p>
+<h2 id="包的下载"><a href="#包的下载" class="headerlink" title="包的下载"></a>包的下载</h2><p>如果使用go工具，包的导入路径不仅指示了如何在本地工作空间中找到它的位置，还指明了通过互联网使用<code>go get</code>来获取和更新它的位置。<br>go get 添加-u，则表示获取每个包的最新版本，若不加该参数，则对应的本地存在的包不会更新。<br>在发布版本中需要精确的版本控制，不适合用-u来更新依赖。常用的解决方案是加一层vendor目录。构建一个关于所有必须依赖的本地副本，然后非常小心的更新这个副本。使用go help gopath可以了解更多。</p>
+<h2 id="包的构建"><a href="#包的构建" class="headerlink" title="包的构建"></a>包的构建</h2><p>每一个目录包含一个包，每一个可执行程序或UNIX命令都需要自己的目录。<br>go build命令构建所需要的包以及他们所有的依赖性，然后丢弃除了最终可执行程序之外的所有编译后的代码；<br>go install命令和go build乐死，区别是，其会保存每一个包的编译代码和命令。编译后的包保存在$GOPATH/pkg目录中，它对应于存放源文件的src目录，可执行的命令保存在$GOPATH/bin目录中。<br>go build -i 可以将包安装在独立于构建目标的地方。<br>因为编译包根据操作系统平台和CPU腿结构不同而不同，所以go install将保存它们的目录命名与GOOS和GOPATH变量的值相关。<br>为了处理底层的可移植性问题或为重要的例程提供优化版本，有一些包需要为特定的平台或处理器编译不同的版本。如果一个文件名包含操作系统或持利器体系结构的名字（如net_linux.go或asm_amd64.s），go工具只会在构建指定规格的目标文件的时候才进行编译。<br>注释标签提供更细粒度的控制：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//+build linux darwin //go build只会在构建Linux或Mac OS X系统应用的时候对它进行编译</span><br><span class="line">//+build ignore //任何时候都不要编译这个文件</span><br></pre></td></tr></table></figure></p>
+<p>更多细节可以在go/build包的文档中的<a href="https://golang.org/pkg/go/build/" target="_blank" rel="noopener">Build Constrains</a>节找到。</p>
+<h2 id="包的文档化"><a href="#包的文档化" class="headerlink" title="包的文档化"></a>包的文档化</h2><p>每一个导出的包成员的声明以及包声明滋生应该立刻使用注释来描述它的目的和用途。<br>Go文档注释总是完整的语句，使用声明的包名作为开头的第一句注释通常是总结。<br>比较长的包注释，可以使用一个单独的注释文档。<br>浏览标准库有两个常用的工具：</p>
+<ol>
+<li>go doc工具输出在命令行上指定的内容的声明和整个文档注释: <code>go doc time</code>; <code>go doc time.Since</code><br>该工具不需要完整的导入路径或准确的标识符。</li>
+<li><a href="https://godoc.org" target="_blank" rel="noopener">godoc</a>，它提供相互链接的HTML页面服务，进而提供不少于go doc命令的信息。<br>也可以在自己的工作空间运行一个godoc（<code>$ godoc -http 8000</code>）实例，在执行命令后，在浏览器访问<a href="http://localhost:8000/pkg" target="_blank" rel="noopener">http://localhost:8000/pkg</a><br>加上-analysis=type或-analysis=pointer标记使文档内容丰富，同时提供源代码的高级静态分析结果。<h2 id="内部包"><a href="#内部包" class="headerlink" title="内部包"></a>内部包</h2>包是用来封装Go程序最重要的机制。没有导出的标识符只能在同一个包内访问，导出的标识符，则全局可访问。<br>也可以通过加上一个允许访问的有限客户列表来限制某一个包的标识符可以被其他特定的包访问。<br>为了实现上述功能，go build工具会特殊对待导入路径中包含路径片段internal的情况，这些包叫内部包。内部包只能被另一个位于以internal目录的父目录为根目录的树中的包导入。<h2 id="包的查询"><a href="#包的查询" class="headerlink" title="包的查询"></a>包的查询</h2>go list工具上报可用包的信息。go list判断一个包是否存在于工作空间内，如果存在输出它的导入路径。<br>go list命令可以包含“…”通配符。它用来匹配包的导入路径中任意的字串。可以使用它枚举一个Go空间中的所有的包：<code>go list ...</code>，或一个指定的子树中的所有的包<code>go list gocode/banyibu/...</code>或一个具体的主题：<code>go list ...xml...</code><br>go list命令获取每一个包的完整元数据，而不单单是导入路径，并且提供各种访问格式，-json标记使go list以JSON格式输出每一个包的完整记录：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">$ go list -json hash</span><br><span class="line">  &#123;</span><br><span class="line">  	&quot;Dir&quot;: &quot;/usr/local/go/src/hash&quot;,</span><br><span class="line">  	&quot;ImportPath&quot;: &quot;hash&quot;,</span><br><span class="line">  	&quot;Name&quot;: &quot;hash&quot;,</span><br><span class="line">  	&quot;Doc&quot;: &quot;Package hash provides interfaces for hash functions.&quot;,</span><br><span class="line">  	&quot;Target&quot;: &quot;/usr/local/go/pkg/darwin_amd64/hash.a&quot;,</span><br><span class="line">  	&quot;Root&quot;: &quot;/usr/local/go&quot;,</span><br><span class="line">  	&quot;Match&quot;: [</span><br><span class="line">  		&quot;hash&quot;</span><br><span class="line">  	],</span><br><span class="line">  	&quot;Goroot&quot;: true,</span><br><span class="line">  	&quot;Standard&quot;: true,</span><br><span class="line">  	&quot;GoFiles&quot;: [</span><br><span class="line">  		&quot;hash.go&quot;</span><br><span class="line">  	],</span><br><span class="line">  	&quot;Imports&quot;: [</span><br><span class="line">  		&quot;io&quot;</span><br><span class="line">  	],</span><br><span class="line">  	&quot;Deps&quot;: [</span><br><span class="line">  		&quot;errors&quot;,</span><br><span class="line">  		&quot;internal/bytealg&quot;,</span><br><span class="line">  		&quot;internal/cpu&quot;,</span><br><span class="line">  		&quot;internal/race&quot;,</span><br><span class="line">  		&quot;io&quot;,</span><br><span class="line">  		&quot;runtime&quot;,</span><br><span class="line">  		&quot;runtime/internal/atomic&quot;,</span><br><span class="line">  		&quot;runtime/internal/sys&quot;,</span><br><span class="line">  		&quot;sync&quot;,</span><br><span class="line">  		&quot;sync/atomic&quot;,</span><br><span class="line">  		&quot;unsafe&quot;</span><br><span class="line">  	],</span><br><span class="line">  	&quot;XTestGoFiles&quot;: [</span><br><span class="line">  		&quot;example_test.go&quot;,</span><br><span class="line">  		&quot;marshal_test.go&quot;</span><br><span class="line">  	],</span><br><span class="line">  	&quot;XTestImports&quot;: [</span><br><span class="line">  		&quot;bytes&quot;,</span><br><span class="line">  		&quot;crypto/md5&quot;,</span><br><span class="line">  		&quot;crypto/sha1&quot;,</span><br><span class="line">  		&quot;crypto/sha256&quot;,</span><br><span class="line">  		&quot;crypto/sha512&quot;,</span><br><span class="line">  		&quot;encoding&quot;,</span><br><span class="line">  		&quot;encoding/hex&quot;,</span><br><span class="line">  		&quot;fmt&quot;,</span><br><span class="line">  		&quot;hash&quot;,</span><br><span class="line">  		&quot;hash/adler32&quot;,</span><br><span class="line">  		&quot;hash/crc32&quot;,</span><br><span class="line">  		&quot;hash/crc64&quot;,</span><br><span class="line">  		&quot;hash/fnv&quot;,</span><br><span class="line">  		&quot;log&quot;,</span><br><span class="line">  		&quot;testing&quot;</span><br><span class="line">  	]</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>-f标记可以让用户通过text/template包提供的模板语言来定制输出格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ go list -f &apos;&#123;&#123;.ImportPath&#125;&#125; -&gt; &#123;&#123;join .Imports &quot; &quot;&#125;&#125;&apos; ./</span><br><span class="line">  github.com/banyibu/gocode/ch7 -&gt; fmt log net/http</span><br></pre></td></tr></table></figure></p>
+<p>更多的参数及它们的含义信息，可以通过执行go help list来获取。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://banyibu.com/2019/03/14/golang第十章-包和go工具/" data-id="cjt9rfn3p00cv7xo32xb3hx37" class="article-share-link">分享</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/03/12/golang第九章-使用共享变量实现并发/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">下一篇</strong>
+      <div class="article-nav-title">golang第九章-使用共享变量实现并发</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+  <div id="comments" class="comments">
+  	<div id="uyan_frame"></div>
+  </div>
+	<section class="livere" id="comments">
+<!-- 来必力City版安装代码 -->
+<div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc5NS8xNDMyNg==">
+<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+</script>
+<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+	
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <h1 class="blog-title">致良知，事上练</h1>
+    <h2 class="blog-subtitle">偏爱精神世界的更新换代，日日思之，日日求突破。</h2>
+    <ul class="blog-link">
+     
+          <a href="/" title="Home">
+            <li>主页</li>
+          </a>
+        
+          <a href="/archives" title="Archives">
+            <li>归档</li>
+          </a>
+        
+          <a href="/categories" title="Categories">
+            <li>分类</li>
+          </a>
+        
+          <a href="/tags" title="Tags">
+            <li>标签</li>
+          </a>
+        
+          <a href="/about" title="About">
+            <li>关于</li>
+          </a>
+        
+          <a href="/sponsor" title="Sponsor">
+            <li>投喂</li>
+          </a>
+        
+    </ul>
+  </div>
+</div>
+
+  
+    <div class="widget-wrap">
+  <h3 class="widget-title"></h3>
+  <div class="widget">
+    <img class="avatar" src="https://upload-images.jianshu.io/upload_images/12985001-ffd8bc90edb9f3e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+    <h2 class="author">般一不</h2>
+    <h3 class="description"></h3>
+    <div class="count-box">
+      <a href="/archives"><div><strong>65</strong><br>文章</div></a>
+      <a href="/categories"><div><strong>28</strong><br>分类</div></a>
+      <a href="/tags"><div><strong>27</strong><br>标签</div></a>
+    </div>
+
+
+
+    <div class="social-link">
+      
+        <a class="hvr-bounce-in" href="http://github.com/banyibu" target="_blank" title="Github">
+          Github
+        </a>
+      
+    </div>
+
+    <div class="friend-link">
+      <h2>友情链接</h2>
+      
+        <a class="hvr-bounce-in" href="https://dadavision.cn" target="_blank" title="Dadavision">
+          Dadavision
+        </a>
+      
+        <a class="hvr-bounce-in" href="https://www.resultlv.com" target="_blank" title="Rwsultlv">
+          Rwsultlv
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy;2018 - 2019 般一不<br>
+      由<a href="http://hexo.io/" target="_blank">Hexo</a>强力驱动 | 
+      主题-<a href="https://github.com/ShanaMaid/hexo-theme-shana">Ban Yibu</a>
+      
+    </div>
+    
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="//apps.bdimg.com/libs/wow/0.1.6/wow.min.js"></script>
+<script>
+new WOW().init();
+</script>   
+
+
+  <link rel="stylesheet" href="/plugin/fancybox/jquery.fancybox.css">
+  <script src="/plugin/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+  <link rel="stylesheet" href="/plugin/galmenu/GalMenu.css">
+  <script src="/plugin/galmenu/GalMenu.js"></script>
+  <div class="GalMenu GalDropDown">
+      <div class="circle" id="gal">
+        <div class="ring">
+          
+            <a href="/" title="" class="menuItem">首页</a>
+          
+            <a href="/tags" title="" class="menuItem">标签</a>
+          
+            <a href="/categories" title="" class="menuItem">分类</a>
+          
+            <a href="/archives" title="" class="menuItem">归档</a>
+          
+            <a href="/about" title="" class="menuItem">关于</a>
+          
+            <a href="/sponsor" title="" class="menuItem">打赏</a>
+          
+        </div>
+        
+          <audio id="audio" src="#"></audio>
+        
+      </div> 
+</div>
+<div id="overlay" style="opacity: 1; cursor: pointer;"></div>
+  <script type="text/javascript">var items = document.querySelectorAll('.menuItem');
+    for (var i = 0,
+    l = items.length; i < l; i++) {
+      items[i].style.left = (50 - 35 * Math.cos( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%";
+      items[i].style.top = (50 + 35 * Math.sin( - 0.5 * Math.PI - 2 * (1 / l) * i * Math.PI)).toFixed(4) + "%"
+    }</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('body').GalMenu({
+      'menu': 'GalDropDown'
+    })
+  });
+</script>
+
+  <section class="hidden-xs"> 
+  <ul class="cb-slideshow"> 
+    <li><span>苟利</span></li> 
+    <li><span>国家</span></li> 
+    <li><span>生死以</span></li> 
+    <li><span>岂能</span></li> 
+    <li><span>祸福</span></li> 
+    <li><span>趋避之</span></li> 
+  </ul>
+</section>
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
