@@ -5,14 +5,18 @@
   
   <title>golang第十二章-反射 | 致良知，事上练</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="概述Go语言提供了一种机制，在编译时不知道类型的情况下，可以更新变量、在运行时查看值、调用方法以及直接对它们对布局进行操作，这种机制称为反射(reflection)。">
+<meta name="keywords" content="计算机语言,go">
+<meta property="og:type" content="article">
 <meta property="og:title" content="golang第十二章-反射">
 <meta property="og:url" content="http://banyibu.com/2019/03/18/golang第十二章-反射/index.html">
 <meta property="og:site_name" content="致良知，事上练">
+<meta property="og:description" content="概述Go语言提供了一种机制，在编译时不知道类型的情况下，可以更新变量、在运行时查看值、调用方法以及直接对它们对布局进行操作，这种机制称为反射(reflection)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-18T11:57:46.346Z">
+<meta property="og:updated_time" content="2019-04-30T06:48:09.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="golang第十二章-反射">
+<meta name="twitter:description" content="概述Go语言提供了一种机制，在编译时不知道类型的情况下，可以更新变量、在运行时查看值、调用方法以及直接对它们对布局进行操作，这种机制称为反射(reflection)。">
   
     <link rel="alternate" href="/atom.xml" title="致良知，事上练" type="application/atom+xml">
   
@@ -40,7 +44,7 @@
     <h3 class="description"></h3>
     <div class="count-box">
       <a href="/archives"><div><strong>67</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>28</strong><br>分类</div></a>
+      <a href="/categories"><div><strong>30</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
     <ul class="blog-link">
@@ -96,6 +100,10 @@
 
         <div>
           
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/计算机语言/">计算机语言</a>,<a class="article-category-link" href="/categories/计算机语言/golang程序设计语言/">golang程序设计语言</a>
+  </div>
+
           
               
 
@@ -105,13 +113,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Go语言提供了一种机制，在编译时不知道类型的情况下，可以更新变量、在运行时查看值、调用方法以及直接对它们对布局进行操作，这种机制称为反射(reflection)。<br><a id="more"></a></p>
+<h1 id="为什么使用反射"><a href="#为什么使用反射" class="headerlink" title="为什么使用反射"></a>为什么使用反射</h1><p>有时候我们需要写一个函数有能力处理各种值类型，而这些类型可能无法共享同一个接口，也可能布局未知，也有可能设计这个函数的时候它还不存在。这时，为了函数正常处理这些值类型，就需要使用到反射了。<br>一个典型的例子：fmt.Printf函数可以处理任意值类型。</p>
+<h1 id="reflect-Type和reflect-Value"><a href="#reflect-Type和reflect-Value" class="headerlink" title="reflect.Type和reflect.Value"></a>reflect.Type和reflect.Value</h1><p>反射功能由reflect包提供，它定义了两个重要的类型：Type和Value。<br><strong>其中Type是Go语言的一个类型</strong>，它是一个有很多方法的接口，这些方法可以用来识别类型以及透视类型的组成部分，比如一个结构的各个字段或一个函数的各个参数。<br>reflect.TypeOf函数接收任何类型的interface{}参数，并且把接口中的动态类型以reflect.Type形式返回。它发返回值总是具体类型而不是接口类型。<br>fmt.Printf提供了一个类型返回的简写方式%T，其内部实现使用了reflect.TypeOf:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(&quot;%T\n&quot;,3)</span><br></pre></td></tr></table></figure></p>
+<p><strong>reflect.Value可以包含一个任意类型的值</strong><br>reflect.ValueOf函数接收任意的interface{}，并将接口的动态值以reflect.Value的形式返回。它发返回值可以是一个接口值。<br>同理，<code>fmt.Printf(&quot;%v\n&quot;,v)</code><br>reflect.Value也满足fmt.Stringer，但除非Value包含的是一个字符串，否则Strings方法的结果只暴露其类型。<br>调用Value的Type方法会把它的类型以reflect.Type方式返回。<code>v.Type()</code>会把它的类型以reflect.Type方式返回。<br>reflect.Value的逆操作是reflect.Value.Interface方法。它返回一个interface{}接口值，与reflect.Value包含同一个具体值。</p>
+<h1 id="Display-一个递归的值显示器"><a href="#Display-一个递归的值显示器" class="headerlink" title="Display: 一个递归的值显示器"></a>Display: 一个递归的值显示器</h1>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://banyibu.com/2019/03/18/golang第十二章-反射/" data-id="cjteaovc5001j77o388g93ikg" class="article-share-link">分享</a>
+      <a data-url="http://banyibu.com/2019/03/18/golang第十二章-反射/" data-id="cjvdq83vb001pu8o3ai590bu6" class="article-share-link">分享</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/go/">go</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/计算机语言/">计算机语言</a></li></ul>
+
     </footer>
   </div>
   
@@ -208,7 +222,7 @@
     <h3 class="description"></h3>
     <div class="count-box">
       <a href="/archives"><div><strong>67</strong><br>文章</div></a>
-      <a href="/categories"><div><strong>28</strong><br>分类</div></a>
+      <a href="/categories"><div><strong>30</strong><br>分类</div></a>
       <a href="/tags"><div><strong>27</strong><br>标签</div></a>
     </div>
 
